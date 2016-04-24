@@ -1,60 +1,19 @@
-from abc import ABCMeta, abstractmethod
-
-class Container(metaclass=ABCmeta)
+class Container():
     """
     Interface for generic collection of items, ie. Conexions, Neurons, Layers, ...
+    Currently though, it is nothing but a list wrapper.
     """
-    @abstractmethod
     def __init__(self):
-        pass
+        self.data = []
 
-    @abstractmethod
-    def __iter__(self):
-        pass
+    def __repr__(self):
+        return str(self.data)
 
-    @abstractmethod
-    def createReverseIterator(self):
-        pass
+    def __len__(self):
+        return len(self.data)
 
-    @abstractmethod
-    def append(self, item):
-        pass
+    def __reversed__(self):
+        return reversed(self.data)
 
-    @abstractmethod
-    def at(self, element):
-        pass
-
-    @abstractmethod
-    def show(self):
-        pass
-
-    @abstractmethod
-    def validate(self):
-        pass
-
-
-class SimpleContainer(Container):
-
-    def __init__(self):
-        self.collection = []
-
-    def __iter__(self):
-        return Simple_container_iterator(self)
-
-    def createReverseIterator(self):
-        return Simple_container_reverse_iterator(self)
-
-    def at(self, element):
-        return self.collection[element]
-
-    def append(self, item):
-        self.collection.append(item)
-
-    def show(self):
-        for item in self:
-            item.show()
-
-    def validate(self):
-        for item in self:
-            item.validate()
-        return true
+    def __getattr__(self, attr):
+        return getattr(self.data, attr)  # Delegate all other attrs
