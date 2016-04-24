@@ -1,6 +1,6 @@
 class Container:
     """
-    Interface for generic collection of items, ie. Conexions, Neurons, Layers, ...
+    Interface for generic collection of items, ie. Connections, Neurons, Layers, ...
     Currently though, it is nothing but a list wrapper.
     """
 
@@ -26,4 +26,4 @@ class Container:
         return reversed(self.data)
 
     def __getattr__(self, attr):
-        return getattr(self.data, attr)  # Delegate all other attrs
+        return getattr(self.data, attr)  # Delegate all other attributes --- those not found in __dict__
