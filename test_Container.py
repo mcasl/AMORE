@@ -3,7 +3,7 @@ from hypothesis import given, strategies as st
 from container import Container
 
 
-class TestContainer(unittest.TestCase):
+class Test_Container(unittest.TestCase):
     """ Tests for Container class """
 
     def test_Container_init___iterable_is_None(self):
