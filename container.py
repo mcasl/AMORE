@@ -1,14 +1,13 @@
 class Container:
     """
-    Interface for generic collection of items, ie. Connections, Neurons, Layers, ...
+    A generic collection of items, ie. Connections, Neurons, Layers, ...
     Currently though, it is nothing but a list wrapper.
     """
 
-    def __init__(self, value=None):
-        if value is None:
-            self.data = []
-        else:
-            self.data = value
+    def __init__(self, iterable=None):
+        self.data = []
+        if iterable is not None:
+            self.extend(iterable)
 
     def __getitem__(self, item):
         result = self.data[item]
@@ -25,5 +24,11 @@ class Container:
     def __reversed__(self):
         return reversed(self.data)
 
+    def __eq__(self, other):
+        return self.data == other
+
+    def __ne__(self, other):
+        return self.data != other
+
     def __getattr__(self, attr):
-        return getattr(self.data, attr)  # Delegate all other attributes --- those not found in __dict__
+        return getattr(self.data, attr)  # Delegate  those  attributes not overridden
