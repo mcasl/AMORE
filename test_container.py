@@ -29,7 +29,7 @@ class TestContainer(unittest.TestCase):
             self.assertEqual(data_item, container.data[data_index])
 
     @given(input_data=st.lists(st.integers()))
-    def test_getitem_where_slice_item_returns_Container_instance(self, input_data):
+    def test_getitem_where_slice_item_returns_container_instance(self, input_data):
         # Setup test
         container = Container(input_data)
         # Test action
