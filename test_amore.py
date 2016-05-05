@@ -7,11 +7,10 @@ from container import Container
 
 
 class TestConnection(unittest.TestCase):
-    """ Tests for Connection class
-    """
+    """ Tests for Connection class """
 
     @given(label=st.integers(), weight=st.floats())
-    def test_init___iterable_is_None(self, label, weight):
+    def test_init_where_iterable_is_None(self, label, weight):
         my_neuron = SimpleNeuron()
         my_neuron.label = label
         my_connection = Connection(my_neuron, weight)
@@ -20,6 +19,8 @@ class TestConnection(unittest.TestCase):
 
 
 class TestSimpleNeuron(unittest.TestCase):
+    """ Tests for SimpleNeuron class, a simple multilayer feed forward
+        neural network neuron"""
     @given(label_list=st.lists(st.integers()))
     def test_add_connection(self, label_list):
         # Setup test
@@ -35,6 +36,7 @@ class TestSimpleNeuron(unittest.TestCase):
 
 
 class TestMlpFactory(unittest.TestCase):
+    """ Test for MlpFactory, a simple factory for simple multilayer feed forward networks"""
     def test_make_connection(self):
         factory = MlpFactory()
         neuron = factory.make_neuron(1)
@@ -68,6 +70,8 @@ class TestMlpFactory(unittest.TestCase):
 
 
 class TestSimpleNeuralCreator(unittest.TestCase):
+    """ Unit tests for SimpleNeuralCreator class, the builder of SimpleNeuralNetworks
+    """
     def test_create_neural_network(self):
         factory = MlpFactory()
         neural_network = factory.make_neural_network(factory)
