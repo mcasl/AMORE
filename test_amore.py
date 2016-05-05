@@ -10,7 +10,7 @@ class TestConnection(unittest.TestCase):
     """ Tests for Connection class """
 
     @given(label=st.integers(), weight=st.floats())
-    def test_init_where_iterable_is_None(self, label, weight):
+    def test_init_where_iterable_is_none(self, label, weight):
         my_neuron = SimpleNeuron()
         my_neuron.label = label
         my_connection = Connection(my_neuron, weight)
