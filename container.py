@@ -1,6 +1,6 @@
 class Container:
     """
-    A generic collection of items, ie. Connections, Neurons, Layers, ...
+    A generic collection of items, eg. Connections, Neurons, Layers, ...
     Currently though, it is nothing but a list wrapper.
     """
 
