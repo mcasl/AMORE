@@ -1,11 +1,11 @@
 from math import tanh, exp, cos, sin, fabs, atan, pi, nan
 
 
-def default_f0(x):
+def default_f0(*args):
     return nan
 
 
-def default_f1(x):
+def default_f1(*args):
     return nan
 
 
@@ -21,7 +21,7 @@ def identity_f0(x):
     return x
 
 
-def identity_f1(x):
+def identity_f1(*args):
     return 1
 
 
@@ -29,7 +29,7 @@ def threshold_f0(x):
     return 1 if x > 0 else 0
 
 
-def threshold_f1(x):
+def threshold_f1(*args):
     return 0
 
 
