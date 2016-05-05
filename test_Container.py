@@ -3,7 +3,7 @@ from hypothesis import given, strategies as st
 from container import Container
 
 
-class Test_Container(unittest.TestCase):
+class TestContainer(unittest.TestCase):
     """ Tests for Container class """
 
     def test_Container_init___iterable_is_None(self):
@@ -23,8 +23,8 @@ class Test_Container(unittest.TestCase):
         # Setup test
         container = Container(input_data)
         # Test action
-        for item in range(len(container)):
-            self.assertEqual(container[item], container.data[item])
+        for data_index, data_item in enumerate(container):
+            self.assertEqual(data_item, container.data[data_index])
 
     @given(input_data=st.lists(st.integers()))
     def test_Container_getitem___slice_item_returns_Container_instance(self, input_data):
@@ -69,7 +69,6 @@ class Test_Container(unittest.TestCase):
         y_reversed = list(reversed(Container(y_data)))
         # Test action
         self.assertEqual(xy_reversed, y_reversed + x_reversed)
-
 
 
 if __name__ == '__main__':
