@@ -7,24 +7,30 @@ from container import Container
 
 
 class Connection:
-    """ Class Connection: A data structure for linking neurons.
-    """
-
+    """ A simple data structure for linking neurons."""
     def __init__(self, neuron, weight=0.0):
+        """
+        Initializer.
+        :param neuron: Input neuron
+        :param weight: float value
+        :return: A Connection instance
+        """
         self.weight = weight
         self.neuron = neuron
 
     def __repr__(self):
+        """ Pretty print """
         return '\nFrom:\t {label} \t Weight= \t {weight}'.format(label=self.neuron.label, weight=self.weight)
 
 
 class Neuron(metaclass=ABCMeta):
-    """ Class Neuron
-
-    """
+    """ The mother of all neurons (a.k.a. Interface)"""
 
     @abstractmethod
     def __init__(self):
+        """
+        Initializer. An assumption is made that all neurons will have at least these properties.
+        """
         self.label = None
         self.induced_local_field = 0.0
         self.output = 0.0
@@ -33,17 +39,22 @@ class Neuron(metaclass=ABCMeta):
 
     @abstractmethod
     def __repr__(self):
+        """ Pretty print """
         pass
 
 
 class SimpleNeuron(Neuron):
-    """ Class Simple_neuron
-    """
+    """ A simple neuron as in multilayer feed forward networks"""
 
     def __init__(self):
+        """
+        Initializer. Python requires explicit call to base class initializer.
+        """
         Neuron.__init__(self)
 
     def __repr__(self):
+        """ Pretty print """
+
         result = ('\n\n'
                   '-----------------------------------\n'
                   ' Id label: {label}\n'
@@ -64,16 +75,27 @@ class SimpleNeuron(Neuron):
 
 
 class NeuralNetwork(metaclass=ABCMeta):
+    """ The mother of all neural networks (a.k.a Interface) """
+
     @abstractmethod
     def train(self, *args):
+        """
+        Method for training the network
+        """
         pass
 
     @abstractmethod
     def sim(self, *args):
+        """
+        Method for obtaining outputs from inputs
+        """
         pass
 
     @abstractmethod
     def number_of_neurons(self):
+        """
+        Gives information about the number of neurons in the neural network
+        """
         pass
 
     @abstractmethod
@@ -82,7 +104,11 @@ class NeuralNetwork(metaclass=ABCMeta):
 
 
 class SimpleNeuralNetwork(NeuralNetwork):
+    """ Simple implementation of a multilayer feed forward network """
+
     def __init__(self, neural_factory):
+        """ Initializer
+        """
         self.layers = neural_factory.make_container()
 
     # TODO:  cost_function = neural_factory.make_cost_function('LMS')
@@ -94,29 +120,29 @@ class SimpleNeuralNetwork(NeuralNetwork):
         pass
 
     def number_of_neurons(self):
-        result = [len(self.input_layer)]
-        result.extend(map(len, self.hidden_layers))
-        result.append(len(self.output_layer))
-        return result
+        """ Gives information on the number of neurons in the neural network
+        """
+        return list(map(len, self.layers))
 
     def __repr__(self):
+        """ Pretty print """
         result = ('\n----------------------------------------------\n'
                   'Simple Neural Network\n'
                   '----------------------------------------------\n'
                   '     INPUT LAYER:\n'
                   '----------------------------------------------\n'
                   )
-        result += repr(self.input_layer)
+        result += repr(self.layers[0])
         result += ('\n----------------------------------------------\n'
                    '     HIDDEN LAYERS:\n'
                    '----------------------------------------------\n'
                    )
-        result += repr(self.hidden_layers)
+        result += repr(self.layers[1:-1])
         result += ('\n----------------------------------------------\n'
                    '     OUTPUT LAYER:\n'
                    '----------------------------------------------\n'
                    )
-        result += repr(self.output_layer)
+        result += repr(self.layers[-1])
         return result
 
 
@@ -124,72 +150,72 @@ class SimpleNeuralNetwork(NeuralNetwork):
 
 def sim(numericMatrix) {
 
-	bool checkIncorrectNumberOfRows(
-			inputSize() != static_cast<size_type>(numericMatrix.nrow()))
-	if (checkIncorrectNumberOfRows) {
-		throw std::runtime_error(
-				"\nIncorrect number or rows. The number of input neurons must be equal to the number of rows of the input matrix.\n")
-	}
+    bool checkIncorrectNumberOfRows(
+            inputSize() != static_cast<size_type>(numericMatrix.nrow()))
+    if (checkIncorrectNumberOfRows) {
+        throw std::runtime_error(
+                "\nIncorrect number or rows. The number of input neurons must be equal to the number of rows of the input matrix.\n")
+    }
 
-	Rcpp::NumericMatrix outputMatrix(outputSize(), numericMatrix.ncol())
-	std::vector<double>::iterator inputIterator(numericMatrix.begin())
-	std::vector<double>::iterator outputIterator(outputMatrix.begin())
+    Rcpp::NumericMatrix outputMatrix(outputSize(), numericMatrix.ncol())
+    std::vector<double>::iterator inputIterator(numericMatrix.begin())
+    std::vector<double>::iterator outputIterator(outputMatrix.begin())
 
-	// PREDICT LOOP
-	{
-		NeuronIterator inputNeuronIterator(d_inputLayer.createIterator())
-		NeuronIterator outputNeuronIterator(d_outputLayer.createIterator())
-		for (int i = 0 i < numericMatrix.ncol() i++) {
-			writeInput(inputIterator, inputNeuronIterator)
-			singlePatternForwardAction()
-			readOutput(outputIterator, outputNeuronIterator)
-		}
-		delete outputNeuronIterator
-		delete inputNeuronIterator
-	}
-	return outputMatrix
+    // PREDICT LOOP
+    {
+        NeuronIterator inputNeuronIterator(d_inputLayer.createIterator())
+        NeuronIterator outputNeuronIterator(d_outputLayer.createIterator())
+        for (int i = 0 i < numericMatrix.ncol() i++) {
+            writeInput(inputIterator, inputNeuronIterator)
+            singlePatternForwardAction()
+            readOutput(outputIterator, outputNeuronIterator)
+        }
+        delete outputNeuronIterator
+        delete inputNeuronIterator
+    }
+    return outputMatrix
 
 }
 
 
 
 def setNeuronTrainBehavior(neural_factory) {
-	// Hidden Layers
-	{
-		LayerIterator layerIterator(d_hiddenLayers.createIterator())
-		for (layerIterator.first() !layerIterator.isDone()
-				layerIterator.next()) {
-			NeuronIterator neuronIterator(
-					layerIterator.currentItem().createIterator())
-			for (neuronIterator.first() !neuronIterator.isDone()
-					neuronIterator.next()) {
-				NeuronTrainBehavior neuronTrainBehavior(
-						neuralFactory.makeHiddenNeuronTrainBehavior(
-								neuronIterator.currentItem()))
-				neuronIterator.currentItem().setNeuronTrainBehavior(
-						neuronTrainBehavior)
-			}
-			delete neuronIterator
-		}
-		delete layerIterator
-	}
-	// Output Layers
-	{
-		NeuronIterator neuronIterator(d_outputLayer.createIterator())
-		for (neuronIterator.first() !neuronIterator.isDone() neuronIterator.next()) {
-			NeuronTrainBehavior neuronTrainBehavior(neuralFactory.makeOutputNeuronTrainBehavior(neuronIterator.currentItem()))
-			neuronIterator.currentItem().setNeuronTrainBehavior(neuronTrainBehavior)
-		}
-		delete neuronIterator
-	}
+    // Hidden Layers
+    {
+        LayerIterator layerIterator(d_hiddenLayers.createIterator())
+        for (layerIterator.first() !layerIterator.isDone()
+                layerIterator.next()) {
+            NeuronIterator neuronIterator(
+                    layerIterator.currentItem().createIterator())
+            for (neuronIterator.first() !neuronIterator.isDone()
+                    neuronIterator.next()) {
+                NeuronTrainBehavior neuronTrainBehavior(
+                        neuralFactory.makeHiddenNeuronTrainBehavior(
+                                neuronIterator.currentItem()))
+                neuronIterator.currentItem().setNeuronTrainBehavior(
+                        neuronTrainBehavior)
+            }
+            delete neuronIterator
+        }
+        delete layerIterator
+    }
+    // Output Layers
+    {
+        NeuronIterator neuronIterator(d_outputLayer.createIterator())
+        for (neuronIterator.first() !neuronIterator.isDone() neuronIterator.next()) {
+            NeuronTrainBehavior neuronTrainBehavior(neuralFactory.makeOutputNeuronTrainBehavior(neuronIterator.currentItem()))
+            neuronIterator.currentItem().setNeuronTrainBehavior(neuronTrainBehavior)
+        }
+        delete neuronIterator
+    }
 }
 
 
 def writeInput(std::vector<double>::iterator& iterator, NeuronIterator neuronIterator) {
-	for (neuronIterator.first() !neuronIterator.isDone()
-			neuronIterator.next()) {
-		neuronIterator.currentItem().setOutput(*iterator++)
-	}
+    for (neuronIterator.first() !neuronIterator.isDone()
+            neuronIterator.next()) {
+        neuronIterator.currentItem().setOutput(*iterator++)
+    }
 }
 
 
@@ -199,131 +225,131 @@ def writeTarget(iterator, neuron_container):
 
 
 void SimpleNetwork::singlePatternForwardAction() {
-	// Hidden Layers
-	{
-		LayerIterator layerIterator(d_hiddenLayers.createIterator())
-		for (layerIterator.first() !layerIterator.isDone()	layerIterator.next()) {
-			NeuronIterator neuronIterator(	layerIterator.currentItem().createIterator())
-			for (neuronIterator.first() !neuronIterator.isDone()	neuronIterator.next()) {
-				neuronIterator.currentItem().singlePatternForwardAction()
-			}
-			delete neuronIterator
-		}
-		delete layerIterator
-	}
+    // Hidden Layers
+    {
+        LayerIterator layerIterator(d_hiddenLayers.createIterator())
+        for (layerIterator.first() !layerIterator.isDone()	layerIterator.next()) {
+            NeuronIterator neuronIterator(	layerIterator.currentItem().createIterator())
+            for (neuronIterator.first() !neuronIterator.isDone()	neuronIterator.next()) {
+                neuronIterator.currentItem().singlePatternForwardAction()
+            }
+            delete neuronIterator
+        }
+        delete layerIterator
+    }
 
-	// Output Layers
-	{
-		NeuronIterator neuronIterator(d_outputLayer.createIterator())
-		for (neuronIterator.first() !neuronIterator.isDone()
-				neuronIterator.next()) {
-			neuronIterator.currentItem().singlePatternForwardAction()
-		}
-		delete neuronIterator
-	}
+    // Output Layers
+    {
+        NeuronIterator neuronIterator(d_outputLayer.createIterator())
+        for (neuronIterator.first() !neuronIterator.isDone()
+                neuronIterator.next()) {
+            neuronIterator.currentItem().singlePatternForwardAction()
+        }
+        delete neuronIterator
+    }
 }
 
 void SimpleNetwork::singlePatternBackwardAction() {
-	// Output Layers
-	{
-		NeuronIterator neuronIterator(
-				d_outputLayer.createReverseIterator())
-		for (neuronIterator.first() !neuronIterator.isDone()
-				neuronIterator.next()) {
-			neuronIterator.currentItem().singlePatternBackwardAction()
-		}
-		delete neuronIterator
-	}
-	// Hidden Layers
-	{
-		LayerIterator layerIterator(
-				d_hiddenLayers.createReverseIterator())
-		for (layerIterator.first() !layerIterator.isDone()
-				layerIterator.next()) {
-			NeuronIterator neuronIterator(
-					layerIterator.currentItem().createReverseIterator())
-			for (neuronIterator.first() !neuronIterator.isDone()
-					neuronIterator.next()) {
-				neuronIterator.currentItem().singlePatternBackwardAction()
-			}
-			delete neuronIterator
-		}
-		delete layerIterator
-	}
+    // Output Layers
+    {
+        NeuronIterator neuronIterator(
+                d_outputLayer.createReverseIterator())
+        for (neuronIterator.first() !neuronIterator.isDone()
+                neuronIterator.next()) {
+            neuronIterator.currentItem().singlePatternBackwardAction()
+        }
+        delete neuronIterator
+    }
+    // Hidden Layers
+    {
+        LayerIterator layerIterator(
+                d_hiddenLayers.createReverseIterator())
+        for (layerIterator.first() !layerIterator.isDone()
+                layerIterator.next()) {
+            NeuronIterator neuronIterator(
+                    layerIterator.currentItem().createReverseIterator())
+            for (neuronIterator.first() !neuronIterator.isDone()
+                    neuronIterator.next()) {
+                neuronIterator.currentItem().singlePatternBackwardAction()
+            }
+            delete neuronIterator
+        }
+        delete layerIterator
+    }
 }
 
 void SimpleNetwork::readOutput(std::vector<double>::iterator& iterator, NeuronIterator neuronIterator) {
-	for (neuronIterator.first() !neuronIterator.isDone()
-			neuronIterator.next()) {
-		*iterator++ = neuronIterator.currentItem().d_output
-	}
+    for (neuronIterator.first() !neuronIterator.isDone()
+            neuronIterator.next()) {
+        *iterator++ = neuronIterator.currentItem().d_output
+    }
 }
 
 Rcpp::List SimpleNetwork::train(Rcpp::List parameterList) {
-	return d_networkTrainBehavior.train(parameterList)
+    return d_networkTrainBehavior.train(parameterList)
 
 }
 
 size_type SimpleNetwork::inputSize() {
-	return d_inputLayer.size()
+    return d_inputLayer.size()
 }
 
 size_type SimpleNetwork::outputSize() {
-	return d_outputLayer.size()
+    return d_outputLayer.size()
 }
 
 double SimpleNetwork::costFunctionf0(double output, double target) {
-	return d_costFunction.f0(output, target)
+    return d_costFunction.f0(output, target)
 }
 
 double SimpleNetwork::costFunctionf1(double output, double target) {
-	return d_costFunction.f1(output, target)
+    return d_costFunction.f1(output, target)
 }
 
 void SimpleNetwork::setLearningRate(double learningRate) {
 
-	// Hidden Layers
-	{
-		LayerIterator layerIterator(d_hiddenLayers.createIterator())
-		for (layerIterator.first() !layerIterator.isDone()
-				layerIterator.next()) {
-			NeuronIterator neuronIterator(
-					layerIterator.currentItem().createIterator())
-			for (neuronIterator.first() !neuronIterator.isDone()
-					neuronIterator.next()) {
-				neuronIterator.currentItem().setLearningRate(learningRate)
-			}
-			delete neuronIterator
-		}
-		delete layerIterator
-	}
-	// Output Layers
-	{
-		NeuronIterator neuronIterator(d_outputLayer.createIterator())
-		for (neuronIterator.first() !neuronIterator.isDone()
-				neuronIterator.next()) {
-			neuronIterator.currentItem().setLearningRate(learningRate)
-		}
-		delete neuronIterator
-	}
+    // Hidden Layers
+    {
+        LayerIterator layerIterator(d_hiddenLayers.createIterator())
+        for (layerIterator.first() !layerIterator.isDone()
+                layerIterator.next()) {
+            NeuronIterator neuronIterator(
+                    layerIterator.currentItem().createIterator())
+            for (neuronIterator.first() !neuronIterator.isDone()
+                    neuronIterator.next()) {
+                neuronIterator.currentItem().setLearningRate(learningRate)
+            }
+            delete neuronIterator
+        }
+        delete layerIterator
+    }
+    // Output Layers
+    {
+        NeuronIterator neuronIterator(d_outputLayer.createIterator())
+        for (neuronIterator.first() !neuronIterator.isDone()
+                neuronIterator.next()) {
+            neuronIterator.currentItem().setLearningRate(learningRate)
+        }
+        delete neuronIterator
+    }
 }
 
 void SimpleNetwork::show() {
-	Rprintf("\n\n=========================================================\n")
-	Rprintf("         Neural Network")
-	Rprintf("\n=========================================================")
+    Rprintf("\n\n=========================================================\n")
+    Rprintf("         Neural Network")
+    Rprintf("\n=========================================================")
 
-	Rprintf("\n Input size: %d\n", inputSize())
-	Rprintf("\n Output size: %d\n", outputSize())
-	Rprintf("\n Network Train Behavior: %s\n",
-			getNetworkTrainBehaviorName().c_str()) // TODO revisar si esto es un memory-leak
-	Rprintf("\n Cost Function: %s\n", getCostFunctionName().c_str()) // TODO revisar si esto es un memory-leak
+    Rprintf("\n Input size: %d\n", inputSize())
+    Rprintf("\n Output size: %d\n", outputSize())
+    Rprintf("\n Network Train Behavior: %s\n",
+            getNetworkTrainBehaviorName().c_str()) // TODO revisar si esto es un memory-leak
+    Rprintf("\n Cost Function: %s\n", getCostFunctionName().c_str()) // TODO revisar si esto es un memory-leak
 
 bool SimpleNetwork::validate() {
-	d_inputLayer.validate()
-	d_hiddenLayers.validate()
-	d_outputLayer.validate()
-	return true
+    d_inputLayer.validate()
+    d_hiddenLayers.validate()
+    d_outputLayer.validate()
+    return true
 }
 
 
@@ -331,6 +357,8 @@ bool SimpleNetwork::validate() {
 
 
 class NeuralFactory(metaclass=ABCMeta):
+    """ The mother of all neural factories (a.k.a Interface)"""
+
     @abstractmethod
     def make_connection(self, neuron):
         pass
@@ -377,8 +405,7 @@ class NeuralFactory(metaclass=ABCMeta):
 
 
 class MlpFactory(NeuralFactory):
-    """ Class MLP_factory
-    """
+    """ Simple implementation of a factory of multilayer feed forward network's elements    """
 
     def make_connection(self, neuron: Neuron) -> Connection:
         return Connection(neuron)
@@ -444,15 +471,24 @@ MLPfactory::makeCostFunction(std::string functionName)
 
 
 class NeuralCreator(metaclass=ABCMeta):
+    """ The mother of all neural creators (a.k.a. Interface)"""
     @abstractmethod
     def create_neural_network(self, *args):
         pass
 
 
 class SimpleNeuralCreator(NeuralCreator):
+    """ A simple implementation of the logic for building multilayer feed forward networks """
     def create_neural_network(self, neural_factory, number_of_neurons,
                               hidden_layers_activation_function_name,
                               output_layer_activation_function_name):
+        """ A method for creating a multilayer feed forward network
+        :param neural_factory:  A factory such as MlpFactory
+        :param number_of_neurons: A list of integers describing the number of neurons in each layer
+        :param hidden_layers_activation_function_name: Function name according to those comprised in activation_functions.py
+        :param output_layer_activation_function_name: Function name according to those comprised in activation_functions.py
+        :return: A multilayer feed forward neural network
+        """
         neural_network = neural_factory.make_neural_network()
         if len(number_of_neurons) < 2:
             raise ValueError('[create_feed_forward_network]: Error, number of layers lower than 2.')
@@ -463,6 +499,13 @@ class SimpleNeuralCreator(NeuralCreator):
 
     @staticmethod
     def populate_network(neural_factory, neural_network, number_of_neurons):
+        """ This method fills the neural network with neurons according to
+            the structure given in the number_of_neurons list.
+            The neurons are unconnected yet and their weights are uninitialized.
+        :param neural_factory:  A factory such as MlpFactory
+        :param neural_network: A multilayer feed forward network
+        :param number_of_neurons: A list of integers describing the number of neurons in each layer
+        """
         neuron_label = 0
         layers = neural_factory.make_container()
         for layer_size in number_of_neurons:
@@ -477,6 +520,13 @@ class SimpleNeuralCreator(NeuralCreator):
 
     @staticmethod
     def connect_two_layers(neural_factory, first, second):
+        """
+        This subroutine links two layers of neurons in a
+        fully connected manner
+        :param neural_factory:  A factory such as MlpFactory
+        :param first: Layer on the left
+        :param second: Layer on the right
+        """
         for destination in second:
             destination.connections = neural_factory.make_container()
             for origin in first:
@@ -484,12 +534,23 @@ class SimpleNeuralCreator(NeuralCreator):
 
     @staticmethod
     def fully_connect_network(neural_factory, neural_network):
-            first = neural_network.layers[0]
-            for second in neural_network.layers[1:]:
-                SimpleNeuralCreator.connect_two_layers(neural_factory, first, second)
-                first = second
+        """ This subroutine walks the neurons through
+            and establishes the connections in a fully connected manner
+            :param neural_factory:  A factory such as MlpFactory
+            :param neural_network: A multilayer feed forward network
+        """
+        first = neural_network.layers[0]
+        for second in neural_network.layers[1:]:
+            SimpleNeuralCreator.connect_two_layers(neural_factory, first, second)
+            first = second
+
     @staticmethod
-    def initialize_weights_and_biases(neural_network : SimpleNeuralNetwork):
+    def initialize_weights_and_biases(neural_network):
+        """ This subroutine walks the neurons through
+            and changes the connections' weights following a recipe
+            given in Simon Haykin's book so as to improve the learning phase
+            :param neural_network: A multilayer feed forward network
+        """
         number_of_neurons = neural_network.number_of_neurons()
         # Calculation of the total amount of parameters
         total_number_of_neurons = sum(number_of_neurons)

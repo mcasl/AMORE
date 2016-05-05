@@ -2,8 +2,8 @@ import unittest
 
 from hypothesis import given, strategies as st
 
-from container import Container
 from amore import Connection, SimpleNeuron, MlpFactory, SimpleNeuralCreator
+from container import Container
 
 
 class TestConnection(unittest.TestCase):
@@ -19,7 +19,7 @@ class TestConnection(unittest.TestCase):
         self.assertTrue(my_connection.weight is weight)
 
 
-class TestSimpleneuron(unittest.TestCase):
+class TestSimpleNeuron(unittest.TestCase):
     @given(label_list=st.lists(st.integers()))
     def test_add_connection(self, label_list):
         # Setup test
@@ -67,14 +67,13 @@ class TestMlpFactory(unittest.TestCase):
         self.assertEqual(10, neuron.label)
 
 
-
 class TestSimpleNeuralCreator(unittest.TestCase):
     def test_create_neural_network(self):
         factory = MlpFactory()
         neural_network = factory.make_neural_network(factory)
         SimpleNeuralCreator.populate_network(factory, neural_network, [3, 5, 2])
         self.assertEqual(len(neural_network.layers), 3)
-        self.assertEqual( list(map(len, neural_network.layers)), [3,5,2])
+        self.assertEqual(list(map(len, neural_network.layers)), [3, 5, 2])
 
 
 if __name__ == '__main__':
