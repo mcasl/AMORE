@@ -10,7 +10,8 @@ class TestConnection(unittest.TestCase):
     """ Tests for Connection class """
 
     @given(label=st.integers(), weight=st.floats())
-    def test_init_where_iterable_is_none(self, label, weight):
+    def test_init(self, label, weight):
+        """ Connection unit tests  """
         my_neuron = SimpleNeuron()
         my_neuron.label = label
         my_connection = Connection(my_neuron, weight)
@@ -23,6 +24,7 @@ class TestSimpleNeuron(unittest.TestCase):
         neural network neuron"""
     @given(label_list=st.lists(st.integers()))
     def test_add_connection(self, label_list):
+        """  SimpleNeuron unit tests """
         # Setup test
         my_neuron = SimpleNeuron()
         for label in label_list:
@@ -38,24 +40,28 @@ class TestSimpleNeuron(unittest.TestCase):
 class TestMlpFactory(unittest.TestCase):
     """ Test for MlpFactory, a simple factory for simple multilayer feed forward networks"""
     def test_make_connection(self):
+        """  MlpFactory unit test """
         factory = MlpFactory()
         neuron = factory.make_neuron(1)
         connection = factory.make_connection(neuron)
         self.assertTrue(connection.neuron is neuron)
 
     def test_make_container(self):
+        """  MlpFactory unit test """
         factory = MlpFactory()
         container = factory.make_container()
         self.assertTrue(isinstance(container, type(Container())))
         self.assertEqual(len(container), 0)
 
     def test_make_neuron(self):
+        """  MlpFactory unit test """
         factory = MlpFactory()
         neuron = factory.make_neuron(1)
         self.assertTrue(isinstance(neuron, type(SimpleNeuron())))
         self.assertEqual(neuron.label, 1)
 
     def test_make_neuron__with_neuron_sequence_for_building_connections(self):
+        """  MlpFactory unit test """
         factory = MlpFactory()
         neural_network = factory.make_neural_network(factory)
         neuron_container = factory.make_container()
@@ -73,6 +79,7 @@ class TestSimpleNeuralCreator(unittest.TestCase):
     """ Unit tests for SimpleNeuralCreator class, the builder of SimpleNeuralNetworks
     """
     def test_create_neural_network(self):
+        """ TestSimpleNeuralCreator Unit tests """
         factory = MlpFactory()
         neural_network = factory.make_neural_network(factory)
         SimpleNeuralCreator.populate_network(factory, neural_network, [3, 5, 2])
