@@ -45,7 +45,16 @@ class TestContainer(unittest.TestCase):
         # Setup test
         container = Container(input_data)
         # Test action
-        self.assertEqual(container[0:], container.data)
+        self.assertEqual(container[0:], input_data)
+
+    @given(input_data=st.lists(st.integers()))
+    def test_not_equal_ne(self, input_data):
+        """ Tests getitem for a slice input data, in particular the contents"""
+        container = Container(input_data)
+        altered_data = input_data[:]
+        altered_data = altered_data.reverse()
+        # Test action
+        self.assertNotEqual(container, altered_data)
 
     @given(input_data=st.lists(st.integers()))
     def test_repr(self, input_data):

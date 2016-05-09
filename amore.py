@@ -8,6 +8,7 @@ from container import Container
 
 class Connection:
     """ A simple data structure for linking neurons."""
+
     def __init__(self, neuron, weight=0.0):
         """
         Initializer.
@@ -65,7 +66,7 @@ class SimpleNeuron(Neuron):
                   ' Target: {target}\n'
                   '-----------------------------------\n').format(label=self.label,
                                                                   output=self.output,
-                                                                  # TODO:                                                                predict_behavior=repr(self.predictBehavior),
+                                                                  # TODO:  predict_behavior=repr(self.predictBehavior),
                                                                   target=self.target)
         result += repr(self.connections)
         #          '\n-----------------------------------\n'
@@ -147,14 +148,14 @@ class SimpleNeuralNetwork(NeuralNetwork):
 
 
 """
-
 def sim(numericMatrix) {
 
     bool checkIncorrectNumberOfRows(
             inputSize() != static_cast<size_type>(numericMatrix.nrow()))
     if (checkIncorrectNumberOfRows) {
         throw std::runtime_error(
-                "\nIncorrect number or rows. The number of input neurons must be equal to the number of rows of the input matrix.\n")
+                "\nIncorrect number or rows. The number of input neurons must be equal
+                to the number of rows of the input matrix.\n")
     }
 
     Rcpp::NumericMatrix outputMatrix(outputSize(), numericMatrix.ncol())
@@ -203,7 +204,7 @@ def setNeuronTrainBehavior(neural_factory) {
     {
         NeuronIterator neuronIterator(d_outputLayer.createIterator())
         for (neuronIterator.first() !neuronIterator.isDone() neuronIterator.next()) {
-            NeuronTrainBehavior neuronTrainBehavior(neuralFactory.makeOutputNeuronTrainBehavior(neuronIterator.currentItem()))
+            neuronTrainBehavior(neuralFactory.makeOutputNeuronTrainBehavior(neuronIterator.currentItem())
             neuronIterator.currentItem().setNeuronTrainBehavior(neuronTrainBehavior)
         }
         delete neuronIterator
@@ -437,7 +438,8 @@ class MlpFactory(NeuralFactory):
 
     def make_neural_network(self, neural_factory):
         simple_neural_network = SimpleNeuralNetwork(neural_factory)
-        # TODO: simple_neural_network.network_train_behavior = self.make_network_train_behavior(simple_neural_network)
+        # TODO: simple_neural_network.network_train_behavior =
+        # self.make_network_train_behavior(simple_neural_network)
         return simple_neural_network
 
     def make_neural_creator(self):
@@ -472,6 +474,7 @@ MLPfactory::makeCostFunction(std::string functionName)
 
 class NeuralCreator(metaclass=ABCMeta):
     """ The mother of all neural creators (a.k.a. Interface)"""
+
     @abstractmethod
     def create_neural_network(self, *args):
         pass
@@ -479,20 +482,22 @@ class NeuralCreator(metaclass=ABCMeta):
 
 class SimpleNeuralCreator(NeuralCreator):
     """ A simple implementation of the logic for building multilayer feed forward networks """
-    def create_neural_network(self, neural_factory, number_of_neurons,
+
+    def create_neural_network(self, neural_factory,
+                              number_of_neurons,
                               hidden_layers_activation_function_name,
                               output_layer_activation_function_name):
         """ A method for creating a multilayer feed forward network
         :param neural_factory:  A factory such as MlpFactory
         :param number_of_neurons: A list of integers describing the number of neurons in each layer
-        :param hidden_layers_activation_function_name: Function name according to those comprised in activation_functions.py
-        :param output_layer_activation_function_name: Function name according to those comprised in activation_functions.py
+        :param hidden_layers_activation_function_name: According to activation_functions.py
+        :param output_layer_activation_function_name: According to activation_functions.py
         :return: A multilayer feed forward neural network
         """
         neural_network = neural_factory.make_neural_network()
         if len(number_of_neurons) < 2:
             raise ValueError('[create_feed_forward_network]: Error, number of layers lower than 2.')
-        SimpleNeuralCreator.populate_network(neural_network, number_of_neurons)
+        SimpleNeuralCreator.populate_network(neural_factory, neural_network, number_of_neurons)
         SimpleNeuralCreator.fully_connect_network(neural_factory, neural_network)
         SimpleNeuralCreator.initialize_weights_and_biases(neural_network)
         return neural_network

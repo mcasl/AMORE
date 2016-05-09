@@ -18,6 +18,12 @@ class TestConnection(unittest.TestCase):
         self.assertTrue(my_connection.neuron.label is label)
         self.assertTrue(my_connection.weight is weight)
 
+    def test_repr(self, label=12, weight=0.23):
+        my_neuron = SimpleNeuron()
+        my_neuron.label = label
+        my_connection = Connection(my_neuron, weight)
+        self.assertEqual(repr(my_connection), '\nFrom:\t 12 \t Weight= \t 0.23')
+
 
 class TestSimpleNeuron(unittest.TestCase):
     """ Tests for SimpleNeuron class, a simple multilayer feed forward
@@ -85,6 +91,12 @@ class TestSimpleNeuralCreator(unittest.TestCase):
         SimpleNeuralCreator.populate_network(factory, neural_network, [3, 5, 2])
         self.assertEqual(len(neural_network.layers), 3)
         self.assertEqual(list(map(len, neural_network.layers)), [3, 5, 2])
+
+    def test_number_of_neurons(self, number_of_neurons=(2, 2, 2)):
+        factory = MlpFactory()
+        neural_network = factory.make_neural_network(factory)
+        SimpleNeuralCreator.populate_network(factory, neural_network, number_of_neurons)
+        self.assertEqual(neural_network.number_of_neurons(), list(number_of_neurons))
 
 
 if __name__ == '__main__':
