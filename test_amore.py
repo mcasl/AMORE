@@ -10,15 +10,26 @@ class TestConnection(unittest.TestCase):
     """ Tests for Connection class """
 
     @given(label=st.integers(), weight=st.floats())
-    def test_init(self, label, weight):
-        """ Connection unit tests  """
+    def test_init_where_label_is_given(self, label, weight):
+        """ Connection constructor test. label attribute initialization is checked
+        """
         my_neuron = SimpleNeuron()
         my_neuron.label = label
         my_connection = Connection(my_neuron, weight)
         self.assertTrue(my_connection.neuron.label is label)
+
+    @given(label=st.integers(), weight=st.floats())
+    def test_init_where_weight_is_given(self, label, weight):
+        """ Connection constructor test. weight attribute initialization is checked
+        """
+        my_neuron = SimpleNeuron()
+        my_neuron.label = label
+        my_connection = Connection(my_neuron, weight)
         self.assertTrue(my_connection.weight is weight)
 
     def test_repr(self, label=12, weight=0.23):
+        """ Connection repr test. Simple string check
+        """
         my_neuron = SimpleNeuron()
         my_neuron.label = label
         my_connection = Connection(my_neuron, weight)
@@ -26,29 +37,36 @@ class TestConnection(unittest.TestCase):
 
 
 class TestSimpleNeuron(unittest.TestCase):
-    """ Tests for SimpleNeuron class, a simple multilayer feed forward
-        neural network neuron"""
-    @given(label_list=st.lists(st.integers()))
-    def test_add_connection(self, label_list):
-        """  SimpleNeuron unit tests """
-        # Setup test
-        my_neuron = SimpleNeuron()
-        for label in label_list:
-            target_neuron = SimpleNeuron()
-            target_neuron.label = label
-            connection = Connection(neuron=target_neuron, weight=0.0)
-            my_neuron.connections.append(connection)
-        # Test action
-        appended_labels = [connection.neuron.label for connection in my_neuron.connections]
-        self.assertEquals(label_list, appended_labels)
+    """ Tests for SimpleNeuron class, a simple multilayer feed forward neural network neuron
+    """
+
+    def test_init(self):
+        neuron = SimpleNeuron()
+        attributes = [None, 0.0, 0.0, 0.0, Container()]
+        neuron_attributes = [neuron.label, neuron.output, neuron.target, neuron.induced_local_field, neuron.connections]
+        self.assertEqual(neuron_attributes, attributes)
+
+
+class TestSimpleNeuralNetwork(unittest.TestCase):
+    def test_init(self):
+        neural_factory = MlpFactory()
+        neural_network = neural_factory.make_primitive_neural_network()
+        self.assertEqual(neural_network.layers, neural_factory.make_container())
+
+    def test_size(self, size=(2, 2, 2)):
+        factory = MlpFactory()
+        neural_creator = factory.make_neural_creator()
+        neural_network = neural_creator.create_neural_network(factory, size, 'Tanh', 'Identity')
+        self.assertEqual(neural_network.size(), list(size))
 
 
 class TestMlpFactory(unittest.TestCase):
     """ Test for MlpFactory, a simple factory for simple multilayer feed forward networks"""
+
     def test_make_connection(self):
         """  MlpFactory unit test """
         factory = MlpFactory()
-        neuron = factory.make_neuron(1)
+        neuron = factory.make_primitive_neuron()
         connection = factory.make_connection(neuron)
         self.assertTrue(connection.neuron is neuron)
 
@@ -62,42 +80,48 @@ class TestMlpFactory(unittest.TestCase):
     def test_make_neuron(self):
         """  MlpFactory unit test """
         factory = MlpFactory()
-        neuron = factory.make_neuron(1)
+        neuron = factory.make_primitive_neuron()
         self.assertTrue(isinstance(neuron, type(SimpleNeuron())))
-        self.assertEqual(neuron.label, 1)
-
-    def test_make_neuron__with_neuron_sequence_for_building_connections(self):
-        """  MlpFactory unit test """
-        factory = MlpFactory()
-        neural_network = factory.make_neural_network(factory)
-        neuron_container = factory.make_container()
-
-        for id_iter in range(10):
-            neuron_container.append(factory.make_neuron(id_iter))
-
-        neuron = factory.make_neuron(10, neuron_container, 10, neural_network)
-        self.assertTrue(isinstance(neuron, type(SimpleNeuron())))
-        self.assertEqual(len(neuron.connections), 10)
-        self.assertEqual(10, neuron.label)
 
 
 class TestSimpleNeuralCreator(unittest.TestCase):
     """ Unit tests for SimpleNeuralCreator class, the builder of SimpleNeuralNetworks
     """
-    def test_create_neural_network(self):
+
+    def test_create_primitive_layers(self):
         """ TestSimpleNeuralCreator Unit tests """
         factory = MlpFactory()
-        neural_network = factory.make_neural_network(factory)
-        SimpleNeuralCreator.populate_network(factory, neural_network, [3, 5, 2])
+        neural_network = factory.make_primitive_neural_network()
+        SimpleNeuralCreator.create_primitive_layers(factory, neural_network, [3, 5, 2])
         self.assertEqual(len(neural_network.layers), 3)
         self.assertEqual(list(map(len, neural_network.layers)), [3, 5, 2])
 
-    def test_number_of_neurons(self, number_of_neurons=(2, 2, 2)):
+    def test_connect_and_initialize_network(self):
         factory = MlpFactory()
-        neural_network = factory.make_neural_network(factory)
-        SimpleNeuralCreator.populate_network(factory, neural_network, number_of_neurons)
-        self.assertEqual(neural_network.number_of_neurons(), list(number_of_neurons))
+        neural_network = factory.make_primitive_neural_network()
+        SimpleNeuralCreator.create_primitive_layers(factory, neural_network, [3, 5, 2])
+        SimpleNeuralCreator.connect_network_layers(factory, neural_network)
+        SimpleNeuralCreator.initialize_network(neural_network)
 
+        labels = []
+        for layer in neural_network.layers:
+            labels.append([neuron.label for neuron in layer])
+        self.assertEqual(labels, [[0, 1, 2], [3, 4, 5, 6, 7], [8, 9]])
 
+        network_connections = []
+        for layer in neural_network.layers:
+            for neuron in layer:
+                network_connections.append([origin.neuron.label for origin in neuron.connections])
+        self.assertEqual(network_connections, [[],
+                                               [],
+                                               [],
+                                               [0, 1, 2],
+                                               [0, 1, 2],
+                                               [0, 1, 2],
+                                               [0, 1, 2],
+                                               [0, 1, 2],
+                                               [3, 4, 5, 6, 7],
+                                               [3, 4, 5, 6, 7]
+                                               ])
 if __name__ == '__main__':
     unittest.main()

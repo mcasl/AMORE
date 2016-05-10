@@ -7,7 +7,8 @@ from container import Container
 
 
 class Connection:
-    """ A simple data structure for linking neurons."""
+    """ A simple data structure for linking neurons
+    """
 
     def __init__(self, neuron, weight=0.0):
         """
@@ -20,17 +21,18 @@ class Connection:
         self.neuron = neuron
 
     def __repr__(self):
-        """ Pretty print """
+        """ Pretty print
+        """
         return '\nFrom:\t {label} \t Weight= \t {weight}'.format(label=self.neuron.label, weight=self.weight)
 
 
 class Neuron(metaclass=ABCMeta):
-    """ The mother of all neurons (a.k.a. Interface)"""
+    """ The mother of all neurons (a.k.a. Interface)
+    """
 
     @abstractmethod
     def __init__(self):
-        """
-        Initializer. An assumption is made that all neurons will have at least these properties.
+        """ Initializer. An assumption is made that all neurons will have at least these properties.
         """
         self.label = None
         self.induced_local_field = 0.0
@@ -40,21 +42,23 @@ class Neuron(metaclass=ABCMeta):
 
     @abstractmethod
     def __repr__(self):
-        """ Pretty print """
+        """ Pretty print
+        """
         pass
 
 
 class SimpleNeuron(Neuron):
-    """ A simple neuron as in multilayer feed forward networks"""
+    """ A simple neuron as in multilayer feed forward networks
+    """
 
     def __init__(self):
-        """
-        Initializer. Python requires explicit call to base class initializer.
+        """ Initializer. Python requires explicit call to base class initializer
         """
         Neuron.__init__(self)
 
     def __repr__(self):
-        """ Pretty print """
+        """ Pretty print
+        """
 
         result = ('\n\n'
                   '-----------------------------------\n'
@@ -62,7 +66,7 @@ class SimpleNeuron(Neuron):
                   '-----------------------------------\n'
                   ' Output: {output}\n'
                   '-----------------------------------\n'
-                  # TODO:                  '{predict_behavior}'
+                  # TODO:    '{predict_behavior}'
                   ' Target: {target}\n'
                   '-----------------------------------\n').format(label=self.label,
                                                                   output=self.output,
@@ -76,26 +80,24 @@ class SimpleNeuron(Neuron):
 
 
 class NeuralNetwork(metaclass=ABCMeta):
-    """ The mother of all neural networks (a.k.a Interface) """
+    """ The mother of all neural networks (a.k.a Interface)
+    """
 
     @abstractmethod
     def train(self, *args):
-        """
-        Method for training the network
+        """ Method for training the network
         """
         pass
 
     @abstractmethod
     def sim(self, *args):
-        """
-        Method for obtaining outputs from inputs
+        """ Method for obtaining outputs from inputs
         """
         pass
 
     @abstractmethod
-    def number_of_neurons(self):
-        """
-        Gives information about the number of neurons in the neural network
+    def size(self):
+        """ Gives information about the number of neurons in the neural network
         """
         pass
 
@@ -105,7 +107,8 @@ class NeuralNetwork(metaclass=ABCMeta):
 
 
 class SimpleNeuralNetwork(NeuralNetwork):
-    """ Simple implementation of a multilayer feed forward network """
+    """ Simple implementation of a multilayer feed forward network
+    """
 
     def __init__(self, neural_factory):
         """ Initializer
@@ -120,13 +123,14 @@ class SimpleNeuralNetwork(NeuralNetwork):
     def sim(self, *args):
         pass
 
-    def number_of_neurons(self):
+    def size(self):
         """ Gives information on the number of neurons in the neural network
         """
         return list(map(len, self.layers))
 
     def __repr__(self):
-        """ Pretty print """
+        """ Pretty print
+        """
         result = ('\n----------------------------------------------\n'
                   'Simple Neural Network\n'
                   '----------------------------------------------\n'
@@ -148,7 +152,7 @@ class SimpleNeuralNetwork(NeuralNetwork):
 
 
 """
-def sim(numericMatrix) {
+def sim( input_data ) {
 
     bool checkIncorrectNumberOfRows(
             inputSize() != static_cast<size_type>(numericMatrix.nrow()))
@@ -156,27 +160,15 @@ def sim(numericMatrix) {
         throw std::runtime_error(
                 "\nIncorrect number or rows. The number of input neurons must be equal
                 to the number of rows of the input matrix.\n")
-    }
 
-    Rcpp::NumericMatrix outputMatrix(outputSize(), numericMatrix.ncol())
-    std::vector<double>::iterator inputIterator(numericMatrix.begin())
-    std::vector<double>::iterator outputIterator(outputMatrix.begin())
 
-    // PREDICT LOOP
-    {
-        NeuronIterator inputNeuronIterator(d_inputLayer.createIterator())
-        NeuronIterator outputNeuronIterator(d_outputLayer.createIterator())
-        for (int i = 0 i < numericMatrix.ncol() i++) {
-            writeInput(inputIterator, inputNeuronIterator)
-            singlePatternForwardAction()
-            readOutput(outputIterator, outputNeuronIterator)
-        }
-        delete outputNeuronIterator
-        delete inputNeuronIterator
-    }
+    outputMatrix = np.zeros( outputSize, input_data_cols )
+
+    for i in numericMatrix.ncol():
+        writeInput(inputIterator, inputNeuronIterator)
+        singlePatternForwardAction()
+        readOutput(outputIterator, outputNeuronIterator)
     return outputMatrix
-
-}
 
 
 
@@ -358,7 +350,8 @@ bool SimpleNetwork::validate() {
 
 
 class NeuralFactory(metaclass=ABCMeta):
-    """ The mother of all neural factories (a.k.a Interface)"""
+    """ The mother of all neural factories (a.k.a Interface)
+    """
 
     @abstractmethod
     def make_connection(self, neuron):
@@ -369,7 +362,11 @@ class NeuralFactory(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def make_neuron(self, label, neuron_container, total_amount_of_parameters, neural_network):
+    def make_primitive_neuron(self, label, neuron_container, total_amount_of_parameters, neural_network):
+        pass
+
+    @abstractmethod
+    def make_primitive_layer(self, size):
         pass
 
     # TODO:    @abstractmethod
@@ -377,7 +374,7 @@ class NeuralFactory(metaclass=ABCMeta):
     # TODO:        pass
 
     @abstractmethod
-    def make_neural_network(self, neural_factory):
+    def make_primitive_neural_network(self, neural_factory):
         pass
 
     @abstractmethod
@@ -406,40 +403,27 @@ class NeuralFactory(metaclass=ABCMeta):
 
 
 class MlpFactory(NeuralFactory):
-    """ Simple implementation of a factory of multilayer feed forward network's elements    """
+    """ Simple implementation of a factory of multilayer feed forward network's elements
+    """
 
     def make_connection(self, neuron: Neuron) -> Connection:
         return Connection(neuron)
 
-    def make_container(self) -> Container:
+    def make_container(self):
         return Container()
 
-    def make_neuron(self, label, neuron_container=None, total_amount_of_parameters=None, neural_network=None):
+    def make_primitive_neuron(self):
         neuron = SimpleNeuron()
-        neuron.label = label
-        # TODO:       _neuron.predict_behavior = self.make_predict_behavior(_neuron)
-        # TODO:       _neuron.activation_function = self.make_activation_function(_neuron,f0, f1)
-        # TODO:       _neuron.train_behavior = self.make_hidden_neuron_train_behavior()
+        return neuron
 
-        if (neuron_container is None) or (total_amount_of_parameters is None) or (neural_network is None):
-            return neuron
-        else:
-            neuron.neural_network = neural_network
-            extreme = sqrt(3.0 / total_amount_of_parameters)
-            for neuron_iter in neuron_container:
-                connection = self.make_connection(neuron_iter)
-                connection.weight = random.uniform(-extreme, extreme)
-                neuron.connections.append(connection)
-            # TODO:            _neuron.predict_behavior.bias = random.uniform(-extreme, extreme)
-            return neuron
+    def make_primitive_layer(self, size):
+        layer = self.make_container()
+        for neuron in range(size):
+            layer.append(self.make_primitive_neuron())
+        return layer
 
-            # TODO:    def make_predict_behavior(self, neuron):
-            # TODO:        return MLP_behavior(neuron)
-
-    def make_neural_network(self, neural_factory):
-        simple_neural_network = SimpleNeuralNetwork(neural_factory)
-        # TODO: simple_neural_network.network_train_behavior =
-        # self.make_network_train_behavior(simple_neural_network)
+    def make_primitive_neural_network(self):
+        simple_neural_network = SimpleNeuralNetwork(self)
         return simple_neural_network
 
     def make_neural_creator(self):
@@ -473,7 +457,8 @@ MLPfactory::makeCostFunction(std::string functionName)
 
 
 class NeuralCreator(metaclass=ABCMeta):
-    """ The mother of all neural creators (a.k.a. Interface)"""
+    """ The mother of all neural creators (a.k.a. Interface)
+    """
 
     @abstractmethod
     def create_neural_network(self, *args):
@@ -481,83 +466,75 @@ class NeuralCreator(metaclass=ABCMeta):
 
 
 class SimpleNeuralCreator(NeuralCreator):
-    """ A simple implementation of the logic for building multilayer feed forward networks """
+    """ A simple implementation of the logic for building multilayer feed forward networks
+    """
 
-    def create_neural_network(self, neural_factory,
-                              number_of_neurons,
+    def create_neural_network(self,
+                              neural_factory,
+                              layers_size,
                               hidden_layers_activation_function_name,
                               output_layer_activation_function_name):
+
         """ A method for creating a multilayer feed forward network
         :param neural_factory:  A factory such as MlpFactory
-        :param number_of_neurons: A list of integers describing the number of neurons in each layer
+        :param layers_size: A list of integers describing the number of neurons in each layer
         :param hidden_layers_activation_function_name: According to activation_functions.py
         :param output_layer_activation_function_name: According to activation_functions.py
         :return: A multilayer feed forward neural network
         """
-        neural_network = neural_factory.make_neural_network()
-        if len(number_of_neurons) < 2:
-            raise ValueError('[create_feed_forward_network]: Error, number of layers lower than 2.')
-        SimpleNeuralCreator.populate_network(neural_factory, neural_network, number_of_neurons)
-        SimpleNeuralCreator.fully_connect_network(neural_factory, neural_network)
-        SimpleNeuralCreator.initialize_weights_and_biases(neural_network)
-        return neural_network
+        primitive_neural_network = neural_factory.make_primitive_neural_network()
+        if layers_size:
+            SimpleNeuralCreator.create_primitive_layers(neural_factory, primitive_neural_network, layers_size)
+            SimpleNeuralCreator.connect_network_layers(neural_factory, primitive_neural_network)
+            SimpleNeuralCreator.initialize_network(primitive_neural_network)
+        return primitive_neural_network
 
     @staticmethod
-    def populate_network(neural_factory, neural_network, number_of_neurons):
+    def create_primitive_layers(neural_factory: NeuralFactory,
+                                neural_network: NeuralNetwork,
+                                layers_size: list):
         """ This method fills the neural network with neurons according to
             the structure given in the number_of_neurons list.
             The neurons are unconnected yet and their weights are uninitialized.
         :param neural_factory:  A factory such as MlpFactory
         :param neural_network: A multilayer feed forward network
-        :param number_of_neurons: A list of integers describing the number of neurons in each layer
+        :param layers_size: A list of integers describing each layer size
         """
-        neuron_label = 0
         layers = neural_factory.make_container()
-        for layer_size in number_of_neurons:
-            layer = neural_factory.make_container()
-            for dummy_iter in range(layer_size):
-                neuron = neural_factory.make_neuron(neuron_label)
-                neuron.neural_network = neural_network
-                layer.append(neuron)
-                neuron_label += 1
+        for size in layers_size:
+            layer = neural_factory.make_primitive_layer(size)
             layers.append(layer)
         neural_network.layers = layers
 
     @staticmethod
-    def connect_two_layers(neural_factory, first, second):
-        """
-        This subroutine links two layers of neurons in a
-        fully connected manner
-        :param neural_factory:  A factory such as MlpFactory
-        :param first: Layer on the left
-        :param second: Layer on the right
-        """
-        for destination in second:
-            destination.connections = neural_factory.make_container()
-            for origin in first:
-                destination.connections.append(neural_factory.make_connection(origin))
-
-    @staticmethod
-    def fully_connect_network(neural_factory, neural_network):
+    def connect_network_layers(neural_factory, neural_network):
         """ This subroutine walks the neurons through
-            and establishes the connections in a fully connected manner
+            and establishes the connections in a fully connected manner.
             :param neural_factory:  A factory such as MlpFactory
             :param neural_network: A multilayer feed forward network
         """
-        first = neural_network.layers[0]
-        for second in neural_network.layers[1:]:
-            SimpleNeuralCreator.connect_two_layers(neural_factory, first, second)
-            first = second
+        origin_layer = neural_network.layers[0]
+        for destination_layer in neural_network.layers[1:]:
+            for neuron in destination_layer:
+                neuron.connections = neural_factory.make_container()
+                for origin in origin_layer:
+                    neuron.connections.append(neural_factory.make_connection(origin))
+            origin_layer = destination_layer
 
     @staticmethod
-    def initialize_weights_and_biases(neural_network):
+    def initialize_network(neural_network):
         """ This subroutine walks the neurons through
-            and changes the connections' weights following a recipe
-            given in Simon Haykin's book so as to improve the learning phase
+            and changes:
+                *   The connections' weights following a recipe
+                    given in Simon Haykin's book so as to improve the learning phase
+                *   The neuron labels
+                *   The neuron.neural_network attribute
             :param neural_network: A multilayer feed forward network
         """
-        number_of_neurons = neural_network.number_of_neurons()
+
         # Calculation of the total amount of parameters
+
+        number_of_neurons = neural_network.size()
         total_number_of_neurons = sum(number_of_neurons)
         total_amount_of_parameters = 0
         previous_number = 0
@@ -567,8 +544,16 @@ class SimpleNeuralCreator(NeuralCreator):
         total_amount_of_parameters += total_number_of_neurons
         extreme = sqrt(3.0 / total_amount_of_parameters)
 
+        # Network walk through
+        label_number = 0
         for layer in neural_network.layers:
             for neuron in layer:
+                # Change weights and bias
                 for connection in neuron.connections:
                     connection.weight = random.uniform(-extreme, extreme)
                 neuron.bias = random.uniform(-extreme, extreme)
+
+                # Initialize other neuron attributes
+                neuron.label, label_number = label_number, label_number + 1
+                neuron.neural_network = neural_network
+                # TODO : more to come, remember to change the comments above
