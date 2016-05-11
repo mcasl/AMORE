@@ -1,5 +1,7 @@
+import random
 import unittest
 
+import numpy
 from hypothesis import given, strategies as st
 
 from amore import Connection, SimpleNeuron, MlpFactory, SimpleNeuralCreator
@@ -53,11 +55,45 @@ class TestSimpleNeuralNetwork(unittest.TestCase):
         neural_network = neural_factory.make_primitive_neural_network()
         self.assertEqual(neural_network.layers, neural_factory.make_container())
 
-    def test_size(self, size=(2, 2, 2)):
+    def test_insert_input_data(self, shape=(40, 3, 2)):
         factory = MlpFactory()
         neural_creator = factory.make_neural_creator()
-        neural_network = neural_creator.create_neural_network(factory, size, 'Tanh', 'Identity')
-        self.assertEqual(neural_network.size(), list(size))
+        neural_network = neural_creator.create_neural_network(factory, shape, 'Tanh', 'Identity')
+        sample_data = [random.random() for x in range(shape[0])]
+        neural_network.insert_input_data(sample_data)
+        result = numpy.asarray([neuron.output for neuron in neural_network.layers[0]])
+        self.assertTrue((result == sample_data).all)
+
+    def test_write_targets_in_output_layer(self, shape=(4, 6, 78)):
+        factory = MlpFactory()
+        neural_creator = factory.make_neural_creator()
+        neural_network = neural_creator.create_neural_network(factory, shape, 'Tanh', 'Identity')
+        sample_data = [random.random() for x in range(shape[-1])]
+        neural_network.write_targets_in_output_layer(sample_data)
+        result = [neuron.target for neuron in neural_network.layers[-1]]
+        self.assertEqual(result, sample_data)
+
+    def test_shape(self, shape=(40, 52, 1, 7, 4)):
+        factory = MlpFactory()
+        neural_creator = factory.make_neural_creator()
+        neural_network = neural_creator.create_neural_network(factory, shape, 'Tanh', 'Identity')
+        self.assertEqual(neural_network.shape, list(shape))
+
+    def test_single_pattern_forward_action(self):
+        pass
+
+    def test_single_pattern_backward_action(self):
+        pass
+
+    def test_read_output_layer(self, shape=(4, 6, 78)):
+        factory = MlpFactory()
+        neural_creator = factory.make_neural_creator()
+        neural_network = neural_creator.create_neural_network(factory, shape, 'Tanh', 'Identity')
+        sample_data = [random.random() for x in range(shape[-1])]
+        for neuron, output_value in zip(neural_network.layers[-1], sample_data):
+            neuron.output = output_value
+        result = neural_network.read_output_layer()
+        self.assertEqual(result, sample_data)
 
 
 class TestMlpFactory(unittest.TestCase):
@@ -123,5 +159,7 @@ class TestSimpleNeuralCreator(unittest.TestCase):
                                                [3, 4, 5, 6, 7],
                                                [3, 4, 5, 6, 7]
                                                ])
+
+
 if __name__ == '__main__':
     unittest.main()

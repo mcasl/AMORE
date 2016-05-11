@@ -180,16 +180,30 @@ def arctan_f1(x):
     return 2.0 / ((1 + x ** 2) * pi)
 
 
-activation_function_set = {'Tanh': (tanh_f0, tanh_f1),
-                           'Identity': (identity_f0, identity_f1),
-                           'Threshold': (threshold_f0, threshold_f1),
-                           'Logistic': (logistic_f0, logistic_f1),
-                           'Exponential': (exponential_f0, exponential_f1),
-                           'Reciprocal': (reciprocal_f0, reciprocal_f1),
-                           'Square': (square_f0, square_f1),
-                           'Sine': (sine_f0, sine_f1),
-                           'Cosine': (cosine_f0, cosine_f1),
-                           'Elliot': (elliot_f0, elliot_f1),
-                           'Arctan': (arctan_f0, arctan_f1),
-                           'default': (default_f0, default_f1),
-                           }
+activation_function_set = {}
+activation_function_set['Tanh'] = tanh_f0
+activation_function_set['Identity'] = identity_f0
+activation_function_set['Threshold'] = threshold_f0
+activation_function_set['Logistic'] = logistic_f0
+activation_function_set['Exponential'] = exponential_f0
+activation_function_set['Reciprocal'] = reciprocal_f0
+activation_function_set['Square'] = square_f0
+activation_function_set['Sine'] = sine_f0
+activation_function_set['Cosine'] = cosine_f0
+activation_function_set['Elliot'] = elliot_f0
+activation_function_set['Arctan'] = arctan_f0
+activation_function_set['default'] = default_f0
+
+activation_function_derivative_set = {}
+activation_function_derivative_set['Tanh'] = tanh_f1
+activation_function_derivative_set['Identity'] = identity_f1
+activation_function_derivative_set['Threshold'] = threshold_f1
+activation_function_derivative_set['Logistic'] = logistic_f1
+activation_function_derivative_set['Exponential'] = exponential_f1
+activation_function_derivative_set['Reciprocal'] = reciprocal_f1
+activation_function_derivative_set['Square'] = square_f1
+activation_function_derivative_set['Sine'] = sine_f1
+activation_function_derivative_set['Cosine'] = cosine_f1
+activation_function_derivative_set['Elliot'] = elliot_f1
+activation_function_derivative_set['Arctan'] = arctan_f1
+activation_function_derivative_set['default'] = default_f1

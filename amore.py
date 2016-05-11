@@ -1,12 +1,23 @@
+""" Amore: A module for training and simulating neural networks the way researchers need
+
+
+"""
+
+import operator
 import random
 from abc import ABCMeta, abstractmethod
+from functools import reduce
 from math import sqrt
+
+import numpy
 
 from activation_functions import *
 from container import Container
 
 
-class Connection:
+# TODO: remember: alternative constructors @classmethod def myalternativeconstructor(class, other arguments):
+
+class Connection(object):
     """ A simple data structure for linking neurons
     """
 
@@ -15,18 +26,18 @@ class Connection:
         Initializer.
         :param neuron: Input neuron
         :param weight: float value
-        :return: A Connection instance
+        :return: An initialized Connection instance
         """
         self.weight = weight
         self.neuron = neuron
 
     def __repr__(self):
-        """ Pretty print
+        """ Pretty print. Probably to be moved to a view class (mvc)
         """
         return '\nFrom:\t {label} \t Weight= \t {weight}'.format(label=self.neuron.label, weight=self.weight)
 
 
-class Neuron(metaclass=ABCMeta):
+class Neuron(object, metaclass=ABCMeta):
     """ The mother of all neurons (a.k.a. Interface)
     """
 
@@ -35,14 +46,17 @@ class Neuron(metaclass=ABCMeta):
         """ Initializer. An assumption is made that all neurons will have at least these properties.
         """
         self.label = None
-        self.induced_local_field = 0.0
-        self.output = 0.0
-        self.target = 0.0
         self.connections = Container()
 
     @abstractmethod
     def __repr__(self):
-        """ Pretty print
+        """ Pretty print. Probably to be moved to a view class (mvc)
+        """
+        pass
+
+    @abstractmethod
+    def propagate(self):
+        """ Neuron forward update by applying its activation function
         """
         pass
 
@@ -55,9 +69,15 @@ class SimpleNeuron(Neuron):
         """ Initializer. Python requires explicit call to base class initializer
         """
         Neuron.__init__(self)
+        self.induced_local_field = 0.0
+        self.output = 0.0
+        self.target = 0.0
+        self.bias = 0.0
+        self.activation_function = activation_function_set['default']
+        self.activation_function_derivative = activation_function_derivative_set['default']
 
     def __repr__(self):
-        """ Pretty print
+        """ Pretty print. Probably to be moved to a view class (mvc)
         """
 
         result = ('\n\n'
@@ -78,8 +98,16 @@ class SimpleNeuron(Neuron):
         #         '\n-----------------------------------'
         return result
 
+    def propagate(self):
+        """ Neuron forward update by applying its activation function
+        """
+        inputs_x_weights = map((lambda connection: connection.neuron.output * connection.weight), self.connections)
+        self.induced_local_field = reduce(operator.add, inputs_x_weights)
+        self.induced_local_field += self.bias
+        self.output = self.activation_function()
 
-class NeuralNetwork(metaclass=ABCMeta):
+
+class NeuralNetwork(object, metaclass=ABCMeta):
     """ The mother of all neural networks (a.k.a Interface)
     """
 
@@ -96,13 +124,20 @@ class NeuralNetwork(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def size(self):
+    def insert_input_data(self, *args):
+        pass
+
+    @property
+    @abstractmethod
+    def shape(self):
         """ Gives information about the number of neurons in the neural network
         """
         pass
 
     @abstractmethod
     def __repr__(self):
+        """ Pretty print. Probably to be moved to a view class (mvc)
+        """
         pass
 
 
@@ -120,10 +155,23 @@ class SimpleNeuralNetwork(NeuralNetwork):
     def train(self, *args):
         pass
 
-    def sim(self, *args):
-        pass
+    def sim(self, input_data):
+        data_number_of_rows, data_number_of_cols = input_data.shape
+        input_layer_size, *hidden_layers_size, output_layer_size = self.shape
 
-    def size(self):
+        if input_layer_size != data_number_of_cols:
+            raise ValueError(
+                '\n[SimpleNeuralNetwork.sim Error:] Input layer size different from data number of columns\n')
+
+        output_data = numpy.zeros(data_number_of_rows, output_layer_size)
+        for row, input_data, in enumerate(input_data):
+            self.insert_input_data(input_data)
+            self.single_pattern_forward_action()
+            output_data[row, :] = self.read_output_layer()
+        return output_data
+
+    @property
+    def shape(self):
         """ Gives information on the number of neurons in the neural network
         """
         return list(map(len, self.layers))
@@ -150,26 +198,29 @@ class SimpleNeuralNetwork(NeuralNetwork):
         result += repr(self.layers[-1])
         return result
 
+    def insert_input_data(self, data):
+        for neuron, value in zip(self.layers[0], data):
+            neuron.output = value
+
+    def write_targets_in_output_layer(self, data):
+        for neuron, value in zip(self.layers[-1], data):
+            neuron.target = value
+
+    def single_pattern_forward_action(self):
+        for layer in self.layers:
+            for neuron in layer:
+                neuron.propagate()
+
+    def single_pattern_backward_action(self):
+        for layer in reversed(self.layers):
+            for neuron in layer:
+                neuron.single_pattern_backward_action()
+
+    def read_output_layer(self):
+        return [neuron.output for neuron in self.layers[-1]]
+
 
 """
-def sim( input_data ) {
-
-    bool checkIncorrectNumberOfRows(
-            inputSize() != static_cast<size_type>(numericMatrix.nrow()))
-    if (checkIncorrectNumberOfRows) {
-        throw std::runtime_error(
-                "\nIncorrect number or rows. The number of input neurons must be equal
-                to the number of rows of the input matrix.\n")
-
-
-    outputMatrix = np.zeros( outputSize, input_data_cols )
-
-    for i in numericMatrix.ncol():
-        writeInput(inputIterator, inputNeuronIterator)
-        singlePatternForwardAction()
-        readOutput(outputIterator, outputNeuronIterator)
-    return outputMatrix
-
 
 
 def setNeuronTrainBehavior(neural_factory) {
@@ -203,93 +254,12 @@ def setNeuronTrainBehavior(neural_factory) {
     }
 }
 
+    Rcpp::List SimpleNetwork::train(Rcpp::List parameterList) {
+        return d_networkTrainBehavior.train(parameterList)
 
-def writeInput(std::vector<double>::iterator& iterator, NeuronIterator neuronIterator) {
-    for (neuronIterator.first() !neuronIterator.isDone()
-            neuronIterator.next()) {
-        neuronIterator.currentItem().setOutput(*iterator++)
-    }
-}
-
-
-def writeTarget(iterator, neuron_container):
-    for neuron_iter in neuron_container:
-        neuron.setTarget(*iterator++)
-
-
-void SimpleNetwork::singlePatternForwardAction() {
-    // Hidden Layers
-    {
-        LayerIterator layerIterator(d_hiddenLayers.createIterator())
-        for (layerIterator.first() !layerIterator.isDone()	layerIterator.next()) {
-            NeuronIterator neuronIterator(	layerIterator.currentItem().createIterator())
-            for (neuronIterator.first() !neuronIterator.isDone()	neuronIterator.next()) {
-                neuronIterator.currentItem().singlePatternForwardAction()
-            }
-            delete neuronIterator
-        }
-        delete layerIterator
     }
 
-    // Output Layers
-    {
-        NeuronIterator neuronIterator(d_outputLayer.createIterator())
-        for (neuronIterator.first() !neuronIterator.isDone()
-                neuronIterator.next()) {
-            neuronIterator.currentItem().singlePatternForwardAction()
-        }
-        delete neuronIterator
-    }
-}
 
-void SimpleNetwork::singlePatternBackwardAction() {
-    // Output Layers
-    {
-        NeuronIterator neuronIterator(
-                d_outputLayer.createReverseIterator())
-        for (neuronIterator.first() !neuronIterator.isDone()
-                neuronIterator.next()) {
-            neuronIterator.currentItem().singlePatternBackwardAction()
-        }
-        delete neuronIterator
-    }
-    // Hidden Layers
-    {
-        LayerIterator layerIterator(
-                d_hiddenLayers.createReverseIterator())
-        for (layerIterator.first() !layerIterator.isDone()
-                layerIterator.next()) {
-            NeuronIterator neuronIterator(
-                    layerIterator.currentItem().createReverseIterator())
-            for (neuronIterator.first() !neuronIterator.isDone()
-                    neuronIterator.next()) {
-                neuronIterator.currentItem().singlePatternBackwardAction()
-            }
-            delete neuronIterator
-        }
-        delete layerIterator
-    }
-}
-
-void SimpleNetwork::readOutput(std::vector<double>::iterator& iterator, NeuronIterator neuronIterator) {
-    for (neuronIterator.first() !neuronIterator.isDone()
-            neuronIterator.next()) {
-        *iterator++ = neuronIterator.currentItem().d_output
-    }
-}
-
-Rcpp::List SimpleNetwork::train(Rcpp::List parameterList) {
-    return d_networkTrainBehavior.train(parameterList)
-
-}
-
-size_type SimpleNetwork::inputSize() {
-    return d_inputLayer.size()
-}
-
-size_type SimpleNetwork::outputSize() {
-    return d_outputLayer.size()
-}
 
 double SimpleNetwork::costFunctionf0(double output, double target) {
     return d_costFunction.f0(output, target)
@@ -327,29 +297,11 @@ void SimpleNetwork::setLearningRate(double learningRate) {
     }
 }
 
-void SimpleNetwork::show() {
-    Rprintf("\n\n=========================================================\n")
-    Rprintf("         Neural Network")
-    Rprintf("\n=========================================================")
-
-    Rprintf("\n Input size: %d\n", inputSize())
-    Rprintf("\n Output size: %d\n", outputSize())
-    Rprintf("\n Network Train Behavior: %s\n",
-            getNetworkTrainBehaviorName().c_str()) // TODO revisar si esto es un memory-leak
-    Rprintf("\n Cost Function: %s\n", getCostFunctionName().c_str()) // TODO revisar si esto es un memory-leak
-
-bool SimpleNetwork::validate() {
-    d_inputLayer.validate()
-    d_hiddenLayers.validate()
-    d_outputLayer.validate()
-    return true
-}
-
 
 """
 
 
-class NeuralFactory(metaclass=ABCMeta):
+class NeuralFactory(object, metaclass=ABCMeta):
     """ The mother of all neural factories (a.k.a Interface)
     """
 
@@ -456,7 +408,7 @@ MLPfactory::makeCostFunction(std::string functionName)
 """
 
 
-class NeuralCreator(metaclass=ABCMeta):
+class NeuralCreator(object, metaclass=ABCMeta):
     """ The mother of all neural creators (a.k.a. Interface)
     """
 
@@ -473,7 +425,7 @@ class SimpleNeuralCreator(NeuralCreator):
                               neural_factory,
                               layers_size,
                               hidden_layers_activation_function_name,
-                              output_layer_activation_function_name):
+                              output_layer_activation_function_name) -> NeuralNetwork:
 
         """ A method for creating a multilayer feed forward network
         :param neural_factory:  A factory such as MlpFactory
@@ -498,7 +450,7 @@ class SimpleNeuralCreator(NeuralCreator):
             The neurons are unconnected yet and their weights are uninitialized.
         :param neural_factory:  A factory such as MlpFactory
         :param neural_network: A multilayer feed forward network
-        :param layers_size: A list of integers describing each layer size
+        :param layers_size: A list of integers describing each layer shape
         """
         layers = neural_factory.make_container()
         for size in layers_size:
@@ -532,9 +484,11 @@ class SimpleNeuralCreator(NeuralCreator):
             :param neural_network: A multilayer feed forward network
         """
 
+        if neural_network.shape == [0]:
+            raise ValueError('[Initialize network]: Empty net,  Shape is [0].')
         # Calculation of the total amount of parameters
 
-        number_of_neurons = neural_network.size()
+        number_of_neurons = neural_network.shape
         total_number_of_neurons = sum(number_of_neurons)
         total_amount_of_parameters = 0
         previous_number = 0
