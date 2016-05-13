@@ -1,31 +1,30 @@
-import random
 import unittest
 
-import numpy
 from hypothesis import given, strategies as st
 
-from amore import Connection, SimpleNeuron, MlpFactory, SimpleNeuralCreator
-from container import Container
+from amore import *
+from container import *
 
 
 class TestConnection(unittest.TestCase):
     """ Tests for Connection class """
 
+    def test_init_where_weight_is_default(self):
+        """ Connection constructor test. weight attribute initialization is checked
+        """
+        factory = MlpFactory()
+        my_neuron = SimpleNeuron(factory)
+        my_connection = Connection(my_neuron)
+        self.assertEqual(my_connection.weight, 0.0)
+
     @given(weight=st.floats())
     def test_init_where_weight_is_given(self, weight):
         """ Connection constructor test. weight attribute initialization is checked
         """
-        my_neuron = SimpleNeuron()
+        factory = MlpFactory()
+        my_neuron = SimpleNeuron(factory)
         my_connection = Connection(my_neuron, weight)
         self.assertTrue(my_connection.weight is weight)
-
-    def test_repr(self, label=12, weight=0.23):
-        """ Connection repr test. Simple string check
-        """
-        my_neuron = SimpleNeuron()
-        my_neuron.label = label
-        my_connection = Connection(my_neuron, weight)
-        self.assertEqual(repr(my_connection), '\nFrom:\t 12 \t Weight= \t 0.23')
 
 
 class TestSimpleNeuron(unittest.TestCase):
@@ -33,10 +32,31 @@ class TestSimpleNeuron(unittest.TestCase):
     """
 
     def test_init(self):
-        neuron = SimpleNeuron()
+        factory = MlpFactory()
+        neuron = SimpleNeuron(factory)
         attributes = [None, 0.0, 0.0, 0.0, Container()]
         neuron_attributes = [neuron.label, neuron.output, neuron.target, neuron.induced_local_field, neuron.connections]
         self.assertEqual(neuron_attributes, attributes)
+
+    def test_fit(self):
+        pass  # TODO: test
+
+    def test___call__(self):
+        factory = MlpFactory()
+        # Prepare ad-hoc input_layer
+        input_layer = factory.make_container()
+        for dummy in range(5):
+            neuron = factory.make_primitive_neuron()
+            neuron.output = random.random()
+            input_layer.append(neuron)
+
+        # Setup test neuron
+        test_neuron = factory.make_primitive_neuron()
+        for neuron in input_layer:
+            connection = factory.make_connection(neuron)
+            connection.weight = random.random()
+            test_neuron.connections.append(connection)
+        self.assertEqual(test_neuron(), test_neuron.predict_strategy())
 
 
 class TestSimpleNeuralNetwork(unittest.TestCase):
@@ -45,11 +65,17 @@ class TestSimpleNeuralNetwork(unittest.TestCase):
         neural_network = neural_factory.make_primitive_neural_network()
         self.assertEqual(neural_network.layers, neural_factory.make_container())
 
+    def test_fit(self):
+        pass  # TODO: test
+
+    def test_predict(self):
+        pass  # TODO: test
+
     def test_insert_input_data(self, shape=(40, 3, 2)):
         factory = MlpFactory()
         neural_creator = factory.make_neural_creator()
         neural_network = neural_creator.create_neural_network(factory, shape, 'Tanh', 'Identity')
-        sample_data = [random.random() for x in range(shape[0])]
+        sample_data = [random.random() for dummy in range(shape[0])]
         neural_network.insert_input_data(sample_data)
         result = numpy.asarray([neuron.output for neuron in neural_network.layers[0]])
         self.assertTrue((result == sample_data).all)
@@ -58,7 +84,7 @@ class TestSimpleNeuralNetwork(unittest.TestCase):
         factory = MlpFactory()
         neural_creator = factory.make_neural_creator()
         neural_network = neural_creator.create_neural_network(factory, shape, 'Tanh', 'Identity')
-        sample_data = [random.random() for x in range(shape[-1])]
+        sample_data = [random.random() for dummy in range(shape[-1])]
         neural_network.write_targets_in_output_layer(sample_data)
         result = [neuron.target for neuron in neural_network.layers[-1]]
         self.assertEqual(result, sample_data)
@@ -79,7 +105,7 @@ class TestSimpleNeuralNetwork(unittest.TestCase):
         factory = MlpFactory()
         neural_creator = factory.make_neural_creator()
         neural_network = neural_creator.create_neural_network(factory, shape, 'Tanh', 'Identity')
-        sample_data = [random.random() for x in range(shape[-1])]
+        sample_data = [random.random() for dummy in range(shape[-1])]
         for neuron, output_value in zip(neural_network.layers[-1], sample_data):
             neuron.output = output_value
         result = neural_network.read_output_layer()
@@ -107,7 +133,7 @@ class TestMlpFactory(unittest.TestCase):
         """  MlpFactory unit test """
         factory = MlpFactory()
         neuron = factory.make_primitive_neuron()
-        self.assertTrue(isinstance(neuron, type(SimpleNeuron())))
+        self.assertTrue(isinstance(neuron, type(SimpleNeuron(factory))))
 
 
 class TestSimpleNeuralCreator(unittest.TestCase):
@@ -149,6 +175,34 @@ class TestSimpleNeuralCreator(unittest.TestCase):
                                                [3, 4, 5, 6, 7],
                                                [3, 4, 5, 6, 7]
                                                ])
+
+
+class TestMlpPredictStrategy(unittest.TestCase):
+    """ Unit tests for MLpPredictStrategy
+    """
+
+    def test__call__(self):
+        factory = MlpFactory()
+        # Prepare ad-hoc input_layer
+        input_layer = factory.make_container()
+        for dummy in range(5):
+            neuron = factory.make_primitive_neuron()
+            neuron.output = random.random()
+            input_layer.append(neuron)
+
+        # Setup test neuron
+        test_neuron = factory.make_primitive_neuron()
+        for neuron in input_layer:
+            connection = factory.make_connection(neuron)
+            connection.weight = random.random()
+            test_neuron.connections.append(connection)
+
+        # Expected result calculation
+        accumulator = test_neuron.predict_strategy.bias
+        for connection in test_neuron.connections:
+            accumulator += connection.neuron.output * connection.weight
+        expected_result = test_neuron.activation_function(accumulator)
+        self.assertEqual(test_neuron.predict_strategy(), expected_result)
 
 
 if __name__ == '__main__':

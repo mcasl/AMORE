@@ -12,6 +12,7 @@ from math import sqrt
 import numpy
 
 from activation_functions import *
+from cost_functions import *
 from container import Container
 
 
@@ -31,28 +32,18 @@ class Connection(object):
         self.weight = weight
         self.neuron = neuron
 
-    def __repr__(self):
-        """ Pretty print. Probably to be moved to a view class (mvc)
-        """
-        return '\nFrom:\t {label} \t Weight= \t {weight}'.format(label=self.neuron.label, weight=self.weight)
-
 
 class Neuron(object, metaclass=ABCMeta):
     """ The mother of all neurons (a.k.a. Interface)
     """
 
     @abstractmethod
-    def __init__(self):
+    def __init__(self, neural_factory):
         """ Initializer. An assumption is made that all neurons will have at least these properties.
         """
         self.label = None
         self.connections = Container()
-
-    @abstractmethod
-    def __repr__(self):
-        """ Pretty print. Probably to be moved to a view class (mvc)
-        """
-        pass
+        self.predict_strategy = neural_factory.make_predict_strategy(self)
 
     @abstractmethod
     def __call__(self, *args, **kwargs):
@@ -69,40 +60,18 @@ class SimpleNeuron(Neuron):
     """ A simple neuron as in multilayer feed forward networks
     """
 
-    def __init__(self):
+    def __init__(self, neural_factory):
         """ Initializer. Python requires explicit call to base class initializer
         """
-        Neuron.__init__(self)
+        Neuron.__init__(self, neural_factory)
         self.induced_local_field = 0.0
         self.output = 0.0
         self.target = 0.0
-        self.activation_function = activation_function_set['default']
-        self.activation_function_derivative = activation_function_derivative_set['default']
-
-    def __repr__(self):
-        """ Pretty print. Probably to be moved to a view class (mvc)
-        """
-
-        result = ('\n\n'
-                  '-----------------------------------\n'
-                  ' Id label: {label}\n'
-                  '-----------------------------------\n'
-                  ' Output: {output}\n'
-                  '-----------------------------------\n'
-                  # TODO:    '{predict_behavior}'
-                  ' Target: {target}\n'
-                  '-----------------------------------\n').format(label=self.label,
-                                                                  output=self.output,
-                                                                  # TODO:  predict_behavior=repr(self.predictBehavior),
-                                                                  target=self.target)
-        result += repr(self.connections)
-        #          '\n-----------------------------------\n'
-        #                   'Neuron Train Behavior: {train_behavior}'.format(train_behavior=self.train_behavior),
-        #         '\n-----------------------------------'
-        return result
+        self.activation_function = activation_functions_set['default']
+        self.activation_function_derivative = activation_functions_derivative_set['default']
 
     def __call__(self, *args, **kwargs):
-        self.predict_strategy()
+        return self.predict_strategy()
 
     def fit(self):
         self.fit_strategy()
@@ -113,13 +82,13 @@ class NeuralNetwork(object, metaclass=ABCMeta):
     """
 
     @abstractmethod
-    def train(self, *args):
+    def fit(self, *args):
         """ Method for training the network
         """
         pass
 
     @abstractmethod
-    def sim(self, *args):
+    def __call__(self, *args, **kwargs):
         """ Method for obtaining outputs from inputs
         """
         pass
@@ -135,12 +104,6 @@ class NeuralNetwork(object, metaclass=ABCMeta):
         """
         pass
 
-    @abstractmethod
-    def __repr__(self):
-        """ Pretty print. Probably to be moved to a view class (mvc)
-        """
-        pass
-
 
 class SimpleNeuralNetwork(NeuralNetwork):
     """ Simple implementation of a multilayer feed forward network
@@ -153,10 +116,10 @@ class SimpleNeuralNetwork(NeuralNetwork):
 
     # TODO:  cost_function = neural_factory.make_cost_function('LMS')
 
-    def train(self, *args):
+    def fit(self, *args):
         pass
 
-    def sim(self, input_data):
+    def __call__(self, input_data):
         data_number_of_rows, data_number_of_cols = input_data.shape
         input_layer_size, *hidden_layers_size, output_layer_size = self.shape
 
@@ -164,10 +127,10 @@ class SimpleNeuralNetwork(NeuralNetwork):
             raise ValueError(
                 '\n[SimpleNeuralNetwork.sim Error:] Input layer size different from data number of columns\n')
 
-        output_data = numpy.zeros(data_number_of_rows, output_layer_size)
+        output_data = numpy.zeros((data_number_of_rows, output_layer_size))
         for row, input_data, in enumerate(input_data):
             self.insert_input_data(input_data)
-            self.single_pattern_forward_action()
+            self.activate_neurons()
             output_data[row, :] = self.read_output_layer()
         return output_data
 
@@ -177,28 +140,6 @@ class SimpleNeuralNetwork(NeuralNetwork):
         """
         return list(map(len, self.layers))
 
-    def __repr__(self):
-        """ Pretty print
-        """
-        result = ('\n----------------------------------------------\n'
-                  'Simple Neural Network\n'
-                  '----------------------------------------------\n'
-                  '     INPUT LAYER:\n'
-                  '----------------------------------------------\n'
-                  )
-        result += repr(self.layers[0])
-        result += ('\n----------------------------------------------\n'
-                   '     HIDDEN LAYERS:\n'
-                   '----------------------------------------------\n'
-                   )
-        result += repr(self.layers[1:-1])
-        result += ('\n----------------------------------------------\n'
-                   '     OUTPUT LAYER:\n'
-                   '----------------------------------------------\n'
-                   )
-        result += repr(self.layers[-1])
-        return result
-
     def insert_input_data(self, data):
         for neuron, value in zip(self.layers[0], data):
             neuron.output = value
@@ -207,10 +148,10 @@ class SimpleNeuralNetwork(NeuralNetwork):
         for neuron, value in zip(self.layers[-1], data):
             neuron.target = value
 
-    def single_pattern_forward_action(self):
-        for layer in self.layers:
+    def activate_neurons(self):
+        for layer in self.layers[1:]:
             for neuron in layer:
-                neuron.propagate()
+                neuron()
 
     def single_pattern_backward_action(self):
         for layer in reversed(self.layers):
@@ -306,7 +247,8 @@ class MlpFactory(NeuralFactory):
         return Container()
 
     def make_primitive_neuron(self):
-        neuron = SimpleNeuron()
+        neuron = SimpleNeuron(self)
+        neuron.predict_strategy = self.make_predict_strategy(neuron)
         return neuron
 
     def make_primitive_layer(self, size):
@@ -323,7 +265,7 @@ class MlpFactory(NeuralFactory):
         return SimpleNeuralCreator()
 
     def make_activation_function(self, function_name):
-        return activation_function_set[function_name]
+        return activation_functions_set[function_name]
 
     def make_predict_strategy(self, neuron):
         return MlpPredictStrategy(neuron)
@@ -338,10 +280,10 @@ class MlpFactory(NeuralFactory):
         pass
 
     def make_cost_function(self, function_name):
-        return cost_function_set[function_name]
+        return cost_functions_set[function_name]
 
     def make_cost_function_derivative(self, function_name):
-        return cost_function_derivative_set[function_name]
+        return cost_functions_derivative_set[function_name]
 
 
 class NeuralCreator(object, metaclass=ABCMeta):
@@ -468,5 +410,83 @@ class MlpPredictStrategy(PredictStrategy):
         inputs_x_weights = map((lambda connection: connection.neuron.output * connection.weight),
                                self.neuron.connections)
         self.neuron.induced_local_field = reduce(operator.add, inputs_x_weights) + self.bias
-        self.neuron.output = self.neuron.activation_function()
-        self.neuron.output_derivative = self.neuron.activation_function_derivative()
+        self.neuron.output = self.neuron.activation_function(self.neuron.induced_local_field)
+        self.neuron.output_derivative = self.neuron.activation_function_derivative(self.neuron.induced_local_field)
+        return self.neuron.output
+
+
+class NeuralViewer(object, metaclass=ABCMeta):
+    @staticmethod
+    @abstractmethod
+    def show_connection(connection):
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def show_neuron(neuron):
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def show_neural_network(neural_network):
+        pass
+
+
+class SimpleNeuralViewer(NeuralViewer):
+    @staticmethod
+    def show_connection(connection):
+        return '\nFrom:\t {label} \t Weight= \t {weight}'.format(label=connection.neuron.label,
+                                                                 weight=connection.weight)
+
+    @staticmethod
+    def show_neuron(neuron):
+        result = ('\n\n'
+                  '-----------------------------------\n'
+                  ' Id label: {label}\n'
+                  '-----------------------------------\n'
+                  ' Output: {output}\n'
+                  '-----------------------------------\n'
+                  # TODO:    '{predict_behavior}'
+                  ' Target: {target}\n'
+                  '-----------------------------------\n').format(label=neuron.label,
+                                                                  output=neuron.output,
+                                                                  # TODO:  predict_behavior=repr(self.predictBehavior),
+                                                                  target=neuron.target)
+        result += repr(neuron.connections)
+        #          '\n-----------------------------------\n'
+        #                   'Neuron Train Behavior: {train_behavior}'.format(train_behavior=self.train_behavior),
+        #         '\n-----------------------------------'
+        return result
+
+    @staticmethod
+    def show_neural_network(neural_network):
+        """ Pretty print
+        """
+        result = ('\n----------------------------------------------\n'
+                  'Simple Neural Network\n'
+                  '----------------------------------------------\n'
+                  '     INPUT LAYER:\n'
+                  '----------------------------------------------\n'
+                  )
+        result += repr(neural_network.layers[0])
+        result += ('\n----------------------------------------------\n'
+                   '     HIDDEN LAYERS:\n'
+                   '----------------------------------------------\n'
+                   )
+        result += repr(neural_network.layers[1:-1])
+        result += ('\n----------------------------------------------\n'
+                   '     OUTPUT LAYER:\n'
+                   '----------------------------------------------\n'
+                   )
+        result += repr(neural_network.layers[-1])
+        return result
+
+
+def mlp_network(layers_size,
+                hidden_layers_activation_function_name,
+                output_layer_activation_function_name):
+    factory = MlpFactory()
+    creator = factory.make_neural_creator()
+    net = creator.create_neural_network(factory, layers_size, hidden_layers_activation_function_name,
+                                        output_layer_activation_function_name)
+    return net
