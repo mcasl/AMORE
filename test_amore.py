@@ -11,21 +11,11 @@ from container import Container
 class TestConnection(unittest.TestCase):
     """ Tests for Connection class """
 
-    @given(label=st.integers(), weight=st.floats())
-    def test_init_where_label_is_given(self, label, weight):
-        """ Connection constructor test. label attribute initialization is checked
-        """
-        my_neuron = SimpleNeuron()
-        my_neuron.label = label
-        my_connection = Connection(my_neuron, weight)
-        self.assertTrue(my_connection.neuron.label is label)
-
-    @given(label=st.integers(), weight=st.floats())
-    def test_init_where_weight_is_given(self, label, weight):
+    @given(weight=st.floats())
+    def test_init_where_weight_is_given(self, weight):
         """ Connection constructor test. weight attribute initialization is checked
         """
         my_neuron = SimpleNeuron()
-        my_neuron.label = label
         my_connection = Connection(my_neuron, weight)
         self.assertTrue(my_connection.weight is weight)
 

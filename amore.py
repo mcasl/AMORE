@@ -55,9 +55,13 @@ class Neuron(object, metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def propagate(self):
+    def __call__(self, *args, **kwargs):
         """ Neuron forward update by applying its activation function
         """
+        pass
+
+    @abstractmethod
+    def fit(self):
         pass
 
 
@@ -72,7 +76,6 @@ class SimpleNeuron(Neuron):
         self.induced_local_field = 0.0
         self.output = 0.0
         self.target = 0.0
-        self.bias = 0.0
         self.activation_function = activation_function_set['default']
         self.activation_function_derivative = activation_function_derivative_set['default']
 
@@ -98,13 +101,11 @@ class SimpleNeuron(Neuron):
         #         '\n-----------------------------------'
         return result
 
-    def propagate(self):
-        """ Neuron forward update by applying its activation function
-        """
-        inputs_x_weights = map((lambda connection: connection.neuron.output * connection.weight), self.connections)
-        self.induced_local_field = reduce(operator.add, inputs_x_weights)
-        self.induced_local_field += self.bias
-        self.output = self.activation_function()
+    def __call__(self, *args, **kwargs):
+        self.predict_strategy()
+
+    def fit(self):
+        self.fit_strategy()
 
 
 class NeuralNetwork(object, metaclass=ABCMeta):
@@ -219,86 +220,22 @@ class SimpleNeuralNetwork(NeuralNetwork):
     def read_output_layer(self):
         return [neuron.output for neuron in self.layers[-1]]
 
+    def set_neurons_train_strategy(self, neural_factory):
+        # Hidden Layers
+        for layer in self.layers[1:-1]:
+            for neuron in layer:
+                neuron.fit_strategy = neural_factory.make_hidden_neuron_fit_strategy(neuron)
+        # Output Layers
+        for neuron in self.layers[-1]:
+            neuron.fit_strategy = neural_factory.make_output_neuron_fit_strategy(neuron)
 
-"""
+    def fit(self, *pargs):
+        return self.fit_strategy(pargs)
 
-
-def setNeuronTrainBehavior(neural_factory) {
-    // Hidden Layers
-    {
-        LayerIterator layerIterator(d_hiddenLayers.createIterator())
-        for (layerIterator.first() !layerIterator.isDone()
-                layerIterator.next()) {
-            NeuronIterator neuronIterator(
-                    layerIterator.currentItem().createIterator())
-            for (neuronIterator.first() !neuronIterator.isDone()
-                    neuronIterator.next()) {
-                NeuronTrainBehavior neuronTrainBehavior(
-                        neuralFactory.makeHiddenNeuronTrainBehavior(
-                                neuronIterator.currentItem()))
-                neuronIterator.currentItem().setNeuronTrainBehavior(
-                        neuronTrainBehavior)
-            }
-            delete neuronIterator
-        }
-        delete layerIterator
-    }
-    // Output Layers
-    {
-        NeuronIterator neuronIterator(d_outputLayer.createIterator())
-        for (neuronIterator.first() !neuronIterator.isDone() neuronIterator.next()) {
-            neuronTrainBehavior(neuralFactory.makeOutputNeuronTrainBehavior(neuronIterator.currentItem())
-            neuronIterator.currentItem().setNeuronTrainBehavior(neuronTrainBehavior)
-        }
-        delete neuronIterator
-    }
-}
-
-    Rcpp::List SimpleNetwork::train(Rcpp::List parameterList) {
-        return d_networkTrainBehavior.train(parameterList)
-
-    }
-
-
-
-double SimpleNetwork::costFunctionf0(double output, double target) {
-    return d_costFunction.f0(output, target)
-}
-
-double SimpleNetwork::costFunctionf1(double output, double target) {
-    return d_costFunction.f1(output, target)
-}
-
-void SimpleNetwork::setLearningRate(double learningRate) {
-
-    // Hidden Layers
-    {
-        LayerIterator layerIterator(d_hiddenLayers.createIterator())
-        for (layerIterator.first() !layerIterator.isDone()
-                layerIterator.next()) {
-            NeuronIterator neuronIterator(
-                    layerIterator.currentItem().createIterator())
-            for (neuronIterator.first() !neuronIterator.isDone()
-                    neuronIterator.next()) {
-                neuronIterator.currentItem().setLearningRate(learningRate)
-            }
-            delete neuronIterator
-        }
-        delete layerIterator
-    }
-    // Output Layers
-    {
-        NeuronIterator neuronIterator(d_outputLayer.createIterator())
-        for (neuronIterator.first() !neuronIterator.isDone()
-                neuronIterator.next()) {
-            neuronIterator.currentItem().setLearningRate(learningRate)
-        }
-        delete neuronIterator
-    }
-}
-
-
-"""
+    def set_neurons_learning_rate(self, learning_rate):
+        for layer in self.layers[1:]:
+            for neuron in layer:
+                neuron.learning_rate = learning_rate
 
 
 class NeuralFactory(object, metaclass=ABCMeta):
@@ -314,19 +251,15 @@ class NeuralFactory(object, metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def make_primitive_neuron(self, label, neuron_container, total_amount_of_parameters, neural_network):
+    def make_primitive_neuron(self):
         pass
 
     @abstractmethod
     def make_primitive_layer(self, size):
         pass
 
-    # TODO:    @abstractmethod
-    # TODO:    def make_predict_behavior(self, neuron):
-    # TODO:        pass
-
     @abstractmethod
-    def make_primitive_neural_network(self, neural_factory):
+    def make_primitive_neural_network(self):
         pass
 
     @abstractmethod
@@ -338,19 +271,27 @@ class NeuralFactory(object, metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def make_network_train_behavior(self, neural_network):
+    def make_predict_strategy(self, neuron):
         pass
 
     @abstractmethod
-    def make_output_neuron_train_behavior(self, neuron):
+    def make_network_fit_strategy(self, neural_network):
         pass
 
     @abstractmethod
-    def make_hidden_neuron_train_behavior(self, neuron):
+    def make_output_neuron_fit_strategy(self, neuron):
+        pass
+
+    @abstractmethod
+    def make_hidden_neuron_fit_strategy(self, neuron):
         pass
 
     @abstractmethod
     def make_cost_function(self, function_name):
+        pass
+
+    @abstractmethod
+    def make_cost_function_derivative(self, function_name):
         pass
 
 
@@ -358,7 +299,7 @@ class MlpFactory(NeuralFactory):
     """ Simple implementation of a factory of multilayer feed forward network's elements
     """
 
-    def make_connection(self, neuron: Neuron) -> Connection:
+    def make_connection(self, neuron):
         return Connection(neuron)
 
     def make_container(self):
@@ -384,28 +325,23 @@ class MlpFactory(NeuralFactory):
     def make_activation_function(self, function_name):
         return activation_function_set[function_name]
 
-    def make_network_train_behavior(self, neural_network):
+    def make_predict_strategy(self, neuron):
+        return MlpPredictStrategy(neuron)
+
+    def make_network_fit_strategy(self, neural_network):
         pass
 
-    def make_output_neuron_train_behavior(self, neuron):
+    def make_output_neuron_fit_strategy(self, neuron):
         pass
 
-    def make_hidden_neuron_train_behavior(self, neuron):
+    def make_hidden_neuron_fit_strategy(self, neuron):
         pass
 
     def make_cost_function(self, function_name):
-        pass
+        return cost_function_set[function_name]
 
-
-"""
-MLPfactory::makeCostFunction(std::string functionName)
-  'LMS'
-  'LMLS'
-   'TAO'
-   else
-       throw std::invalid_argument(
-           "[SimpleNetwork::train Error]: Unknown cost function.")
-"""
+    def make_cost_function_derivative(self, function_name):
+        return cost_function_derivative_set[function_name]
 
 
 class NeuralCreator(object, metaclass=ABCMeta):
@@ -511,3 +447,26 @@ class SimpleNeuralCreator(NeuralCreator):
                 neuron.label, label_number = label_number, label_number + 1
                 neuron.neural_network = neural_network
                 # TODO : more to come, remember to change the comments above
+
+
+class PredictStrategy(object, metaclass=ABCMeta):
+    @abstractmethod
+    def __init__(self, neuron):
+        self.neuron = neuron
+
+    @abstractmethod
+    def __call__(self, *args, **kwargs):
+        pass
+
+
+class MlpPredictStrategy(PredictStrategy):
+    def __init__(self, neuron):
+        PredictStrategy.__init__(self, neuron)
+        self.bias = 0.0
+
+    def __call__(self, *args, **kwargs):
+        inputs_x_weights = map((lambda connection: connection.neuron.output * connection.weight),
+                               self.neuron.connections)
+        self.neuron.induced_local_field = reduce(operator.add, inputs_x_weights) + self.bias
+        self.neuron.output = self.neuron.activation_function()
+        self.neuron.output_derivative = self.neuron.activation_function_derivative()
