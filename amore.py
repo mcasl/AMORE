@@ -259,7 +259,7 @@ class MlpFactory(NeuralFactory):
 
     @staticmethod
     def make_neural_creator():
-        return SimpleNeuralCreator()
+        return MlpNeuralCreator()
 
     @staticmethod
     def make_activation_function(function_name):
@@ -303,7 +303,7 @@ class NeuralCreator(object, metaclass=ABCMeta):
         pass
 
 
-class SimpleNeuralCreator(NeuralCreator):
+class MlpNeuralCreator(NeuralCreator):
     """ A simple implementation of the logic for building multilayer feed forward networks
     """
 
@@ -322,9 +322,9 @@ class SimpleNeuralCreator(NeuralCreator):
         """
         primitive_neural_network = neural_factory.make_primitive_neural_network()
         if layers_size:
-            SimpleNeuralCreator.create_primitive_layers(neural_factory, primitive_neural_network, layers_size)
-            SimpleNeuralCreator.connect_network_layers(neural_factory, primitive_neural_network)
-            SimpleNeuralCreator.initialize_network(primitive_neural_network)
+            MlpNeuralCreator.create_primitive_layers(neural_factory, primitive_neural_network, layers_size)
+            MlpNeuralCreator.connect_network_layers(neural_factory, primitive_neural_network)
+            MlpNeuralCreator.initialize_network(primitive_neural_network)
         return primitive_neural_network
 
     @staticmethod

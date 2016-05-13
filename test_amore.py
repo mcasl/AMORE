@@ -144,16 +144,16 @@ class TestSimpleNeuralCreator(unittest.TestCase):
         """ TestSimpleNeuralCreator Unit tests """
         factory = MlpFactory()
         neural_network = factory.make_primitive_neural_network()
-        SimpleNeuralCreator.create_primitive_layers(factory, neural_network, [3, 5, 2])
+        MlpNeuralCreator.create_primitive_layers(factory, neural_network, [3, 5, 2])
         self.assertEqual(len(neural_network.layers), 3)
         self.assertEqual(list(map(len, neural_network.layers)), [3, 5, 2])
 
     def test_connect_and_initialize_network(self):
         factory = MlpFactory()
         neural_network = factory.make_primitive_neural_network()
-        SimpleNeuralCreator.create_primitive_layers(factory, neural_network, [3, 5, 2])
-        SimpleNeuralCreator.connect_network_layers(factory, neural_network)
-        SimpleNeuralCreator.initialize_network(neural_network)
+        MlpNeuralCreator.create_primitive_layers(factory, neural_network, [3, 5, 2])
+        MlpNeuralCreator.connect_network_layers(factory, neural_network)
+        MlpNeuralCreator.initialize_network(neural_network)
 
         labels = []
         for layer in neural_network.layers:
