@@ -13,7 +13,7 @@ class TestConnection(unittest.TestCase):
         """ Connection constructor test. weight attribute initialization is checked
         """
         factory = MlpFactory()
-        my_neuron = SimpleNeuron(factory)
+        my_neuron = MlpNeuron(factory)
         my_connection = Connection(my_neuron)
         self.assertEqual(my_connection.weight, 0.0)
 
@@ -22,7 +22,7 @@ class TestConnection(unittest.TestCase):
         """ Connection constructor test. weight attribute initialization is checked
         """
         factory = MlpFactory()
-        my_neuron = SimpleNeuron(factory)
+        my_neuron = MlpNeuron(factory)
         my_connection = Connection(my_neuron, weight)
         self.assertTrue(my_connection.weight is weight)
 
@@ -33,7 +33,7 @@ class TestSimpleNeuron(unittest.TestCase):
 
     def test_init(self):
         factory = MlpFactory()
-        neuron = SimpleNeuron(factory)
+        neuron = MlpNeuron(factory)
         attributes = [None, 0.0, 0.0, 0.0, Container()]
         neuron_attributes = [neuron.label, neuron.output, neuron.target, neuron.induced_local_field, neuron.connections]
         self.assertEqual(neuron_attributes, attributes)
@@ -76,7 +76,7 @@ class TestSimpleNeuralNetwork(unittest.TestCase):
         neural_creator = factory.make_neural_creator()
         neural_network = neural_creator.create_neural_network(factory, shape, 'Tanh', 'Identity')
         sample_data = [random.random() for dummy in range(shape[0])]
-        neural_network.insert_input_data(sample_data)
+        neural_network.read(sample_data)
         result = numpy.asarray([neuron.output for neuron in neural_network.layers[0]])
         self.assertTrue((result == sample_data).all)
 
@@ -133,7 +133,7 @@ class TestMlpFactory(unittest.TestCase):
         """  MlpFactory unit test """
         factory = MlpFactory()
         neuron = factory.make_primitive_neuron()
-        self.assertTrue(isinstance(neuron, type(SimpleNeuron(factory))))
+        self.assertTrue(isinstance(neuron, type(MlpNeuron(factory))))
 
 
 class TestSimpleNeuralCreator(unittest.TestCase):
