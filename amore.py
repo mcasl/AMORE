@@ -62,7 +62,7 @@ class MlpNeuron(Neuron):
         self.output = 0.0
         self.target = 0.0
         self.activation_function = neural_network.factory.make_activation_function('default')
-        self.activation_function_derivative = neural_network.factory.make_activation_function_derivative('default')
+        self.activation_function.derivative = neural_network.factory.make_activation_function_derivative('default')
         self.connections = neural_network.factory.make_primitive_container()
 
     def __call__(self, *args, **kwargs):
@@ -217,17 +217,10 @@ class MlpFactory(NeuralFactory):
     def make_activation_function(function_name):
         return activation_functions_set[function_name]
 
-    @staticmethod
-    def make_activation_function_derivative(function_name):
-        return activation_functions_derivative_set[function_name]
 
     @staticmethod
     def make_cost_function(function_name):
         return cost_functions_set[function_name]
-
-    @staticmethod
-    def make_cost_function_derivative(function_name):
-        return cost_functions_derivative_set[function_name]
 
 
 class AdaptiveGradientDescentFactory(MlpFactory):
