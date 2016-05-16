@@ -38,20 +38,15 @@ class Neuron(object, metaclass=ABCMeta):
     """
 
     @abstractmethod
-    def __init__(self, neural_factory):
+    def __init__(self, neural_network):
         """ Initializer. An assumption is made that all neurons will have at least these properties.
         """
         self.label = None
-        self.connections = neural_factory.make_container()
-        self.predict_strategy = neural_factory.make_neuron_predict_strategy(self)
-        self.fit_strategy = neural_factory.make_neuron_fit_strategy(self)
+        self.neural_network = neural_network
+        self.predict_strategy = neural_network.factory.make_neuron_predict_strategy(self)
 
     @abstractmethod
     def __call__(self, *args, **kwargs):
-        pass
-
-    @abstractmethod
-    def fit(self):
         pass
 
 
@@ -59,21 +54,19 @@ class MlpNeuron(Neuron):
     """ A simple neuron as in multilayer feed forward networks
     """
 
-    def __init__(self, neural_factory):
+    def __init__(self, neural_network):
         """ Initializer. Python requires explicit call to base class initializer
         """
-        Neuron.__init__(self, neural_factory)
+        Neuron.__init__(self, neural_network)
         self.induced_local_field = 0.0
         self.output = 0.0
         self.target = 0.0
-        self.activation_function = neural_factory.make_activation_function('default')
-        self.activation_function_derivative = neural_factory.make_activation_function_derivative('default')
+        self.activation_function = neural_network.factory.make_activation_function('default')
+        self.activation_function_derivative = neural_network.factory.make_activation_function_derivative('default')
+        self.connections = neural_network.factory.make_primitive_container()
 
     def __call__(self, *args, **kwargs):
         return self.predict_strategy()
-
-    def fit(self):
-        self.fit_strategy()
 
 
 class NeuralNetwork(object, metaclass=ABCMeta):
@@ -82,19 +75,22 @@ class NeuralNetwork(object, metaclass=ABCMeta):
 
     @abstractmethod
     def __init__(self, neural_factory):
-        self.predict_strategy = neural_factory.make_network_predict_strategy(self)
-        self.fit_strategy = neural_factory.make_network_fit_strategy(self)
-
-    @abstractmethod
-    def fit(self, *args, **kwargs):
-        """ Method for training the network
-        """
-        self.fit_strategy(args, kwargs)
+        self.factory = neural_factory
+        self.predict_strategy = neural_factory.make_neural_network_predict_strategy(self)
+        self.fit_strategy = neural_factory.make_neural_network_fit_strategy(self)
 
     @abstractmethod
     def __call__(self, *args, **kwargs):
         """ Method for obtaining outputs from inputs
         """
+        pass
+
+    @abstractmethod
+    def read_input_data(self, data):
+        pass
+
+    @abstractmethod
+    def inspect_output(self):
         pass
 
     @property
@@ -111,58 +107,25 @@ class MlpNeuralNetwork(NeuralNetwork):
 
     def __init__(self, neural_factory):
         NeuralNetwork.__init__(self, neural_factory)
-        self.layers = neural_factory.make_container()
-    # TODO:  cost_function = neural_factory.make_cost_function('LMS')
+        self.layers = neural_factory.make_primitive_container()
 
-    def fit(self, *args, **kwargs):
-        pass
+    # TODO:  cost_function = neural_factory.make_cost_function('LMS')
 
     def __call__(self, input_data):
         return self.predict_strategy()
+
+    def read_input_data(self, data):
+        for neuron, value in zip(self.layers[0], data):
+            neuron.output = value
+
+    def inspect_output(self):
+        return [neuron.output for neuron in self.layers[-1]]
 
     @property
     def shape(self):
         """ Gives information on the number of neurons in the neural network
         """
         return list(map(len, self.layers))
-
-    def read(self, data):
-        for neuron, value in zip(self.layers[0], data):
-            neuron.output = value
-
-    def write_targets_in_output_layer(self, data):
-        for neuron, value in zip(self.layers[-1], data):
-            neuron.target = value
-
-    def activate_neurons(self):
-        for layer in self.layers[1:]:
-            for neuron in layer:
-                neuron()
-
-    def single_pattern_backward_action(self):
-        for layer in reversed(self.layers):
-            for neuron in layer:
-                neuron.single_pattern_backward_action()
-
-    def read_output_layer(self):
-        return [neuron.output for neuron in self.layers[-1]]
-
-    def set_neurons_train_strategy(self, neural_factory):
-        # Hidden Layers
-        for layer in self.layers[1:-1]:
-            for neuron in layer:
-                neuron.fit_strategy = neural_factory.make_hidden_neuron_fit_strategy(neuron)
-        # Output Layers
-        for neuron in self.layers[-1]:
-            neuron.fit_strategy = neural_factory.make_output_neuron_fit_strategy(neuron)
-
-    def fit(self, *pargs):
-        return self.fit_strategy(pargs)
-
-    def set_neurons_learning_rate(self, learning_rate):
-        for layer in self.layers[1:]:
-            for neuron in layer:
-                neuron.learning_rate = learning_rate
 
 
 class NeuralFactory(object, metaclass=ABCMeta):
@@ -171,31 +134,19 @@ class NeuralFactory(object, metaclass=ABCMeta):
 
     @staticmethod
     @abstractmethod
-    def make_connection(neuron):
+    def make_neural_network_builder():
         pass
 
     @staticmethod
     @abstractmethod
-    def make_container():
-        pass
-
-    @abstractmethod
-    def make_primitive_neuron(self):
-        pass
-
-    @abstractmethod
-    def make_primitive_neural_network(self):
+    def make_neural_network_predict_strategy(neuron):
         pass
 
     @staticmethod
     @abstractmethod
-    def make_neural_creator():
+    def make_neural_network_fit_strategy(neural_network):
         pass
 
-    @staticmethod
-    @abstractmethod
-    def make_activation_function(function_name):
-        pass
 
     @staticmethod
     @abstractmethod
@@ -204,12 +155,47 @@ class NeuralFactory(object, metaclass=ABCMeta):
 
     @staticmethod
     @abstractmethod
-    def make_network_predict_strategy(neuron):
+    def make_neuron_fit_strategy(neuron):
         pass
+
+
+class MlpFactory(NeuralFactory):
+    """ Simple implementation of a factory of multilayer feed forward network's elements
+    """
+
+    @staticmethod
+    def make_primitive_connection(neuron):
+        return Connection(neuron)
+
+    @staticmethod
+    def make_primitive_container():
+        return Container()
+
+    @staticmethod
+    def make_primitive_neuron(neural_network):
+        neuron = MlpNeuron(neural_network)
+        return neuron
+
+    def make_primitive_layer(self, size, neural_network):
+        layer = self.make_primitive_container()
+        for dummy in range(size):
+            layer.append(self.make_primitive_neuron(neural_network))
+        return layer
+
+    def make_primitive_neural_network(self):
+        neural_network = MlpNeuralNetwork(self)
+        neural_network.predict_strategy = self.make_neural_network_predict_strategy(neural_network)
+        neural_network.fit_strategy = self.make_neural_network_fit_strategy(neural_network)
+        neural_network.layers = self.make_primitive_container()
+        return neural_network
+
+    @staticmethod
+    def make_neural_network_builder():
+        return MlpNeuralNetworkBuilder()
 
     @staticmethod
     @abstractmethod
-    def make_network_fit_strategy(neural_network):
+    def make_neuron_predict_strategy(neuron):
         pass
 
     @staticmethod
@@ -219,47 +205,13 @@ class NeuralFactory(object, metaclass=ABCMeta):
 
     @staticmethod
     @abstractmethod
-    def make_cost_function(function_name):
+    def make_neural_network_predict_strategy(neural_network):
         pass
 
     @staticmethod
     @abstractmethod
-    def make_cost_function_derivative(function_name):
+    def make_neural_network_fit_strategy(neural_network):
         pass
-
-
-class MlpFactory(NeuralFactory):
-    """ Simple implementation of a factory of multilayer feed forward network's elements
-    """
-
-    @staticmethod
-    def make_connection(neuron):
-        return Connection(neuron)
-
-    @staticmethod
-    def make_container():
-        return Container()
-
-    def make_primitive_neuron(self):
-        neuron = MlpNeuron(self)
-        return neuron
-
-    def make_primitive_layer(self, size):
-        layer = self.make_container()
-        for dummy in range(size):
-            layer.append(self.make_primitive_neuron())
-        return layer
-
-    def make_primitive_neural_network(self):
-        neural_network = MlpNeuralNetwork(self)
-        neural_network.predict_strategy = self.make_network_predict_strategy(neural_network)
-        neural_network.fit_strategy = self.make_network_fit_strategy(neural_network)
-        neural_network.layers = self.make_container()
-        return neural_network
-
-    @staticmethod
-    def make_neural_creator():
-        return MlpNeuralCreator()
 
     @staticmethod
     def make_activation_function(function_name):
@@ -270,22 +222,6 @@ class MlpFactory(NeuralFactory):
         return activation_functions_derivative_set[function_name]
 
     @staticmethod
-    def make_neuron_predict_strategy(neuron):
-        return MlpNeuronPredictStrategy(neuron)
-
-    @staticmethod
-    def make_network_predict_strategy(neural_network):
-        return MlpNetworkPredictStrategy(neural_network)
-
-    @staticmethod
-    def make_network_fit_strategy(neural_network):
-        return MlpNetworkFitStrategy(neural_network)
-
-    @staticmethod
-    def make_neuron_fit_strategy(neuron):
-        pass
-
-    @staticmethod
     def make_cost_function(function_name):
         return cost_functions_set[function_name]
 
@@ -294,7 +230,69 @@ class MlpFactory(NeuralFactory):
         return cost_functions_derivative_set[function_name]
 
 
-class NeuralCreator(object, metaclass=ABCMeta):
+class AdaptiveGradientDescentFactory(MlpFactory):
+    @staticmethod
+    def make_neuron_predict_strategy(neuron):
+        return AdaptiveGradientDescentNeuronPredictStrategy(neuron)
+
+    @staticmethod
+    def make_neuron_fit_strategy(neuron):
+        is_output_neuron = neuron in neuron.neural_network.layers[-1]
+        if is_output_neuron:
+            return AdaptiveGradientDescentOutputNeuronFitStrategy(neuron)
+        else:
+            return AdaptiveGradientDescentHiddenNeuronFitStrategy(neuron)
+
+    @staticmethod
+    def make_neural_network_predict_strategy(neural_network):
+        return AdaptiveGradientDescentNetworkPredictStrategy(neural_network)
+
+    @staticmethod
+    def make_neural_network_fit_strategy(neural_network):
+        return AdaptiveGradientDescentNetworkFitStrategy(neural_network)
+
+
+#
+# class AdaptiveGradientDescentWithMomentumFactory(MlpFactory):
+#
+#     def make_neuron_fit_strategy(self, neuron):
+#         is_output_neuron = neuron in neuron.neural_network.layers[-1]
+#         if is_output_neuron:
+#             return AdaptiveGradientDescentWithMomentumOutputNeuronFitStrategy(neuron)
+#         else:
+#             return AdaptiveGradientDescentWithMomentumHiddenNeuronFitStrategy(neuron)
+#
+#     def make_neural_network_predict_strategy(self, neural_network):
+#         return AdaptiveGradientDescentWithMomentumNetworkPredictStrategy(neural_network)
+#
+#
+# class BatchGradientDescentFactory(MlpFactory):
+#     def make_neuron_fit_strategy(neuron):
+#         is_output_neuron = neuron in neuron.neural_network.layers[-1]
+#         if is_output_neuron:
+#             return BatchGradientDescentOutputNeuronFitStrategy(neuron)
+#         else:
+#             return BatchGradientDescentHiddenNeuronFitStrategy(neuron)
+#
+#
+#     def make_neural_network_predict_strategy(self, neural_network):
+#         return BatchGradientDescentNetworkPredictStrategy(neural_network)
+#
+#
+# class BatchGradientDescentWithMomentumFactory(MlpFactory):
+#     def make_neuron_fit_strategy(neuron):
+#         is_output_neuron = neuron in neuron.neural_network.layers[-1]
+#         if is_output_neuron:
+#             return BatchDescentWithMomentumOutputNeuronFitStrategy(neuron)
+#         else:
+#             return BatchDescentWithMomentumHiddenNeuronFitStrategy(neuron)
+#
+#
+#     def make_neural_network_predict_strategy(self, neural_network):
+#         return BatchDescentWithMomentumNetworkPredictStrategy(neural_network)
+
+
+class NeuralNetworkBuilder(object, metaclass=ABCMeta):
     """ The mother of all neural creators (a.k.a. Interface)
     """
 
@@ -303,7 +301,7 @@ class NeuralCreator(object, metaclass=ABCMeta):
         pass
 
 
-class MlpNeuralCreator(NeuralCreator):
+class MlpNeuralNetworkBuilder(NeuralNetworkBuilder):
     """ A simple implementation of the logic for building multilayer feed forward networks
     """
 
@@ -322,9 +320,9 @@ class MlpNeuralCreator(NeuralCreator):
         """
         primitive_neural_network = neural_factory.make_primitive_neural_network()
         if layers_size:
-            MlpNeuralCreator.create_primitive_layers(neural_factory, primitive_neural_network, layers_size)
-            MlpNeuralCreator.connect_network_layers(neural_factory, primitive_neural_network)
-            MlpNeuralCreator.initialize_network(primitive_neural_network)
+            MlpNeuralNetworkBuilder.create_primitive_layers(neural_factory, primitive_neural_network, layers_size)
+            MlpNeuralNetworkBuilder.connect_network_layers(neural_factory, primitive_neural_network)
+            MlpNeuralNetworkBuilder.initialize_network(primitive_neural_network)
         return primitive_neural_network
 
     @staticmethod
@@ -338,9 +336,9 @@ class MlpNeuralCreator(NeuralCreator):
         :param neural_network: A multilayer feed forward network
         :param layers_size: A list of integers describing each layer shape
         """
-        layers = neural_factory.make_container()
+        layers = neural_factory.make_primitive_container()
         for size in layers_size:
-            layer = neural_factory.make_primitive_layer(size)
+            layer = neural_factory.make_primitive_layer(size, neural_network)
             layers.append(layer)
         neural_network.layers = layers
 
@@ -354,9 +352,9 @@ class MlpNeuralCreator(NeuralCreator):
         origin_layer = neural_network.layers[0]
         for destination_layer in neural_network.layers[1:]:
             for neuron in destination_layer:
-                neuron.connections = neural_factory.make_container()
+                neuron.connections = neural_factory.make_primitive_container()
                 for origin in origin_layer:
-                    neuron.connections.append(neural_factory.make_connection(origin))
+                    neuron.connections.append(neural_factory.make_primitive_connection(origin))
             origin_layer = destination_layer
 
     @staticmethod
@@ -423,6 +421,26 @@ class MlpNeuronPredictStrategy(NeuronPredictStrategy):
         return self.neuron.output
 
 
+class AdaptiveGradientDescentNeuronPredictStrategy(MlpNeuronPredictStrategy):
+    def __init__(self, neuron):
+        MlpNeuronPredictStrategy.__init__(self, neuron)
+
+
+class AdaptiveGradientDescentWithMomentumNeuronPredictStrategy(MlpNeuronPredictStrategy):
+    def __init__(self, neuron):
+        MlpNeuronPredictStrategy.__init__(self, neuron)
+
+
+class BatchGradientDescentNeuronPredictStrategy(MlpNeuronPredictStrategy):
+    def __init__(self, neuron):
+        MlpNeuronPredictStrategy.__init__(self, neuron)
+
+
+class BatchGradientDescentWithMomentumNeuronPredictStrategy(MlpNeuronPredictStrategy):
+    def __init__(self, neuron):
+        MlpNeuronPredictStrategy.__init__(self, neuron)
+
+
 class NetworkPredictStrategy(object, metaclass=ABCMeta):
     def __init__(self, neural_network):
         self.neural_network = neural_network
@@ -445,11 +463,30 @@ class MlpNetworkPredictStrategy(NetworkPredictStrategy):
 
         output_data = numpy.zeros((data_number_of_rows, output_layer_size))
         for row, input_data in enumerate(input_data):
-            self.neural_network.read(input_data)
+            self.neural_network.read_input_data(input_data)
             self.neural_network.activate_neurons()
-            output_data[row, :] = self.neural_network.read_output_layer()
+            output_data[row, :] = self.neural_network.inspect_output_layer()
         return output_data
 
+
+class AdaptiveGradientDescentNetworkPredictStrategy(MlpNetworkPredictStrategy):
+    def __init__(self, neural_network):
+        MlpNetworkPredictStrategy.__init__(self, neural_network)
+
+
+class AdaptiveGradientDescentWithMomentumNetworkPredictStrategy(MlpNetworkPredictStrategy):
+    def __init__(self, neural_network):
+        MlpNetworkPredictStrategy.__init__(self, neural_network)
+
+
+class BatchGradientDescentNetworkPredictStrategy(MlpNetworkPredictStrategy):
+    def __init__(self, neural_network):
+        MlpNetworkPredictStrategy.__init__(self, neural_network)
+
+
+class BatchGradientDescentWithMomentumNetworkPredictStrategy(MlpNetworkPredictStrategy):
+    def __init__(self, neural_network):
+        MlpNetworkPredictStrategy.__init__(self, neural_network)
 
 class NeuralViewer(object, metaclass=ABCMeta):
     @staticmethod
@@ -518,51 +555,136 @@ class MlpNeuralViewer(NeuralViewer):
         print(result)
 
 
-class NetworkFitStrategy(metaclass=ABCMeta):
+class NeuronFitStrategy(object, metaclass=ABCMeta):
+    @abstractmethod
+    def __init__(self, neuron):
+        neuron = neuron
+
+    def cost_function(self, output, target):
+        return self.cost_function(self.neuron.output, self.neuron.target)
+
+    def cost_function_derivative(self, output, target):
+        return self.cost_function_derivative(self.neuron.output, self.neuron.target);
+
+
+class MlpNeuronFitStrategy(NeuronFitStrategy):
+    @abstractmethod
+    def __init__(self, neuron):
+        NeuronFitStrategy.__init__(self, neuron)
+
+
+class AdaptiveGradientDescentNeuronFitStrategy(MlpNeuronFitStrategy):
+    @abstractmethod
+    def __init__(self, neuron):
+        MlpNeuronFitStrategy.__init__(neuron)
+        self.delta = 0.0
+        self.learning_rate = 0.0
+
+
+class AdaptiveGradientDescentOutputNeuronFitStrategy(AdaptiveGradientDescentNeuronFitStrategy):
+    def __init__(self, neuron):
+        AdaptiveGradientDescentNeuronFitStrategy.__init__(neuron)
+
+    def __call__(self):
+        self.delta = self.neuron.output_derivative * self.neuron.cost_function_derivative(self.neuron.output,
+                                                                                          self.neuron.target)
+        minus_learning_rate_x_delta = -self.learning_rate * self.delta
+        self.bias += minus_learning_rate_x_delta
+        for connection in self.neuron.connections:
+            input_value = connection.neuron.output
+            connection.weight += minus_learning_rate_x_delta * input_value
+            connection.neuron.fit_strategy.delta += self.delta * connection.weight
+        self.delta = 0.0
+
+
+class AdaptiveGradientDescentHiddenNeuronFitStrategy(AdaptiveGradientDescentNeuronFitStrategy):
+    def __init__(self, neuron):
+        AdaptiveGradientDescentNeuronFitStrategy.__init__(neuron)
+
+    def __call__(self, *args, **kwargs):
+        self.delta = self.neuron.output_derivative * self.delta
+        minus_learning_rate_x_delta = - self.learning_rate * self.delta
+        self.bias += minus_learning_rate_x_delta
+        for connection in self.neuron.connections:
+            input_value = connection.neuron.output
+            connection.weight += minus_learning_rate_x_delta * input_value
+            connection.neuron.fit_strategy.delta += self.delta * connection.weight
+        self.delta = 0.0
+
+
+class NetworkFitStrategy(object, metaclass=ABCMeta):
     @abstractmethod
     def __init__(self, neural_network):
         self.neural_network = neural_network
+
+    @abstractmethod
+    def __call__(self, *args, **kwargs):
+        pass
+
+
+class MlpNetworkFitStrategy(NetworkFitStrategy):
+    @abstractmethod
+    def __init__(self, neural_network):
+        NetworkFitStrategy.__init__(self, neural_network)
+
+    @abstractmethod
+    def __call__(self, *args, **kwargs):
+        pass
+
+    def write_targets_in_output_layer(self, data):
+        for neuron, value in zip(self.neural_network.layers[-1], data):
+            neuron.target = value
+
+    def activate_neurons(self):
+        for layer in self.neural_network.layers[1:]:
+            for neuron in layer:
+                neuron()
+
+    def single_pattern_backward_action(self):
+        for layer in reversed(self.neural_network.layers):
+            for neuron in layer:
+                neuron.fit()
+
+    def set_neurons_fit_strategy(self, neural_factory):
+        # Hidden Layers
+        for layer in self.neural_network.layers[1:-1]:
+            for neuron in layer:
+                neuron.fit_strategy = neural_factory.make_hidden_neuron_fit_strategy(neuron)
+        # Output Layers
+        for neuron in self.neural_network.layers[-1]:
+            neuron.fit_strategy = neural_factory.make_output_neuron_fit_strategy(neuron)
+
+    def set_neurons_learning_rate(self, learning_rate):
+        for layer in self.neural_network.layers[1:]:
+            for neuron in layer:
+                neuron.learning_rate = learning_rate
 
     def set_learning_rate(self, learning_rate):
         self.neural_network.set_learning_rate(learning_rate)
 
 
-class MlpNetworkFitStrategy(NetworkFitStrategy):
-    def __init__(self, neural_network):
-        NetworkFitStrategy.__init__(self, neural_network)
-
-
-class ADAPTgdNetworkFitStrategy(MlpNetworkFitStrategy):
+class AdaptiveGradientDescentNetworkFitStrategy(MlpNetworkFitStrategy):
     def __init__(self, neural_network):
         MlpNetworkFitStrategy.__init__(self, neural_network)
 
-    def fit(self,
-            learning_rate,
-            input_data,
-            target_data,
-            number_of_epochs,
-            show_step):
+    def __call__(self, *args, **kwargs):
         self.set_learning_rate(learning_rate)
         max_shows = number_of_epochs / show_step if number_of_epochs > show_step else 1
 
         for dummy_1 in range(max_shows):
             for dummy_2 in range(show_step):
                 for input_data_row, target_data_row in zip(input_data, target_data):
-                    self.neural_network.read(input_data_row)
+                    self.neural_network.read_input_data(input_data_row)
                     self.neural_network.activate_neurons()
                     self.neural_network.write_target(target_data_row)
                     self.neural_network.single_pattern_backward_action()
-
-    @staticmethod
-    def name(self):
-        return 'ADAPTgdNetworkTrainBehavior'
 
 
 def mlp_network(layers_size,
                 hidden_layers_activation_function_name,
                 output_layer_activation_function_name):
     factory = MlpFactory()
-    creator = factory.make_neural_creator()
-    net = creator.create_neural_network(factory, layers_size, hidden_layers_activation_function_name,
+    builder = factory.make_neural_network_builder()
+    net = builder.create_neural_network(factory, layers_size, hidden_layers_activation_function_name,
                                         output_layer_activation_function_name)
     return net
