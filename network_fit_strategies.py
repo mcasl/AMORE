@@ -58,7 +58,7 @@ class AdaptiveGradientDescentNetworkFitStrategy(MlpNetworkFitStrategy):
         for dummy_1 in range(max_shows):
             for dummy_2 in range(show_step):
                 for input_data_row, target_data_row in zip(input_data, target_data):
-                    self.neural_network.read_input_data(input_data_row)
+                    self.neural_network.read(input_data_row)
                     self.neural_network.activate_neurons()
                     self.neural_network.write_target(target_data_row)
                     self.neural_network.single_pattern_backward_action()

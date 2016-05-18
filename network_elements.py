@@ -69,8 +69,8 @@ class NeuralNetwork(object, metaclass=ABCMeta):
         raise NotImplementedError("You shouldn't be calling NeuralNetwork.__call__")
 
     @abstractmethod
-    def read_input_data(self, data):
-        raise NotImplementedError("You shouldn't be calling NeuralNetwork.read_input_data")
+    def read(self, input_data):
+        raise NotImplementedError("You shouldn't be calling NeuralNetwork.read")
 
     @abstractmethod
     def inspect_output(self):
@@ -95,8 +95,8 @@ class MlpNeuralNetwork(NeuralNetwork):
     def __call__(self, input_data):
         return self.predict_strategy(input_data)
 
-    def read_input_data(self, data):
-        for neuron, value in zip(self.layers[0], data):
+    def read(self, input_data):
+        for neuron, value in zip(self.layers[0], input_data):
             neuron.output = value
 
     def inspect_output(self):

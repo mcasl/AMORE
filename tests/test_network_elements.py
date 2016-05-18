@@ -97,7 +97,7 @@ class TestNeuralNetwork(unittest.TestCase):
         factory = AdaptiveGradientDescentFactory()
         neural_network = factory.make_primitive_neural_network()
         data = None
-        self.assertRaises(NotImplementedError, NeuralNetwork.read_input_data, neural_network, data)
+        self.assertRaises(NotImplementedError, NeuralNetwork.read, neural_network, data)
 
     def test_inspect_output(self):
         factory = AdaptiveGradientDescentFactory()
@@ -135,7 +135,7 @@ class TestSimpleNeuralNetwork(unittest.TestCase):
         neural_network_builder = factory.make_neural_network_builder()
         neural_network = neural_network_builder.create_neural_network(factory, shape, 'Tanh', 'Identity')
         sample_data = [random.random() for dummy in range(shape[0])]
-        neural_network.read_input_data(sample_data)
+        neural_network.read(sample_data)
         result = numpy.asarray([neuron.output for neuron in neural_network.layers[0]])
         self.assertTrue((result == sample_data).all)
 
