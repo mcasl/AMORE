@@ -1,19 +1,41 @@
-def lms_f0(x):
-    pass
+import numpy
 
 
-def lms_f1(x):
-    pass
+############################################################
 
 
-def lmls_f0(x):
-    pass
+def __lms(prediction, target):
+    residual = prediction - target
+    return numpy.mean(residual ** 2)
 
 
-def lmls_f1(x):
-    pass
+def __lms_derivative(prediction, target):
+    residual = prediction - target
+    return residual
 
 
-cost_functions_set = {'LMS': lms_f0, 'LMLS': lmls_f0}
+__lms.derivative = __lms_derivative
 
-cost_functions_derivative_set = {'LMS': lms_f1, 'LMLS': lmls_f1}
+
+############################################################
+
+
+def __lmls(prediction, target):
+    residual = prediction - target
+    result = numpy.mean(numpy.log(1 + residual ** 2 / 2))
+    return result
+
+
+def __lmls_derivative(prediction, target):
+    residual = prediction - target
+    result = residual / (1 + residual ** 2 / 2)
+    return result
+
+
+__lmls.derivative = __lmls_derivative
+
+############################################################
+
+cost_functions_set = {'LMS': __lms,
+                      'LMLS': __lmls
+                      }
