@@ -10,7 +10,7 @@ class NeuronPredictStrategy(object, metaclass=ABCMeta):
 
     @abstractmethod
     def __call__(self, *args, **kwargs):
-        pass
+        raise NotImplementedError("You shouldn't be calling NeuronPredictStrategy.__call__")
 
 
 class MlpNeuronPredictStrategy(NeuronPredictStrategy):
@@ -20,7 +20,7 @@ class MlpNeuronPredictStrategy(NeuronPredictStrategy):
         self.induced_local_field = 0.0
 
     def __call__(self, *args, **kwargs):
-        inputs_x_weights = map((lambda connection: connection.neuron.output * connection.weight),
+        inputs_x_weights = map((lambda x: x.neuron.output * x.weight),
                                self.neuron.connections)
         self.induced_local_field = reduce(operator.add, inputs_x_weights) + self.neuron.bias
         self.neuron.output = self.neuron.activation_function(self.induced_local_field)
@@ -32,17 +32,16 @@ class AdaptiveGradientDescentNeuronPredictStrategy(MlpNeuronPredictStrategy):
     def __init__(self, neuron):
         MlpNeuronPredictStrategy.__init__(self, neuron)
 
-
-class AdaptiveGradientDescentWithMomentumNeuronPredictStrategy(MlpNeuronPredictStrategy):
-    def __init__(self, neuron):
-        MlpNeuronPredictStrategy.__init__(self, neuron)
-
-
-class BatchGradientDescentNeuronPredictStrategy(MlpNeuronPredictStrategy):
-    def __init__(self, neuron):
-        MlpNeuronPredictStrategy.__init__(self, neuron)
-
-
-class BatchGradientDescentWithMomentumNeuronPredictStrategy(MlpNeuronPredictStrategy):
-    def __init__(self, neuron):
-        MlpNeuronPredictStrategy.__init__(self, neuron)
+# class AdaptiveGradientDescentWithMomentumNeuronPredictStrategy(MlpNeuronPredictStrategy):
+#     def __init__(self, neuron):
+#         MlpNeuronPredictStrategy.__init__(self, neuron)
+#
+#
+# class BatchGradientDescentNeuronPredictStrategy(MlpNeuronPredictStrategy):
+#     def __init__(self, neuron):
+#         MlpNeuronPredictStrategy.__init__(self, neuron)
+#
+#
+# class BatchGradientDescentWithMomentumNeuronPredictStrategy(MlpNeuronPredictStrategy):
+#     def __init__(self, neuron):
+#         MlpNeuronPredictStrategy.__init__(self, neuron)

@@ -7,10 +7,10 @@ class NetworkPredictStrategy(object, metaclass=ABCMeta):
         self.neural_network = neural_network
 
     def __call__(self, *args, **kwargs):
-        pass
+        raise NotImplementedError("You shouldn't be calling NetworkPredictStrategy.__call__")
 
     def activate_neurons(self, *args, **kwargs):
-        pass
+        raise NotImplementedError("You shouldn't be calling NetworkPredictStrategy.activate_neurons")
 
 
 class MlpNetworkPredictStrategy(NetworkPredictStrategy):
@@ -42,17 +42,16 @@ class AdaptiveGradientDescentNetworkPredictStrategy(MlpNetworkPredictStrategy):
     def __init__(self, neural_network):
         MlpNetworkPredictStrategy.__init__(self, neural_network)
 
-
-class AdaptiveGradientDescentWithMomentumNetworkPredictStrategy(MlpNetworkPredictStrategy):
-    def __init__(self, neural_network):
-        MlpNetworkPredictStrategy.__init__(self, neural_network)
-
-
-class BatchGradientDescentNetworkPredictStrategy(MlpNetworkPredictStrategy):
-    def __init__(self, neural_network):
-        MlpNetworkPredictStrategy.__init__(self, neural_network)
-
-
-class BatchGradientDescentWithMomentumNetworkPredictStrategy(MlpNetworkPredictStrategy):
-    def __init__(self, neural_network):
-        MlpNetworkPredictStrategy.__init__(self, neural_network)
+# class AdaptiveGradientDescentWithMomentumNetworkPredictStrategy(MlpNetworkPredictStrategy):
+#     def __init__(self, neural_network):
+#         MlpNetworkPredictStrategy.__init__(self, neural_network)
+#
+#
+# class BatchGradientDescentNetworkPredictStrategy(MlpNetworkPredictStrategy):
+#     def __init__(self, neural_network):
+#         MlpNetworkPredictStrategy.__init__(self, neural_network)
+#
+#
+# class BatchGradientDescentWithMomentumNetworkPredictStrategy(MlpNetworkPredictStrategy):
+#     def __init__(self, neural_network):
+#         MlpNetworkPredictStrategy.__init__(self, neural_network)

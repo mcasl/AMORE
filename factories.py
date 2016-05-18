@@ -9,35 +9,44 @@ class NeuralFactory(object, metaclass=ABCMeta):
     """ The mother of all neural factories (a.k.a Interface)
     """
 
+    @abstractmethod
+    def __init__(self):
+        raise NotImplementedError("You shouldn't be calling NeuralFactory.__init__")
+
     @staticmethod
     @abstractmethod
     def make_neural_network_builder():
-        pass
+        raise NotImplementedError("You shouldn't be calling NeuralFactory.make_neural_network_builder")
 
     @staticmethod
     @abstractmethod
     def make_neural_network_predict_strategy(neuron):
-        pass
+        raise NotImplementedError("You shouldn't be calling NeuralFactory.make_neural_network_predict_strategy")
 
     @staticmethod
     @abstractmethod
     def make_neural_network_fit_strategy(neural_network):
-        pass
+        raise NotImplementedError("You shouldn't be calling NeuralFactory.make_neural_network_fit_strategy")
 
     @staticmethod
     @abstractmethod
     def make_neuron_predict_strategy(neuron):
-        pass
+        raise NotImplementedError("You shouldn't be calling NeuralFactory.make_neuron_predict_strategy")
 
     @staticmethod
     @abstractmethod
     def make_neuron_fit_strategy(neuron):
-        pass
+        raise NotImplementedError("You shouldn't be calling NeuralFactory.make_neuron_fit_strategy")
+
 
 
 class MlpFactory(NeuralFactory):
     """ Simple implementation of a factory of multilayer feed forward network's elements
     """
+
+    @abstractmethod
+    def __init__(self):
+        raise NotImplementedError("You shouldn't be calling MlpFactory.__init__")
 
     @staticmethod
     def make_primitive_connection(neuron):
@@ -71,22 +80,22 @@ class MlpFactory(NeuralFactory):
     @staticmethod
     @abstractmethod
     def make_neuron_predict_strategy(neuron):
-        pass
+        raise NotImplementedError("You shouldn't be calling MlpFactory.make_neuron_predict_strategy")
 
     @staticmethod
     @abstractmethod
     def make_neuron_fit_strategy(neuron):
-        pass
+        raise NotImplementedError("You shouldn't be calling MlpFactory.make_neuron_fit_strategy")
 
     @staticmethod
     @abstractmethod
     def make_neural_network_predict_strategy(neural_network):
-        pass
+        raise NotImplementedError("You shouldn't be calling MlpFactory.make_neural_network_predict_strategy")
 
     @staticmethod
     @abstractmethod
     def make_neural_network_fit_strategy(neural_network):
-        pass
+        raise NotImplementedError("You shouldn't be calling MlpFactory.make_neural_network_fit_strategy")
 
     @staticmethod
     def make_activation_function(function_name):
@@ -98,6 +107,9 @@ class MlpFactory(NeuralFactory):
 
 
 class AdaptiveGradientDescentFactory(MlpFactory):
+    def __init__(self):
+        pass
+
     @staticmethod
     def make_neuron_predict_strategy(neuron):
         return AdaptiveGradientDescentNeuronPredictStrategy(neuron)

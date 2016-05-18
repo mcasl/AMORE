@@ -30,6 +30,22 @@ class TestConnection(unittest.TestCase):
         self.assertTrue(connection.weight is weight)
 
 
+class TestNeuron(unittest.TestCase):
+    def test_init(self):
+        factory = AdaptiveGradientDescentFactory()
+        neural_network = factory.make_primitive_neural_network()
+        neuron = MlpNeuron(neural_network)
+        self.assertEqual(neuron.label, None)
+        self.assertEqual(neuron.neural_network, neural_network)
+        self.assertTrue(isinstance(neuron.predict_strategy, AdaptiveGradientDescentNeuronPredictStrategy))
+
+    def test_call(self):
+        factory = AdaptiveGradientDescentFactory()
+        neural_network = factory.make_primitive_neural_network()
+        neuron = MlpNeuron(neural_network)
+        self.assertRaises(NotImplementedError, Neuron.__call__, neuron)
+
+
 class TestMlpNeuron(unittest.TestCase):
     """ Tests for SimpleNeuron class, a simple multilayer feed forward neural network neuron
     """
@@ -62,6 +78,36 @@ class TestMlpNeuron(unittest.TestCase):
             connection.weight = random.random()
             test_neuron.connections.append(connection)
         self.assertEqual(test_neuron(), test_neuron.predict_strategy())
+
+
+class TestNeuralNetwork(unittest.TestCase):
+    def test_init(self):
+        factory = AdaptiveGradientDescentFactory()
+        neural_network = factory.make_primitive_neural_network()
+        self.assertEqual(neural_network.factory, factory)
+        self.assertTrue(isinstance(neural_network.predict_strategy, AdaptiveGradientDescentNetworkPredictStrategy))
+        self.assertTrue(isinstance(neural_network.fit_strategy, AdaptiveGradientDescentNetworkFitStrategy))
+
+    def test_call(self):
+        factory = AdaptiveGradientDescentFactory()
+        neural_network = factory.make_primitive_neural_network()
+        self.assertRaises(NotImplementedError, NeuralNetwork.__call__, neural_network)
+
+    def test_read_input_data(self):
+        factory = AdaptiveGradientDescentFactory()
+        neural_network = factory.make_primitive_neural_network()
+        data = None
+        self.assertRaises(NotImplementedError, NeuralNetwork.read_input_data, neural_network, data)
+
+    def test_inspect_output(self):
+        factory = AdaptiveGradientDescentFactory()
+        neural_network = factory.make_primitive_neural_network()
+        self.assertRaises(NotImplementedError, NeuralNetwork.inspect_output, neural_network)
+
+    def test_shape(self):
+        factory = AdaptiveGradientDescentFactory()
+        neural_network = factory.make_primitive_neural_network()
+        self.assertRaises(NotImplementedError, NeuralNetwork.shape, neural_network)
 
 
 class TestSimpleNeuralNetwork(unittest.TestCase):

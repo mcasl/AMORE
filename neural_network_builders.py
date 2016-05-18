@@ -9,7 +9,7 @@ class NeuralNetworkBuilder(object, metaclass=ABCMeta):
 
     @abstractmethod
     def create_neural_network(self, *args):
-        pass
+        raise NotImplementedError("You shouldn't be calling NeuralNetworkBuilder.create_neural_network")
 
 
 class MlpNeuralNetworkBuilder(NeuralNetworkBuilder):
@@ -78,8 +78,8 @@ class MlpNeuralNetworkBuilder(NeuralNetworkBuilder):
                 *   The neuron.neural_network attribute
             :param neural_network: A multilayer feed forward network
         """
-
-        if neural_network.shape == [0]:
+        neural_network_shape_is_not_valid = (neural_network.shape == []) or (neural_network.shape == [0])
+        if neural_network_shape_is_not_valid:
             raise ValueError('[Initialize network]: Empty net,  Shape is [0].')
         # Calculation of the total amount of parameters
 

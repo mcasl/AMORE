@@ -25,6 +25,7 @@ class Neuron(object, metaclass=ABCMeta):
         """ Initializer. An assumption is made that all neurons will have at least these properties.
         """
         self.label = None
+        self.output = 0.0
         self.neural_network = neural_network
         self.predict_strategy = neural_network.factory.make_neuron_predict_strategy(self)
         # self.fit_strategy should not be assigned here as it will depend on the neurons role
@@ -32,7 +33,7 @@ class Neuron(object, metaclass=ABCMeta):
 
     @abstractmethod
     def __call__(self, *args, **kwargs):
-        pass
+        raise NotImplementedError("You shouldn't be calling Neuron.__call__()")
 
 
 class MlpNeuron(Neuron):
@@ -43,7 +44,6 @@ class MlpNeuron(Neuron):
         """ Initializer. Python requires explicit call to base class initializer
         """
         Neuron.__init__(self, neural_network)
-        self.output = 0.0
         self.activation_function = neural_network.factory.make_activation_function('default')
         self.connections = neural_network.factory.make_primitive_container()
         self.bias = 0.0
@@ -66,28 +66,26 @@ class NeuralNetwork(object, metaclass=ABCMeta):
     def __call__(self, *args, **kwargs):
         """ Method for obtaining outputs from inputs
         """
-        pass
+        raise NotImplementedError("You shouldn't be calling NeuralNetwork.__call__")
 
     @abstractmethod
     def read_input_data(self, data):
-        pass
+        raise NotImplementedError("You shouldn't be calling NeuralNetwork.read_input_data")
 
     @abstractmethod
     def inspect_output(self):
-        pass
+        raise NotImplementedError("You shouldn't be calling NeuralNetwork.inspect_output")
 
-    @property
     @abstractmethod
     def shape(self):
         """ Gives information about the number of neurons in the neural network
         """
-        pass
+        raise NotImplementedError("You shouldn't be calling NeuralNetwork.shape")
 
 
 class MlpNeuralNetwork(NeuralNetwork):
     """ Simple implementation of a multilayer feed forward network
     """
-
     def __init__(self, neural_factory):
         NeuralNetwork.__init__(self, neural_factory)
         self.layers = neural_factory.make_primitive_container()

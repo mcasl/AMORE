@@ -1,8 +1,105 @@
 import unittest
-
 from amore import *
-from container import *
-from neuron_predict_strategies import *
+
+
+class TestNeuralFactory(unittest.TestCase):
+    def test__init__(self):
+        factory = AdaptiveGradientDescentFactory()
+        self.assertRaises(NotImplementedError, NeuralFactory.__init__, factory)
+
+    def test_make_neural_network_builder(self):
+        factory = AdaptiveGradientDescentFactory()
+        self.assertRaises(NotImplementedError, NeuralFactory.make_neural_network_builder)
+
+    def test_make_neural_network_predict_strategy(self):
+        factory = AdaptiveGradientDescentFactory()
+        self.assertRaises(NotImplementedError, NeuralFactory.make_neural_network_predict_strategy, factory)
+
+    def test_make_neural_network_fit_strategy(self):
+        factory = AdaptiveGradientDescentFactory()
+        self.assertRaises(NotImplementedError, NeuralFactory.make_neural_network_fit_strategy, factory)
+
+    def test_make_neuron_predict_strategy(self):
+        factory = AdaptiveGradientDescentFactory()
+        self.assertRaises(NotImplementedError, NeuralFactory.make_neuron_predict_strategy, factory)
+
+    def test_make_neuron_fit_strategy(self):
+        factory = AdaptiveGradientDescentFactory()
+        self.assertRaises(NotImplementedError, NeuralFactory.make_neuron_fit_strategy, factory)
+
+
+class MlpNeuralNetworkFactory(unittest.TestCase):
+    def test_init(self):
+        factory = AdaptiveGradientDescentFactory()
+        self.assertRaises(NotImplementedError, MlpFactory.__init__, factory)
+
+    def test_make_primitive_connection(self):
+        factory = AdaptiveGradientDescentFactory()
+        neural_network = factory.make_primitive_neural_network()
+        neuron = factory.make_primitive_neuron(neural_network)
+        connection = factory.make_primitive_connection(neuron)
+        self.assertTrue(isinstance(connection, Connection))
+
+    def test_make_primitive_container(self):
+        factory = AdaptiveGradientDescentFactory()
+        neural_network = factory.make_primitive_neural_network()
+        neuron = factory.make_primitive_neuron(neural_network)
+        connection = factory.make_primitive_connection(neuron)
+        self.assertTrue(isinstance(connection, Connection))
+
+    def test_make_primitive_neuron(self):
+        factory = AdaptiveGradientDescentFactory()
+        neural_network = factory.make_primitive_neural_network()
+        neuron = factory.make_primitive_neuron(neural_network)
+        self.assertTrue(isinstance(neuron, MlpNeuron))
+
+    def test_make_primitive_layer(self):
+        factory = AdaptiveGradientDescentFactory()
+        neural_network = factory.make_primitive_neural_network()
+        layer = factory.make_primitive_layer(4, neural_network)
+        self.assertTrue(isinstance(layer, Container))
+
+    def test_make_primitive_neural_network(self):
+        factory = AdaptiveGradientDescentFactory()
+        neural_network = factory.make_primitive_neural_network()
+        self.assertTrue(isinstance(neural_network, MlpNeuralNetwork))
+
+    def test_make_neural_network_builder(self):
+        factory = AdaptiveGradientDescentFactory()
+        builder = factory.make_neural_network_builder()
+        self.assertTrue(isinstance(builder, MlpNeuralNetworkBuilder))
+
+    def test_make_neuron_predict_strategy(self):
+        factory = AdaptiveGradientDescentFactory()
+        neural_network = factory.make_primitive_neural_network()
+        neuron = factory.make_primitive_neuron(neural_network)
+        self.assertRaises(NotImplementedError, MlpFactory.make_neuron_predict_strategy, neuron)
+
+    def test_make_neuron_fit_strategy(self):
+        factory = AdaptiveGradientDescentFactory()
+        neural_network = factory.make_primitive_neural_network()
+        neuron = factory.make_primitive_neuron(neural_network)
+        self.assertRaises(NotImplementedError, MlpFactory.make_neuron_fit_strategy, neuron)
+
+    def test_make_neural_network_predict_strategy(self):
+        factory = AdaptiveGradientDescentFactory()
+        neural_network = factory.make_primitive_neural_network()
+        self.assertRaises(NotImplementedError, MlpFactory.make_neural_network_predict_strategy, neural_network)
+
+    def test_make_neural_network_fit_strategy(self):
+        factory = AdaptiveGradientDescentFactory()
+        neural_network = factory.make_primitive_neural_network()
+        self.assertRaises(NotImplementedError, MlpFactory.make_neural_network_fit_strategy, neural_network)
+
+    def test_make_activation_function(self):
+        factory = AdaptiveGradientDescentFactory()
+        activation_function = factory.make_activation_function('tanh')
+        self.assertTrue(activation_function is activation_functions_set['tanh'])
+
+    def test_make_cost_function(self):
+        factory = AdaptiveGradientDescentFactory()
+        cost_function = factory.make_cost_function('LMS')
+        self.assertTrue(cost_function is cost_functions_set['LMS'])
 
 
 class TestAdaptiveGradientDescentFactory(unittest.TestCase):
