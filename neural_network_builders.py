@@ -34,6 +34,9 @@ class MlpNeuralNetworkBuilder(NeuralNetworkBuilder):
             MlpNeuralNetworkBuilder.create_primitive_layers(neural_factory, primitive_neural_network, layers_size)
             MlpNeuralNetworkBuilder.connect_network_layers(neural_factory, primitive_neural_network)
             MlpNeuralNetworkBuilder.initialize_network(primitive_neural_network)
+        for layer in primitive_neural_network.layers:
+            for neuron in layer:
+                neuron.fit_strategy = neural_factory.make_neuron_fit_strategy(neuron)
         return primitive_neural_network
 
     @staticmethod

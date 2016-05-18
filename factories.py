@@ -39,7 +39,6 @@ class NeuralFactory(object, metaclass=ABCMeta):
         raise NotImplementedError("You shouldn't be calling NeuralFactory.make_neuron_fit_strategy")
 
 
-
 class MlpFactory(NeuralFactory):
     """ Simple implementation of a factory of multilayer feed forward network's elements
     """

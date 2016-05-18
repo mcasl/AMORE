@@ -21,6 +21,8 @@ def mlp_network(layers_size,
                 output_layer_activation_function_name):
     factory = AdaptiveGradientDescentFactory()
     builder = factory.make_neural_network_builder()
-    net = builder.create_neural_network(factory, layers_size, hidden_layers_activation_function_name,
+    net = builder.create_neural_network(factory,
+                                        layers_size,
+                                        hidden_layers_activation_function_name,
                                         output_layer_activation_function_name)
     return net
