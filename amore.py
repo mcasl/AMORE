@@ -45,7 +45,7 @@ def fit_adaptive_gradient_descent(mlp_neural_network,
 if __name__ == '__main__':
     import numpy as np
 
-    input_data = np.random.rand(100, 1)
+    input_data = np.random.rand(1000, 1)
     target = input_data ** 2
     net = mlp_network([1, 5, 1],
                       'tanh',
