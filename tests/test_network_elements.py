@@ -145,7 +145,7 @@ class TestSimpleNeuralNetwork(unittest.TestCase):
         neural_network = neural_creator.create_neural_network(factory, shape, 'Tanh', 'Identity')
         sample_data = [random.random() for dummy in range(shape[-1])]
         neural_network.fit_strategy.write_targets_in_output_layer(sample_data)
-        result = [neuron.target for neuron in neural_network.layers[-1]]
+        result = [neuron.fit_strategy.target for neuron in neural_network.layers[-1]]
         self.assertEqual(result, sample_data)
 
     def test_shape(self, shape=(40, 52, 1, 7, 4)):

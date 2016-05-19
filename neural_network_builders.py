@@ -29,15 +29,13 @@ class MlpNeuralNetworkBuilder(NeuralNetworkBuilder):
         :param output_layer_activation_function_name: According to activation_functions.py
         :return: A multilayer feed forward neural network
         """
-        primitive_neural_network = neural_factory.make_primitive_neural_network()
+        neural_network = neural_factory.make_primitive_neural_network()
         if layers_size:
-            MlpNeuralNetworkBuilder.create_primitive_layers(neural_factory, primitive_neural_network, layers_size)
-            MlpNeuralNetworkBuilder.connect_network_layers(neural_factory, primitive_neural_network)
-            MlpNeuralNetworkBuilder.initialize_network(primitive_neural_network)
-        for layer in primitive_neural_network.layers:
-            for neuron in layer:
-                neuron.fit_strategy = neural_factory.make_neuron_fit_strategy(neuron)
-        return primitive_neural_network
+            MlpNeuralNetworkBuilder.create_primitive_layers(neural_factory, neural_network, layers_size)
+            MlpNeuralNetworkBuilder.connect_network_layers(neural_factory, neural_network)
+            MlpNeuralNetworkBuilder.initialize_network(neural_network)
+            neural_network.fit_strategy.set_neurons_fit_strategy(neural_factory)
+            return neural_network
 
     @staticmethod
     def create_primitive_layers(neural_factory,
