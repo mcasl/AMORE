@@ -1,10 +1,9 @@
 import unittest
 
 from hypothesis import given, strategies as st
-
-from amore import *
-from container import *
 from neuron_predict_strategies import *
+
+from amore.network_elements.container import *
 
 
 class TestConnection(unittest.TestCase):

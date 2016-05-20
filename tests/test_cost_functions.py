@@ -1,6 +1,7 @@
 import unittest
-from cost_functions import *
 from math import log
+
+from amore.network_elements.cost_functions import *
 
 
 class TestCostFunctions(unittest.TestCase):

@@ -1,4 +1,4 @@
-class Container:
+class Container(object):
     """
     A generic collection of items, eg. Connections, Neurons, Layers, ...
     Currently though, it is nothing but a list wrapper.

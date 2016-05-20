@@ -2,7 +2,7 @@ import unittest
 
 from hypothesis import given, strategies as st
 
-from container import Container
+from amore.network_elements.container import Container
 
 
 class TestContainer(unittest.TestCase):

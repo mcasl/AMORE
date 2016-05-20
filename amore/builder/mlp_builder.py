@@ -1,15 +1,5 @@
-from neuron_predict_strategies import *
-from math import sqrt
 import random
-
-
-class NeuralNetworkBuilder(object, metaclass=ABCMeta):
-    """ The mother of all neural creators (a.k.a. Interface)
-    """
-
-    @abstractmethod
-    def create_neural_network(self, *args):
-        raise NotImplementedError("You shouldn't be calling NeuralNetworkBuilder.create_neural_network")
+from .neuralnetworkbuilder import NeuralNetworkBuilder
 
 
 class MlpNeuralNetworkBuilder(NeuralNetworkBuilder):

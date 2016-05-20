@@ -1,24 +1,7 @@
-from abc import ABCMeta, abstractmethod
+from .neural_viewer_console import NeuralViewerConsole
 
 
-class NeuralViewer(object, metaclass=ABCMeta):
-    @staticmethod
-    @abstractmethod
-    def show_connection(connection):
-        pass
-
-    @staticmethod
-    @abstractmethod
-    def show_neuron(neuron):
-        pass
-
-    @staticmethod
-    @abstractmethod
-    def show_neural_network(neural_network):
-        pass
-
-
-class MlpNeuralViewer(NeuralViewer):
+class MlpNeuralViewer(NeuralViewerConsole):
     @staticmethod
     def show_connection(connection):
         print('\nFrom:\t {label} \t Weight= \t {weight}'.format(label=connection.neuron.label,
