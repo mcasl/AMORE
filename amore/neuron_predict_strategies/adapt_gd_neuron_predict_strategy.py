@@ -1,4 +1,4 @@
-from .mlp_neuron_predict_strategy import MlpNeuronPredictStrategy
+from amore.neuron_predict_strategies.mlp_neuron_predict_strategy import MlpNeuronPredictStrategy
 
 
 class AdaptiveGradientDescentNeuronPredictStrategy(MlpNeuronPredictStrategy):

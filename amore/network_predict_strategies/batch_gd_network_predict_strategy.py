@@ -1,4 +1,4 @@
-from .mlp_network_predict_strategy import MlpNetworkPredictStrategy
+from amore.network_predict_strategies.mlp_network_predict_strategy import MlpNetworkPredictStrategy
 
 
 class BatchGradientDescentNetworkPredictStrategy(MlpNetworkPredictStrategy):

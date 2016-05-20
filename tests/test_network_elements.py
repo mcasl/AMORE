@@ -1,9 +1,17 @@
+import random
 import unittest
 
+import numpy
 from hypothesis import given, strategies as st
-from neuron_predict_strategies import *
 
+from amore.factories.adapt_gd_factory import *
+from amore.network_elements.connection import *
 from amore.network_elements.container import *
+from amore.network_elements.mlp_neuron import *
+from amore.network_elements.neural_network import *
+from amore.network_fit_strategies.adapt_gd_network_fit_strategy import *
+from amore.network_predict_strategies.adapt_gd_network_predict_strategy import *
+from amore.neuron_predict_strategies.adapt_gd_neuron_predict_strategy import *
 
 
 class TestConnection(unittest.TestCase):
@@ -132,7 +140,7 @@ class TestSimpleNeuralNetwork(unittest.TestCase):
         factory = AdaptiveGradientDescentFactory()
         neural_network = factory.make_primitive_neural_network()
         neural_network_builder = factory.make_neural_network_builder()
-        neural_network = neural_network_builder.create_neural_network(factory, shape, 'Tanh', 'Identity')
+        neural_network = neural_network_builder.create_neural_network(factory, shape, 'tanh', 'identity')
         sample_data = [random.random() for dummy in range(shape[0])]
         neural_network.read(sample_data)
         result = numpy.asarray([neuron.output for neuron in neural_network.layers[0]])
@@ -141,7 +149,7 @@ class TestSimpleNeuralNetwork(unittest.TestCase):
     def test_write_targets_in_output_layer(self, shape=(4, 6, 78)):
         factory = AdaptiveGradientDescentFactory()
         neural_creator = factory.make_neural_network_builder()
-        neural_network = neural_creator.create_neural_network(factory, shape, 'Tanh', 'Identity')
+        neural_network = neural_creator.create_neural_network(factory, shape, 'tanh', 'identity')
         sample_data = [random.random() for dummy in range(shape[-1])]
         neural_network.fit_strategy.write_targets_in_output_layer(sample_data)
         result = [neuron.fit_strategy.target for neuron in neural_network.layers[-1]]
@@ -150,7 +158,7 @@ class TestSimpleNeuralNetwork(unittest.TestCase):
     def test_shape(self, shape=(40, 52, 1, 7, 4)):
         factory = AdaptiveGradientDescentFactory()
         neural_creator = factory.make_neural_network_builder()
-        neural_network = neural_creator.create_neural_network(factory, shape, 'Tanh', 'Identity')
+        neural_network = neural_creator.create_neural_network(factory, shape, 'tanh', 'identity')
         self.assertEqual(neural_network.shape, list(shape))
 
     def test_single_pattern_forward_action(self):
@@ -162,7 +170,7 @@ class TestSimpleNeuralNetwork(unittest.TestCase):
     def test_read_output_layer(self, shape=(4, 6, 78)):
         factory = AdaptiveGradientDescentFactory()
         neural_creator = factory.make_neural_network_builder()
-        neural_network = neural_creator.create_neural_network(factory, shape, 'Tanh', 'Identity')
+        neural_network = neural_creator.create_neural_network(factory, shape, 'tanh', 'identity')
         sample_data = [random.random() for dummy in range(shape[-1])]
         for neuron, output_value in zip(neural_network.layers[-1], sample_data):
             neuron.output = output_value

@@ -1,7 +1,10 @@
 import unittest
+
 import numpy as np
 
-from amore import *
+from amore.factories.adapt_gd_factory import *
+from amore.interface import mlp_network
+from amore.network_fit_strategies.mlp_network_fit_strategy import *
 
 
 class TestNetworkFitStrategies(unittest.TestCase):

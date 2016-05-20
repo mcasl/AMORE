@@ -1,3 +1,4 @@
+from abc import ABCMeta, abstractmethod
 from amore.network_elements.cost_functions import *
 
 

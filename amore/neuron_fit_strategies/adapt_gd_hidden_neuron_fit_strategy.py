@@ -1,15 +1,15 @@
-from .adapt_gd_neuron_fit_strategy import AdaptiveGradientDescentNeuronFitStrategy
+from amore.neuron_fit_strategies.adapt_gd_neuron_fit_strategy import AdaptiveGradientDescentNeuronFitStrategy
 
 
-class AdaptiveGradientDescentOutputNeuronFitStrategy(AdaptiveGradientDescentNeuronFitStrategy):
+class AdaptiveGradientDescentHiddenNeuronFitStrategy(AdaptiveGradientDescentNeuronFitStrategy):
     def __init__(self, neuron):
         AdaptiveGradientDescentNeuronFitStrategy.__init__(self, neuron)
 
     def __call__(self):
         neuron = self.neuron
         self.output_derivative = neuron.activation_function.derivative(neuron.predict_strategy.induced_local_field)
-        self.delta = self.output_derivative * self.cost_function.derivative(neuron.output, self.target)
-        minus_learning_rate_x_delta = -self.learning_rate * self.delta
+        self.delta *= self.output_derivative
+        minus_learning_rate_x_delta = - self.learning_rate * self.delta
         neuron.bias += minus_learning_rate_x_delta
         for connection in self.neuron.connections:
             input_value = connection.neuron.output

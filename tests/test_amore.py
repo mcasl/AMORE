@@ -1,5 +1,6 @@
 import unittest
-from amore import *
+
+from amore.interface import *
 
 
 class TestAmore(unittest.TestCase):
@@ -26,11 +27,6 @@ class TestAmore(unittest.TestCase):
         for layer in neural_network.layers:
             neuron_labels.extend([neuron.label for neuron in layer])
         self.assertEqual(neuron_labels, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
-
-
-class AdaptiveGradientDescentFactory(unittest.TestCase):
-    def test_make_neuron_fit_strategy(self):
-        pass
 
 
 if __name__ == '__main__':

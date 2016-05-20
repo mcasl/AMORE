@@ -1,13 +1,7 @@
 """ Amore: A module for training and simulating neural networks the way researchers need
 """
 
-from cost_functions import *
-from network_elements import *
-from neural_network_builders import *
-from neuron_predict_strategies import *
-
-from amore.factory.adapt_gd_factory import *
-
+from amore.factories.adapt_gd_factory import *
 
 # TODO: remember: alternative constructors @classmethod def myalternativeconstructor(class, other arguments):
 
@@ -17,11 +11,11 @@ def mlp_network(layers_size,
                 output_layer_activation_function_name):
     factory = AdaptiveGradientDescentFactory()
     builder = factory.make_neural_network_builder()
-    net = builder.create_neural_network(factory,
-                                        layers_size,
-                                        hidden_layers_activation_function_name,
-                                        output_layer_activation_function_name)
-    return net
+    neural_network = builder.create_neural_network(factory,
+                                                   layers_size,
+                                                   hidden_layers_activation_function_name,
+                                                   output_layer_activation_function_name)
+    return neural_network
 
 
 def fit_adaptive_gradient_descent(mlp_neural_network,

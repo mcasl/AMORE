@@ -1,6 +1,11 @@
 import unittest
+
 import numpy as np
-from amore import *
+
+from amore.interface import mlp_network
+from amore.network_elements.cost_functions import *
+from amore.neuron_fit_strategies.adapt_gd_hidden_neuron_fit_strategy import *
+from amore.neuron_fit_strategies.adapt_gd_output_neuron_fit_strategy import *
 
 
 class TestNeuronFitStrategy(unittest.TestCase):
@@ -58,7 +63,6 @@ class TestAdaptiveGradientDescentHiddenNeuronFitStrategy(unittest.TestCase):
         post_weights_and_bias = [neuron.bias] + [connection.weight for connection in neuron.connections]
         self.assertTrue(isinstance(neuron.fit_strategy, AdaptiveGradientDescentHiddenNeuronFitStrategy))
         self.assertNotEqual(previous_weights_and_bias, post_weights_and_bias)
-
 
 
 if __name__ == '__main__':

@@ -1,10 +1,14 @@
 import unittest
+
 import numpy as np
-from amore import *
+
+from amore.factories.adapt_gd_factory import *
+from amore.interface import mlp_network
+from amore.network_predict_strategies.adapt_gd_network_predict_strategy import *
+from amore.network_predict_strategies.network_predict_strategy import *
 
 
 class TestNetworkPredictStrategy(unittest.TestCase):
-
     def test_call(self):
         factory = AdaptiveGradientDescentFactory()
         neural_network = factory.make_primitive_neural_network()

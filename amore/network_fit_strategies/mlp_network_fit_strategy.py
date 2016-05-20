@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from .networkfitstrategy import NetworkFitStrategy
+from amore.network_fit_strategies.network_fit_strategy import NetworkFitStrategy
 
 
 class MlpNetworkFitStrategy(NetworkFitStrategy):

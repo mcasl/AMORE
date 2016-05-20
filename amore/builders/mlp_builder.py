@@ -1,5 +1,7 @@
 import random
-from .neuralnetworkbuilder import NeuralNetworkBuilder
+from math import sqrt
+from amore.builders.neural_network_builder import NeuralNetworkBuilder
+from amore.network_elements.neural_network import NeuralNetwork
 
 
 class MlpNeuralNetworkBuilder(NeuralNetworkBuilder):
@@ -13,7 +15,7 @@ class MlpNeuralNetworkBuilder(NeuralNetworkBuilder):
                               output_layer_activation_function_name) -> NeuralNetwork:
 
         """ A method for creating a multilayer feed forward network
-        :param neural_factory:  A factory such as MlpFactory
+        :param neural_factory:  A factories such as MlpFactory
         :param layers_size: A list of integers describing the number of neurons in each layer
         :param hidden_layers_activation_function_name: According to activation_functions.py
         :param output_layer_activation_function_name: According to activation_functions.py
@@ -34,7 +36,7 @@ class MlpNeuralNetworkBuilder(NeuralNetworkBuilder):
         """ This method fills the neural network with neurons according to
             the structure given in the number_of_neurons list.
             The neurons are unconnected yet and their weights are uninitialized.
-        :param neural_factory:  A factory such as MlpFactory
+        :param neural_factory:  A factories such as MlpFactory
         :param neural_network: A multilayer feed forward network
         :param layers_size: A list of integers describing each layer shape
         """
@@ -48,7 +50,7 @@ class MlpNeuralNetworkBuilder(NeuralNetworkBuilder):
     def connect_network_layers(neural_factory, neural_network):
         """ This subroutine walks the neurons through
             and establishes the connections in a fully connected manner.
-            :param neural_factory:  A factory such as MlpFactory
+            :param neural_factory:  A factories such as MlpFactory
             :param neural_network: A multilayer feed forward network
         """
         origin_layer = neural_network.layers[0]

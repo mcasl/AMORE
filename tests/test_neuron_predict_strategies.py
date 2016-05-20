@@ -1,8 +1,9 @@
 import unittest
+from math import tanh
 
-from hypothesis import given, strategies as st
-
-from amore import *
+from amore.factories.adapt_gd_factory import *
+from amore.interface import mlp_network
+from amore.neuron_predict_strategies.neuron_predict_strategy import *
 
 
 class TestNeuronPredictStrategies(unittest.TestCase):

@@ -14,7 +14,7 @@ class Neuron(object, metaclass=ABCMeta):
         self.neural_network = neural_network
         self.predict_strategy = neural_network.factory.make_neuron_predict_strategy(self)
         # self.fit_strategy should not be assigned here as it will depend on the neurons role
-        # and it will be the builder's responsibility to assign it
+        # and it will be the builders's responsibility to assign it
 
     @abstractmethod
     def __call__(self, *args, **kwargs):

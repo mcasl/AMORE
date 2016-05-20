@@ -1,5 +1,7 @@
 import unittest
-from amore import *
+
+from amore.factories.adapt_gd_factory import *
+from amore.factories.mlp_factory import *
 
 
 class TestNeuralFactory(unittest.TestCase):
@@ -103,7 +105,7 @@ class MlpNeuralNetworkFactory(unittest.TestCase):
 
 
 class TestAdaptiveGradientDescentFactory(unittest.TestCase):
-    """ Test for MlpFactory, a simple factory for simple multilayer feed forward networks"""
+    """ Test for MlpFactory, a simple factories for simple multilayer feed forward networks"""
 
     def test_make_primitive_connection(self):
         """  MlpFactory unit test """

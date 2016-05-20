@@ -1,4 +1,4 @@
-from .neuralnetwork import NeuralNetwork
+from amore.network_elements.neural_network import NeuralNetwork
 
 
 class MlpNeuralNetwork(NeuralNetwork):

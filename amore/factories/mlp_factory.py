@@ -1,8 +1,18 @@
-from .neuralfactory import NeuralFactory
+from abc import abstractmethod
+
+from amore.network_elements.container import Container
+from amore.network_elements.connection import Connection
+from amore.network_elements.mlp_neuron import MlpNeuron
+from amore.network_elements.mlp_neural_network import MlpNeuralNetwork
+from amore.network_elements.activation_functions import activation_functions_set
+from amore.network_elements.cost_functions import cost_functions_set
+from amore.builders.mlp_builder import MlpNeuralNetworkBuilder
+
+from .neural_factory import NeuralFactory
 
 
 class MlpFactory(NeuralFactory):
-    """ Simple implementation of a factory of multilayer feed forward network's elements
+    """ Simple implementation of a factories of multilayer feed forward network's elements
     """
 
     @abstractmethod

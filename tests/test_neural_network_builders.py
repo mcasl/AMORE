@@ -1,5 +1,8 @@
 import unittest
-from amore import *
+
+from amore.builders.mlp_builder import *
+from amore.factories.adapt_gd_factory import *
+from amore.network_elements.mlp_neural_network import *
 
 
 class TestNeuralNetworkBuilder(unittest.TestCase):
@@ -10,7 +13,7 @@ class TestNeuralNetworkBuilder(unittest.TestCase):
 
 
 class TestMlpNeuralBuilder(unittest.TestCase):
-    """ Unit tests for SimpleNeuralCreator class, the builder of SimpleNeuralNetworks
+    """ Unit tests for SimpleNeuralCreator class, the builders of SimpleNeuralNetworks
     """
 
     def test_create_neural_network(self):

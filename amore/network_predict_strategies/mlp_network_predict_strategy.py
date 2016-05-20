@@ -1,5 +1,5 @@
 import numpy
-from .networkpredictstrategy import NetworkPredictStrategy
+from amore.network_predict_strategies.network_predict_strategy import NetworkPredictStrategy
 
 
 class MlpNetworkPredictStrategy(NetworkPredictStrategy):

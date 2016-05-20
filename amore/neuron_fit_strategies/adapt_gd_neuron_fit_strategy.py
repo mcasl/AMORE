@@ -1,4 +1,5 @@
-from .mlp_neuron_fit_strategy import MlpNeuronFitStrategy
+from abc import abstractmethod
+from amore.neuron_fit_strategies.mlp_neuron_fit_strategy import MlpNeuronFitStrategy
 
 
 class AdaptiveGradientDescentNeuronFitStrategy(MlpNeuronFitStrategy):

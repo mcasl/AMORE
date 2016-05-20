@@ -1,4 +1,4 @@
-from .mlp_network_fit_strategy import MlpNetworkFitStrategy
+from amore.network_fit_strategies.mlp_network_fit_strategy import MlpNetworkFitStrategy
 
 
 class AdaptiveGradientDescentNetworkFitStrategy(MlpNetworkFitStrategy):

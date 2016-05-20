@@ -1,4 +1,9 @@
 from .mlp_factory import MlpFactory
+from amore.neuron_predict_strategies.adapt_gd_neuron_predict_strategy import *
+from amore.neuron_fit_strategies.adapt_gd_output_neuron_fit_strategy import *
+from amore.neuron_fit_strategies.adapt_gd_hidden_neuron_fit_strategy import *
+from amore.network_predict_strategies.adapt_gd_network_predict_strategy import *
+from amore.network_fit_strategies.adapt_gd_network_fit_strategy import *
 
 
 class AdaptiveGradientDescentFactory(MlpFactory):

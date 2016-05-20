@@ -1,4 +1,4 @@
-from .neuron import Neuron
+from amore.network_elements.neuron import Neuron
 
 
 class MlpNeuron(Neuron):
