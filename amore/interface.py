@@ -1,16 +1,7 @@
 """ Amore: A module for training and simulating neural networks the way researchers need
 """
-import numpy as np
-from .activation_functions import *
-from .builders import *
-from .container import *
-from .cost_functions import *
 from .factories import *
-from .materials import *
-from .network_fit_strategies import *
-from .network_predict_strategies import *
 from .neuron_fit_strategies import *
-from .neuron_predict_strategies import *
 
 # TODO: remember: alternative constructors @classmethod def myalternativeconstructor(class, other arguments):
 

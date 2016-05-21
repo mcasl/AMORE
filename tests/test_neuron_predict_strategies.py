@@ -1,4 +1,5 @@
 import unittest
+import math
 
 from amore.interface import *
 
@@ -34,5 +35,5 @@ class TestMlpNeuronPredictStrategy(unittest.TestCase):
         accumulator = neuron.bias
         for connection in neuron.connections:
             accumulator += connection.neuron.output * connection.weight
-        result = tanh(accumulator)
+        result = math.tanh(accumulator)
         self.assertEqual(neuron.predict_strategy(), result)
