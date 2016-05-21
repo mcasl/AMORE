@@ -1,7 +1,17 @@
+import math
 import random
-from math import sqrt
-from amore.builders.neural_network_builder import NeuralNetworkBuilder
-from amore.network_elements.neural_network import NeuralNetwork
+
+from .materials import *
+from .neuron_predict_strategies import *
+
+
+class NeuralNetworkBuilder(object, metaclass=ABCMeta):
+    """ The mother of all neural creators (a.k.a. Interface)
+    """
+
+    @abstractmethod
+    def create_neural_network(self, *args):
+        raise NotImplementedError("You shouldn't be calling NeuralNetworkBuilder.create_neural_network")
 
 
 class MlpNeuralNetworkBuilder(NeuralNetworkBuilder):
@@ -10,16 +20,11 @@ class MlpNeuralNetworkBuilder(NeuralNetworkBuilder):
 
     def create_neural_network(self,
                               neural_factory,
-                              layers_size,
-                              hidden_layers_activation_function_name,
-                              output_layer_activation_function_name) -> NeuralNetwork:
+                              layers_size: List[int],
+                              hidden_layers_activation_function_name: str,
+                              output_layer_activation_function_name: str):
 
         """ A method for creating a multilayer feed forward network
-        :param neural_factory:  A factories such as MlpFactory
-        :param layers_size: A list of integers describing the number of neurons in each layer
-        :param hidden_layers_activation_function_name: According to activation_functions.py
-        :param output_layer_activation_function_name: According to activation_functions.py
-        :return: A multilayer feed forward neural network
         """
         neural_network = neural_factory.make_primitive_neural_network()
         if layers_size:
@@ -32,7 +37,7 @@ class MlpNeuralNetworkBuilder(NeuralNetworkBuilder):
     @staticmethod
     def create_primitive_layers(neural_factory,
                                 neural_network,
-                                layers_size):
+                                layers_size: List[int]):
         """ This method fills the neural network with neurons according to
             the structure given in the number_of_neurons list.
             The neurons are unconnected yet and their weights are uninitialized.
@@ -47,7 +52,8 @@ class MlpNeuralNetworkBuilder(NeuralNetworkBuilder):
         neural_network.layers = layers
 
     @staticmethod
-    def connect_network_layers(neural_factory, neural_network):
+    def connect_network_layers(neural_factory,
+                               neural_network):
         """ This subroutine walks the neurons through
             and establishes the connections in a fully connected manner.
             :param neural_factory:  A factories such as MlpFactory
@@ -84,7 +90,7 @@ class MlpNeuralNetworkBuilder(NeuralNetworkBuilder):
             total_amount_of_parameters += current_number * previous_number
             previous_number = current_number
         total_amount_of_parameters += total_number_of_neurons
-        extreme = sqrt(3.0 / total_amount_of_parameters)
+        extreme = math.sqrt(3.0 / total_amount_of_parameters)
 
         # Network walk through
         label_number = 0

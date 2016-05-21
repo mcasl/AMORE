@@ -1,7 +1,16 @@
 """ Amore: A module for training and simulating neural networks the way researchers need
 """
-
-from amore.factories.adapt_gd_factory import *
+import numpy as np
+from .activation_functions import *
+from .builders import *
+from .container import *
+from .cost_functions import *
+from .factories import *
+from .materials import *
+from .network_fit_strategies import *
+from .network_predict_strategies import *
+from .neuron_fit_strategies import *
+from .neuron_predict_strategies import *
 
 # TODO: remember: alternative constructors @classmethod def myalternativeconstructor(class, other arguments):
 
@@ -18,12 +27,12 @@ def mlp_network(layers_size,
     return neural_network
 
 
-def fit_adaptive_gradient_descent(mlp_neural_network,
-                                  input_data,
-                                  target_data,
-                                  learning_rate,
-                                  step_length,
-                                  number_of_steps):
+def fit_adaptive_gradient_descent(mlp_neural_network: MlpNeuralNetwork,
+                                  input_data: np.array,
+                                  target_data: np.array,
+                                  learning_rate: float,
+                                  step_length: int,
+                                  number_of_steps: int) -> MlpNeuralNetwork:
     mlp_neural_network.fit_strategy.set_neurons_learning_rate(learning_rate)
     for step in range(number_of_steps):
         for inner_iterations in range(step_length):
@@ -35,13 +44,13 @@ def fit_adaptive_gradient_descent(mlp_neural_network,
 if __name__ == '__main__':
     import numpy as np
 
-    input_data = np.random.rand(1000, 1)
-    target = input_data ** 2
+    data = np.random.rand(1000, 1)
+    target = data ** 2
     net = mlp_network([1, 5, 1],
                       'tanh',
                       'identity')
     fit_adaptive_gradient_descent(net,
-                                  input_data,
+                                  data,
                                   target,
                                   0.1,
                                   100,

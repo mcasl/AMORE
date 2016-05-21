@@ -1,6 +1,0 @@
-from amore.network_predict_strategies.mlp_network_predict_strategy import MlpNetworkPredictStrategy
-
-
-class AdaptiveGradientDescentWithMomentumNetworkPredictStrategy(MlpNetworkPredictStrategy):
-    def __init__(self, neural_network):
-        MlpNetworkPredictStrategy.__init__(self, neural_network)

@@ -1,7 +1,12 @@
 import unittest
-
-from amore.factories.adapt_gd_factory import *
-from amore.factories.mlp_factory import *
+from amore.activation_functions import *
+from amore.builders import *
+from amore.factories import *
+from amore.materials import *
+from amore.network_fit_strategies import *
+from amore.network_predict_strategies import *
+from amore.neuron_fit_strategies import *
+from amore.neuron_predict_strategies import *
 
 
 class TestNeuralFactory(unittest.TestCase):
@@ -100,8 +105,8 @@ class MlpNeuralNetworkFactory(unittest.TestCase):
 
     def test_make_cost_function(self):
         factory = AdaptiveGradientDescentFactory()
-        cost_function = factory.make_cost_function('LMS')
-        self.assertTrue(cost_function is cost_functions_set['LMS'])
+        cost_function = factory.make_cost_function('adaptLMS')
+        self.assertTrue(cost_function is cost_functions_set['adaptLMS'])
 
 
 class TestAdaptiveGradientDescentFactory(unittest.TestCase):
@@ -196,8 +201,8 @@ class TestAdaptiveGradientDescentFactory(unittest.TestCase):
 
     def test_make_cost_function(self):
         factory = AdaptiveGradientDescentFactory()
-        test_function = factory.make_cost_function('LMS')
-        self.assertEqual(test_function(0.1, 0.6), cost_functions_set['LMS'](0.1, 0.6))
+        test_function = factory.make_cost_function('adaptLMS')
+        self.assertEqual(test_function(0.1, 0.6), cost_functions_set['adaptLMS'](0.1, 0.6))
 
 
 if __name__ == '__main__':

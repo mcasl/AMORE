@@ -1,11 +1,7 @@
 import unittest
 
-import numpy as np
-
-from amore.interface import mlp_network
-from amore.network_elements.cost_functions import *
-from amore.neuron_fit_strategies.adapt_gd_hidden_neuron_fit_strategy import *
-from amore.neuron_fit_strategies.adapt_gd_output_neuron_fit_strategy import *
+from amore.interface import *
+from amore.neuron_fit_strategies import *
 
 
 class TestNeuronFitStrategy(unittest.TestCase):
@@ -13,7 +9,7 @@ class TestNeuronFitStrategy(unittest.TestCase):
         neural_network = mlp_network([3, 2, 1], 'tanh', 'tanh')
         neuron = neural_network.layers[1][0]
         self.assertEqual(neuron.fit_strategy.neuron, neuron)
-        self.assertEqual(neuron.fit_strategy.cost_function, cost_functions_set['LMS'])
+        self.assertEqual(neuron.fit_strategy.cost_function, cost_functions_set['adaptLMS'])
 
 
 class TestMlpNeuronFitStrategy(unittest.TestCase):

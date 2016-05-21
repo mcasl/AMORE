@@ -1,6 +1,5 @@
 import unittest
-
-from amore.network_elements.activation_functions import *
+from amore.activation_functions import *
 
 
 class TestActivationFunctions(unittest.TestCase):

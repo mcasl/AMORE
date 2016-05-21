@@ -1,13 +1,13 @@
 import unittest
 from math import log
 
-from amore.network_elements.cost_functions import *
+from amore.cost_functions import *
 
 
 class TestCostFunctions(unittest.TestCase):
     def test_lms(self):
         # function
-        test_function = cost_functions_set['LMS']
+        test_function = cost_functions_set['adaptLMS']
         self.assertEqual(test_function(0.1, 0.1), 0.0)
         self.assertEqual(test_function(0.1, 0.6), 0.5 ** 2)
         # derivative
@@ -16,7 +16,7 @@ class TestCostFunctions(unittest.TestCase):
 
     def test_lmls(self):
         # function
-        test_function = cost_functions_set['LMLS']
+        test_function = cost_functions_set['adaptLMLS']
         self.assertEqual(test_function(0.1, 0.1), 0.0)
         self.assertEqual(test_function(0.1, 0.6), log(1 + 0.5 ** 2 / 2))
         # derivative

@@ -1,17 +1,13 @@
 import random
 import unittest
+import numpy as np
 
-import numpy
 from hypothesis import given, strategies as st
-
-from amore.factories.adapt_gd_factory import *
-from amore.network_elements.connection import *
-from amore.network_elements.container import *
-from amore.network_elements.mlp_neuron import *
-from amore.network_elements.neural_network import *
-from amore.network_fit_strategies.adapt_gd_network_fit_strategy import *
-from amore.network_predict_strategies.adapt_gd_network_predict_strategy import *
-from amore.neuron_predict_strategies.adapt_gd_neuron_predict_strategy import *
+from amore.factories import *
+from amore.materials import *
+from amore.network_fit_strategies import *
+from amore.network_predict_strategies import *
+from amore.neuron_predict_strategies import *
 
 
 class TestConnection(unittest.TestCase):
@@ -111,10 +107,10 @@ class TestNeuralNetwork(unittest.TestCase):
         neural_network = factory.make_primitive_neural_network()
         self.assertRaises(NotImplementedError, NeuralNetwork.inspect_output, neural_network)
 
-    def test_shape(self):
-        factory = AdaptiveGradientDescentFactory()
-        neural_network = factory.make_primitive_neural_network()
-        self.assertRaises(NotImplementedError, NeuralNetwork.shape, neural_network)
+        # def test_shape(self):
+        #     factory = AdaptiveGradientDescentFactory()
+        #     neural_network = factory.make_primitive_neural_network()
+        #     self.assertRaises(NotImplementedError, NeuralNetwork.shape, neural_network)
 
 
 class TestSimpleNeuralNetwork(unittest.TestCase):
@@ -127,7 +123,7 @@ class TestSimpleNeuralNetwork(unittest.TestCase):
         factory = AdaptiveGradientDescentFactory()
         builder = factory.make_neural_network_builder()
         neural_network = builder.create_neural_network(factory, [3, 6, 2], 'tanh', 'identity')
-        input_data = numpy.ones((100, 3))
+        input_data = np.ones((100, 3))
         self.assertTrue((neural_network(input_data) == neural_network.predict_strategy(input_data)).all)
 
     def test_fit(self):
@@ -143,7 +139,7 @@ class TestSimpleNeuralNetwork(unittest.TestCase):
         neural_network = neural_network_builder.create_neural_network(factory, shape, 'tanh', 'identity')
         sample_data = [random.random() for dummy in range(shape[0])]
         neural_network.read(sample_data)
-        result = numpy.asarray([neuron.output for neuron in neural_network.layers[0]])
+        result = np.asarray([neuron.output for neuron in neural_network.layers[0]])
         self.assertTrue((result == sample_data).all)
 
     def test_write_targets_in_output_layer(self, shape=(4, 6, 78)):

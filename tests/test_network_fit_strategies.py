@@ -1,10 +1,9 @@
 import unittest
 
-import numpy as np
-
-from amore.factories.adapt_gd_factory import *
-from amore.interface import mlp_network
-from amore.network_fit_strategies.mlp_network_fit_strategy import *
+from amore.interface import *
+from amore.materials import *
+from amore.network_fit_strategies import *
+from amore.neuron_fit_strategies import *
 
 
 class TestNetworkFitStrategies(unittest.TestCase):
