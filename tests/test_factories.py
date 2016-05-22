@@ -1,5 +1,5 @@
 import unittest
-from amore.activation_functions import *
+
 from amore.builders import *
 from amore.factories import *
 from amore.materials import *

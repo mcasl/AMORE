@@ -54,5 +54,6 @@ __adapt_lmls.derivative = __adapt_lmls_derivative
 ############################################################
 
 cost_functions_set = {'adaptLMS': __adapt_lms,
-                      'adaptLMLS': __adapt_lmls
+                      'adaptLMLS': __adapt_lmls,
+                      'default': __adapt_lms
                       }

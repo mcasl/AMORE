@@ -1,6 +1,6 @@
-from abc import ABCMeta, abstractmethod
 import functools
 import operator
+from abc import ABCMeta, abstractmethod
 
 
 class NeuronPredictStrategy(object, metaclass=ABCMeta):

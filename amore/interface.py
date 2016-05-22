@@ -2,6 +2,7 @@
 """
 from .factories import *
 from .neuron_fit_strategies import *
+from .materials import MlpNeuralNetwork
 
 # TODO: remember: alternative constructors @classmethod def myalternativeconstructor(class, other arguments):
 
@@ -45,4 +46,7 @@ if __name__ == '__main__':
                                   target,
                                   0.1,
                                   100,
-                                  30)
+                                  5)
+
+    # %timeit amore.interface.fit_adaptive_gradient_descent(net, data, target, 0.1, 100, 4)
+    # 1 loops, best of 3: 48 s per loop

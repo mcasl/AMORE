@@ -1,8 +1,8 @@
 import random
 import unittest
-import numpy as np
 
 from hypothesis import given, strategies as st
+
 from amore.factories import *
 from amore.materials import *
 from amore.network_fit_strategies import *

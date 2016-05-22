@@ -1,5 +1,5 @@
-import unittest
 import math
+import unittest
 
 from amore.interface import *
 

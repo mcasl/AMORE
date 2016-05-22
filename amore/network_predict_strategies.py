@@ -1,4 +1,5 @@
 import numpy as np
+
 from .neuron_predict_strategies import *
 
 

@@ -1,10 +1,11 @@
+from .activation_functions import activation_functions_set
 from .container import *
-from .materials import *
+from .materials import Connection, MlpNeuron, MlpNeuralNetwork
+from .builders import MlpNeuralNetworkBuilder
 from .network_fit_strategies import *
 from .network_predict_strategies import *
 from .neuron_fit_strategies import *
 from .neuron_predict_strategies import *
-from .activation_functions import activation_functions_set
 
 
 class NeuralFactory(object, metaclass=ABCMeta):

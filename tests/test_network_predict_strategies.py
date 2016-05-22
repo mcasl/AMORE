@@ -1,9 +1,8 @@
 import unittest
+
+from amore.factories import *
 from amore.interface import *
 from amore.materials import *
-from amore.network_predict_strategies import *
-from amore.neuron_fit_strategies import *
-from amore.factories import *
 
 
 class TestNetworkPredictStrategy(unittest.TestCase):

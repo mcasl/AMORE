@@ -1,4 +1,3 @@
-from .builders import *
 from .cost_functions import *
 from .neuron_predict_strategies import *
 
@@ -7,7 +6,7 @@ class NeuronFitStrategy(object, metaclass=ABCMeta):
     @abstractmethod
     def __init__(self, neuron):
         self.neuron = neuron
-        self.cost_function = cost_functions_set['adaptLMS']
+        self.cost_function = cost_functions_set['default']
 
 
 class MlpNeuronFitStrategy(NeuronFitStrategy):
