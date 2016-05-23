@@ -29,10 +29,12 @@ class MlpNeuralNetworkBuilder(NeuralNetworkBuilder):
         neural_network = neural_factory.make_primitive_neural_network()
         if layers_size:
             MlpNeuralNetworkBuilder.create_primitive_layers(neural_factory, neural_network, layers_size)
+            MlpNeuralNetworkBuilder.create_neuron_fit_and_predict_sequence(neural_network)
             MlpNeuralNetworkBuilder.connect_network_layers(neural_factory, neural_network)
             MlpNeuralNetworkBuilder.initialize_network(neural_network)
             neural_network.fit_strategy.set_neurons_fit_strategy(neural_factory)
             return neural_network
+
 
     @staticmethod
     def create_primitive_layers(neural_factory,
@@ -66,6 +68,15 @@ class MlpNeuralNetworkBuilder(NeuralNetworkBuilder):
                 for origin in origin_layer:
                     neuron.connections.append(neural_factory.make_primitive_connection(origin))
             origin_layer = destination_layer
+
+    @staticmethod
+    def create_neuron_fit_and_predict_sequence(neural_network):
+        predict_sequence = []
+        for layer in neural_network.layers[1:]:
+            for neuron in layer:
+                predict_sequence.append(neuron)
+        neural_network.predict_strategy.neuron_predict_sequence = predict_sequence
+        neural_network.fit_strategy.neuron_fit_sequence = reversed(predict_sequence)
 
     @staticmethod
     def initialize_network(neural_network):

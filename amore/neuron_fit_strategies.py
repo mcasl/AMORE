@@ -31,7 +31,8 @@ class AdaptiveGradientDescentOutputNeuronFitStrategy(AdaptiveGradientDescentNeur
 
     def __call__(self):
         neuron = self.neuron
-        self.output_derivative = neuron.activation_function.derivative(neuron.predict_strategy.induced_local_field)
+        self.output_derivative = neuron.activation_function.derivative(neuron.predict_strategy.induced_local_field,
+                                                                       self.neuron.output)
         self.delta = self.output_derivative * self.cost_function.derivative(neuron.output, self.target)
         minus_learning_rate_x_delta = -self.learning_rate * self.delta
         neuron.bias += minus_learning_rate_x_delta
@@ -48,7 +49,8 @@ class AdaptiveGradientDescentHiddenNeuronFitStrategy(AdaptiveGradientDescentNeur
 
     def __call__(self):
         neuron = self.neuron
-        self.output_derivative = neuron.activation_function.derivative(neuron.predict_strategy.induced_local_field)
+        self.output_derivative = neuron.activation_function.derivative(neuron.predict_strategy.induced_local_field,
+                                                                       neuron.output)
         self.delta *= self.output_derivative
         minus_learning_rate_x_delta = - self.learning_rate * self.delta
         neuron.bias += minus_learning_rate_x_delta

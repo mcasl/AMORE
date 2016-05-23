@@ -1,7 +1,6 @@
 from .activation_functions import activation_functions_set
-from .container import *
-from .materials import Connection, MlpNeuron, MlpNeuralNetwork
 from .builders import MlpNeuralNetworkBuilder
+from .materials import Connection, MlpNeuron, MlpNeuralNetwork
 from .network_fit_strategies import *
 from .network_predict_strategies import *
 from .neuron_fit_strategies import *
@@ -56,7 +55,7 @@ class MlpFactory(NeuralFactory):
 
     @staticmethod
     def make_primitive_container():
-        return Container()
+        return []
 
     @staticmethod
     def make_primitive_neuron(neural_network):
@@ -71,8 +70,8 @@ class MlpFactory(NeuralFactory):
 
     def make_primitive_neural_network(self):
         neural_network = MlpNeuralNetwork(self)
-        neural_network.predict_strategy = self.make_neural_network_predict_strategy(neural_network)
         neural_network.layers = self.make_primitive_container()
+        neural_network.predict_strategy = self.make_neural_network_predict_strategy(neural_network)
         return neural_network
 
     @staticmethod

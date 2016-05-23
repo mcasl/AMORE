@@ -57,7 +57,7 @@ class TestMlpNeuron(unittest.TestCase):
         factory = AdaptiveGradientDescentFactory()
         neural_network = factory.make_primitive_neural_network()
         neuron = MlpNeuron(neural_network)
-        attributes = [None, 0.0, Container()]
+        attributes = [None, 0.0, []]
         neuron_attributes = [neuron.label, neuron.output, neuron.connections]
         self.assertEqual(neuron_attributes, attributes)
 

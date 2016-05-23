@@ -26,7 +26,6 @@ class TestMlpNeuronPredictStrategy(unittest.TestCase):
         neural_network = factory.make_primitive_neural_network()
         neuron = factory.make_primitive_neuron(neural_network)
         predict_strategy = factory.make_neuron_predict_strategy(neuron)
-        self.assertEqual(predict_strategy.output_derivative, 0.0)
         self.assertEqual(predict_strategy.induced_local_field, 0.0)
 
     def test_call(self):

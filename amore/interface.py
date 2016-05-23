@@ -32,21 +32,3 @@ def fit_adaptive_gradient_descent(mlp_neural_network: MlpNeuralNetwork,
         print("Step={step}".format(step=step))
     return mlp_neural_network
 
-
-if __name__ == '__main__':
-    import numpy as np
-
-    data = np.random.rand(1000, 1)
-    target = data ** 2
-    net = mlp_network([1, 5, 1],
-                      'tanh',
-                      'identity')
-    fit_adaptive_gradient_descent(net,
-                                  data,
-                                  target,
-                                  0.1,
-                                  100,
-                                  5)
-
-    # %timeit amore.interface.fit_adaptive_gradient_descent(net, data, target, 0.1, 100, 4)
-    # 1 loops, best of 3: 48 s per loop

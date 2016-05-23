@@ -15,6 +15,7 @@ class MlpNetworkFitStrategy(NetworkFitStrategy):
     @abstractmethod
     def __init__(self, neural_network):
         NetworkFitStrategy.__init__(self, neural_network)
+        self.neuron_fit_sequence = []
 
     @abstractmethod
     def __call__(self, *args, **kwargs):
@@ -25,9 +26,8 @@ class MlpNetworkFitStrategy(NetworkFitStrategy):
             neuron.fit_strategy.target = value
 
     def single_pattern_backward_action(self):
-        for layer in reversed(self.neural_network.layers[1:]):
-            for neuron in layer:
-                neuron.fit_strategy()
+        [neuron.fit_strategy() for neuron in self.neuron_fit_sequence]
+
 
     def set_neurons_fit_strategy(self, neural_factory):
         # Providing input neurons with a fit strategy simplifies
