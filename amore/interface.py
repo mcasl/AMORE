@@ -3,6 +3,7 @@
 from .factories import *
 from .neuron_fit_strategies import *
 from .materials import MlpNeuralNetwork
+import matplotlib.pyplot as plt
 
 # TODO: remember: alternative constructors @classmethod def myalternativeconstructor(class, other arguments):
 
@@ -19,16 +20,17 @@ def mlp_network(layers_size,
     return neural_network
 
 
-def fit_adaptive_gradient_descent(mlp_neural_network: MlpNeuralNetwork,
-                                  input_data: np.array,
-                                  target_data: np.array,
-                                  learning_rate: float,
-                                  step_length: int,
-                                  number_of_steps: int) -> MlpNeuralNetwork:
+def fit_adaptive_gradient_descent(mlp_neural_network: object,
+                                  input_data: object,
+                                  target_data: object,
+                                  learning_rate: object,
+                                  step_length: object,
+                                  number_of_steps: object) -> object:
     mlp_neural_network.fit_strategy.set_neurons_learning_rate(learning_rate)
     for step in range(number_of_steps):
         for inner_iterations in range(step_length):
             mlp_neural_network.fit_strategy(input_data, target_data)
+        plt.scatter(input_data, mlp_neural_network(input_data))
         print("Step={step}".format(step=step))
     return mlp_neural_network
 
