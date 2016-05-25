@@ -43,6 +43,7 @@ class MlpNeuralNetwork(NeuralNetwork):
     def __init__(self, neural_factory):
         NeuralNetwork.__init__(self, neural_factory)
         self.layers = neural_factory.make_primitive_container()
+        self.predict_strategy = neural_factory.make_neural_network_predict_strategy(self)
 
     # TODO:  cost_function = neural_factory.make_cost_function('LMS')
 

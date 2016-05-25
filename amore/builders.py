@@ -48,7 +48,9 @@ class MlpNeuralNetworkBuilder(NeuralNetworkBuilder):
         """
         layers = neural_factory.make_primitive_container()
         for size in layers_size:
-            layer = neural_factory.make_primitive_layer(size, neural_network)
+            layer = neural_factory.make_primitive_container()
+            for dummy in range(size):
+                layer.append(neural_factory.make_primitive_neuron(neural_network))
             layers.append(layer)
         neural_network.layers = layers
 
