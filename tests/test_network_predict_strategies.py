@@ -1,6 +1,5 @@
 import unittest
 
-from amore.factories import *
 from amore.interface import *
 from amore.materials import *
 

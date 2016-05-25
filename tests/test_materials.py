@@ -34,14 +34,6 @@ class TestConnection(unittest.TestCase):
 
 
 class TestNeuron(unittest.TestCase):
-    def test_init(self):
-        factory = AdaptiveGradientDescentFactory()
-        neural_network = factory.make_primitive_neural_network()
-        neuron = MlpNeuron(neural_network)
-        self.assertEqual(neuron.label, None)
-        self.assertEqual(neuron.neural_network, neural_network)
-        self.assertTrue(isinstance(neuron.predict_strategy, AdaptiveGradientDescentNeuronPredictStrategy))
-
     def test_call(self):
         factory = AdaptiveGradientDescentFactory()
         neural_network = factory.make_primitive_neural_network()
@@ -57,12 +49,10 @@ class TestMlpNeuron(unittest.TestCase):
         factory = AdaptiveGradientDescentFactory()
         neural_network = factory.make_primitive_neural_network()
         neuron = MlpNeuron(neural_network)
-        attributes = [None, 0.0, []]
-        neuron_attributes = [neuron.label, neuron.output, neuron.connections]
-        self.assertEqual(neuron_attributes, attributes)
-
-    def test_fit(self):
-        pass  # TODO: test
+        self.assertEqual(neuron.label, None)
+        self.assertEqual(neuron.output, 0.0)
+        self.assertEqual(neuron.connections, [])
+        self.assertTrue(isinstance(neuron.predict_strategy, AdaptiveGradientDescentNeuronPredictStrategy))
 
     def test___call__(self):
         factory = AdaptiveGradientDescentFactory()
@@ -96,7 +86,7 @@ class TestNeuralNetwork(unittest.TestCase):
         neural_network = factory.make_primitive_neural_network()
         self.assertRaises(NotImplementedError, NeuralNetwork.__call__, neural_network)
 
-    def test_read_input_data(self):
+    def test_read(self):
         factory = AdaptiveGradientDescentFactory()
         neural_network = factory.make_primitive_neural_network()
         data = None
@@ -113,7 +103,7 @@ class TestNeuralNetwork(unittest.TestCase):
         #     self.assertRaises(NotImplementedError, NeuralNetwork.shape, neural_network)
 
 
-class TestSimpleNeuralNetwork(unittest.TestCase):
+class TestMlpNeuralNetwork(unittest.TestCase):
     def test_init(self):
         factory = AdaptiveGradientDescentFactory()
         neural_network = factory.make_primitive_neural_network()
@@ -126,13 +116,7 @@ class TestSimpleNeuralNetwork(unittest.TestCase):
         input_data = np.ones((100, 3))
         self.assertTrue((neural_network(input_data) == neural_network.predict_strategy(input_data)).all)
 
-    def test_fit(self):
-        pass  # TODO: test
-
-    def test_predict(self):
-        pass  # TODO: test
-
-    def test_insert_input_data(self, shape=(40, 3, 2)):
+    def test_read(self, shape=(40, 3, 2)):
         factory = AdaptiveGradientDescentFactory()
         neural_network = factory.make_primitive_neural_network()
         neural_network_builder = factory.make_neural_network_builder()
@@ -157,13 +141,7 @@ class TestSimpleNeuralNetwork(unittest.TestCase):
         neural_network = neural_creator.create_neural_network(factory, shape, 'tanh', 'identity')
         self.assertEqual(neural_network.shape, list(shape))
 
-    def test_single_pattern_forward_action(self):
-        pass
-
-    def test_single_pattern_backward_action(self):
-        pass
-
-    def test_read_output_layer(self, shape=(4, 6, 78)):
+    def test_inspect_output(self, shape=(4, 6, 78)):
         factory = AdaptiveGradientDescentFactory()
         neural_creator = factory.make_neural_network_builder()
         neural_network = neural_creator.create_neural_network(factory, shape, 'tanh', 'identity')

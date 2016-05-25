@@ -3,7 +3,7 @@ from math import tanh, exp, cos, sin, fabs, atan, pi
 
 ##################################################################
 
-def __default(induced_local_field: float, neuron_output: float):
+def __default(induced_local_field):
     return tanh(induced_local_field)
 
 
@@ -16,7 +16,7 @@ __default.derivative = __default_derivative
 
 ##################################################################
 
-def __tanh(induced_local_field: float, neuron_output: float):
+def __tanh(induced_local_field):
     return tanh(induced_local_field)
 
 
@@ -29,7 +29,7 @@ __tanh.derivative = __tanh_derivative
 
 ##################################################################
 
-def __identity(induced_local_field: float, neuron_output: float):
+def __identity(induced_local_field):
     return induced_local_field
 
 
@@ -42,7 +42,7 @@ __identity.derivative = __identity_derivative
 
 ##################################################################
 
-def __threshold(induced_local_field: float, neuron_output: float):
+def __threshold(induced_local_field):
     return 1.0 if induced_local_field > 0.0 else 0.0
 
 
@@ -55,7 +55,7 @@ __threshold.derivative = __threshold_derivative
 
 ##################################################################
 
-def __logistic(induced_local_field: float, neuron_output: float):
+def __logistic(induced_local_field):
     return 1.0 / (1.0 + exp(-induced_local_field))
 
 
@@ -68,7 +68,7 @@ __logistic.derivative = __logistic_derivative
 
 ##################################################################
 
-def __exponential(induced_local_field: float, neuron_output: float):
+def __exponential(induced_local_field):
     return exp(induced_local_field)
 
 
@@ -81,7 +81,7 @@ __exponential.derivative = __exponential_derivative
 
 ##################################################################
 
-def __reciprocal(induced_local_field: float, neuron_output: float):
+def __reciprocal(induced_local_field):
     return 1.0 / induced_local_field
 
 
@@ -94,7 +94,7 @@ __reciprocal.derivative = __reciprocal_derivative
 
 ##################################################################
 
-def __square(induced_local_field: float, neuron_output: float):
+def __square(induced_local_field):
     return induced_local_field ** 2
 
 
@@ -107,7 +107,7 @@ __square.derivative = __square_derivative
 
 ##################################################################
 
-def __gauss(induced_local_field: float, neuron_output: float):
+def __gauss(induced_local_field):
     return exp(-induced_local_field ** 2)
 
 
@@ -120,7 +120,7 @@ __gauss.derivative = __gauss_derivative
 
 ##################################################################
 
-def __sine(induced_local_field: float, neuron_output: float):
+def __sine(induced_local_field):
     return sin(induced_local_field)
 
 
@@ -133,7 +133,7 @@ __sine.derivative = __sine_derivative
 
 ##################################################################
 
-def __cosine(induced_local_field: float, neuron_output: float):
+def __cosine(induced_local_field):
     return cos(induced_local_field)
 
 
@@ -146,7 +146,7 @@ __cosine.derivative = __cosine_derivative
 
 ##################################################################
 
-def __elliot(induced_local_field: float, neuron_output: float):
+def __elliot(induced_local_field):
     return induced_local_field / (1 + fabs(induced_local_field))
 
 
@@ -160,7 +160,7 @@ __elliot.derivative = __elliot_derivative
 
 ##################################################################
 
-def __arctan(induced_local_field: float, neuron_output: float):
+def __arctan(induced_local_field):
     return 2.0 * atan(induced_local_field) / pi
 
 

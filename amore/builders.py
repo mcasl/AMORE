@@ -35,7 +35,6 @@ class MlpNeuralNetworkBuilder(NeuralNetworkBuilder):
             neural_network.fit_strategy.set_neurons_fit_strategy(neural_factory)
             return neural_network
 
-
     @staticmethod
     def create_primitive_layers(neural_factory,
                                 neural_network,

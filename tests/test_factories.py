@@ -1,6 +1,5 @@
 import unittest
 
-from amore.builders import *
 from amore.factories import *
 from amore.materials import *
 from amore.network_fit_strategies import *
@@ -197,7 +196,7 @@ class TestAdaptiveGradientDescentFactory(unittest.TestCase):
     def test_make_activation_function(self):
         factory = AdaptiveGradientDescentFactory()
         test_function = factory.make_activation_function('tanh')
-        self.assertEqual(test_function(0.5, None), activation_functions_set['tanh'](0.5, None))
+        self.assertEqual(test_function(0.5), activation_functions_set['tanh'](0.5))
 
     def test_make_cost_function(self):
         factory = AdaptiveGradientDescentFactory()

@@ -22,7 +22,7 @@ class MlpNeuronPredictStrategy(NeuronPredictStrategy):
             accumulator += connection.neuron.output * connection.weight
         self.induced_local_field = accumulator
 
-        self.neuron.output = self.neuron.activation_function(self.induced_local_field, self.neuron.output)
+        self.neuron.output = self.neuron.activation_function(self.induced_local_field)
         return self.neuron.output
 
 

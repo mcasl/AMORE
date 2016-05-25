@@ -28,7 +28,6 @@ class MlpNetworkFitStrategy(NetworkFitStrategy):
     def single_pattern_backward_action(self):
         [neuron.fit_strategy() for neuron in self.neuron_fit_sequence]
 
-
     def set_neurons_fit_strategy(self, neural_factory):
         # Providing input neurons with a fit strategy simplifies
         # the code for adjusting the weights and biases

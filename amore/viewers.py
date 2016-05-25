@@ -18,9 +18,6 @@ class NeuralViewerConsole(object, metaclass=ABCMeta):
         pass
 
 
-from .viewers import NeuralViewerConsole
-
-
 class MlpNeuralViewer(NeuralViewerConsole):
     @staticmethod
     def show_connection(connection):

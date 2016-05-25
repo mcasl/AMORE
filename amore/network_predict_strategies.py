@@ -22,7 +22,6 @@ class MlpNetworkPredictStrategy(NetworkPredictStrategy):
         NetworkPredictStrategy.__init__(self, neural_network)
         self.neuron_predict_sequence = []
 
-
     def __call__(self, input_data):
         data_number_of_rows, data_number_of_columns = input_data.shape
         input_layer_size, *hidden_layers_size, output_layer_size = self.neural_network.shape
