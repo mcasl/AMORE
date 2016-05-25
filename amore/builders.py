@@ -75,7 +75,7 @@ class MlpNeuralNetworkBuilder(NeuralNetworkBuilder):
             for neuron in layer:
                 predict_sequence.append(neuron)
         neural_network.predict_strategy.neuron_predict_sequence = predict_sequence
-        neural_network.fit_strategy.neuron_fit_sequence = reversed(predict_sequence)
+        neural_network.fit_strategy.neuron_fit_sequence = list(reversed(predict_sequence))
 
     @staticmethod
     def initialize_network(neural_network):

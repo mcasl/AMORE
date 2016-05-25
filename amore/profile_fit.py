@@ -9,6 +9,7 @@ def test():
     print('\nNet created.\n')
     am.fit_adaptive_gradient_descent(net, data, target, 0.1, 10, 5)
     print('\nFinished.\n')
+    return net
 
 
 if __name__ == '__main__':
