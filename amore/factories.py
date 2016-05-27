@@ -91,7 +91,7 @@ class MlpMaterialsFactory(MaterialsFactory):
             return self.make('HiddenNeuronFitStrategy', neuron)
 
 
-class AdaptiveGradientDescentFactory(MlpMaterialsFactory):
+class AdaptiveGradientDescentMaterialsFactory(MlpMaterialsFactory):
     def __init__(self):
         MlpMaterialsFactory.__init__(self)
         self.class_names.update({name: 'AdaptiveGradientDescent' + name for name in (
@@ -100,7 +100,7 @@ class AdaptiveGradientDescentFactory(MlpMaterialsFactory):
             'HiddenNeuronFitStrategy')})
 
 
-class AdaptiveGradientDescentWithMomentumFactory(MlpMaterialsFactory):
+class AdaptiveGradientDescentWithMomentumMaterialsFactory(MlpMaterialsFactory):
     def __init__(self):
         MlpMaterialsFactory.__init__(self)
         self.class_names.update({name: 'AdaptiveGradientDescentWithMomentum' + name for name in (
@@ -109,7 +109,7 @@ class AdaptiveGradientDescentWithMomentumFactory(MlpMaterialsFactory):
             'HiddenNeuronFitStrategy')})
 
 
-class BatchGradientDescentFactory(MlpMaterialsFactory):
+class BatchGradientDescentMaterialsFactory(MlpMaterialsFactory):
     def __init__(self):
         MlpMaterialsFactory.__init__(self)
         self.class_names.update({name: 'BatchGradientDescent' + name for name in (
@@ -118,7 +118,7 @@ class BatchGradientDescentFactory(MlpMaterialsFactory):
             'HiddenNeuronFitStrategy',)})
 
 
-class BatchGradientDescentWithMomentumFactory(MlpMaterialsFactory):
+class BatchGradientDescentWithMomentumMaterialsFactory(MlpMaterialsFactory):
     def __init__(self):
         MlpMaterialsFactory.__init__(self)
         self.class_names.update({name: 'BatchGradientDescentWithMomentum' + name for name in (

@@ -6,14 +6,14 @@ from amore.interface import *
 
 class TestNeuronPredictStrategies(unittest.TestCase):
     def test_init(self):
-        factory = AdaptiveGradientDescentFactory()
+        factory = AdaptiveGradientDescentMaterialsFactory()
         neural_network = factory.make_primitive_neural_network()
         neuron = factory.make_primitive_neuron(neural_network)
         predict_strategy = factory.make_neuron_predict_strategy(neuron)
         self.assertEqual(predict_strategy.neuron, neuron)
 
     def test_call(self):
-        factory = AdaptiveGradientDescentFactory()
+        factory = AdaptiveGradientDescentMaterialsFactory()
         neural_network = factory.make_primitive_neural_network()
         neuron = factory.make_primitive_neuron(neural_network)
         predict_strategy = factory.make_neuron_predict_strategy(neuron)
@@ -22,7 +22,7 @@ class TestNeuronPredictStrategies(unittest.TestCase):
 
 class TestMlpNeuronPredictStrategy(unittest.TestCase):
     def test_init(self):
-        factory = AdaptiveGradientDescentFactory()
+        factory = AdaptiveGradientDescentMaterialsFactory()
         neural_network = factory.make_primitive_neural_network()
         neuron = factory.make_primitive_neuron(neural_network)
         predict_strategy = factory.make_neuron_predict_strategy(neuron)

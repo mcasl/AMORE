@@ -8,13 +8,13 @@ from amore.neuron_fit_strategies import *
 
 class TestNetworkFitStrategies(unittest.TestCase):
     def test_init(self):
-        factory = AdaptiveGradientDescentFactory()
+        factory = AdaptiveGradientDescentMaterialsFactory()
         neural_network = factory.make_primitive_neural_network()
         fit_strategy = factory.make_neural_network_fit_strategy(neural_network)
         self.assertEqual(fit_strategy.neural_network, neural_network)
 
     def test_call(self):
-        factory = AdaptiveGradientDescentFactory()
+        factory = AdaptiveGradientDescentMaterialsFactory()
         neural_network = factory.make_primitive_neural_network()
         fit_strategy = factory.make_neural_network_fit_strategy(neural_network)
         self.assertRaises(NotImplementedError, NetworkFitStrategy.__call__, fit_strategy)
@@ -22,7 +22,7 @@ class TestNetworkFitStrategies(unittest.TestCase):
 
 class TestMlpNetworkFitStrategy(unittest.TestCase):
     def test_call(self):
-        factory = AdaptiveGradientDescentFactory()
+        factory = AdaptiveGradientDescentMaterialsFactory()
         neural_network = factory.make_primitive_neural_network()
         fit_strategy = factory.make_neural_network_fit_strategy(neural_network)
         self.assertRaises(NotImplementedError, MlpNetworkFitStrategy.__call__, fit_strategy)
@@ -55,7 +55,7 @@ class TestMlpNetworkFitStrategy(unittest.TestCase):
         self.assertNotEqual(post, previous)
 
     def test_set_neurons_fit_strategy(self):
-        factory = AdaptiveGradientDescentFactory()
+        factory = AdaptiveGradientDescentMaterialsFactory()
         neural_network = mlp_network([3, 4, 5], 'tanh', 'tanh')
         neural_network.fit_strategy.set_neurons_fit_strategy(factory)
         result = []

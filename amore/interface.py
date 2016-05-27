@@ -9,7 +9,7 @@ from .materials import MlpNetwork
 def mlp_network(layers_size,
                 hidden_layers_activation_function_name,
                 output_layer_activation_function_name):
-    factory = AdaptiveGradientDescentFactory()
+    factory = AdaptiveGradientDescentMaterialsFactory()
     builder = factory.make_neural_network_builder()
     neural_network = builder.create_neural_network(factory,
                                                    layers_size,

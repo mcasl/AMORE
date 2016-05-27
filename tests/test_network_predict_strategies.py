@@ -6,13 +6,13 @@ from amore.materials import *
 
 class TestNetworkPredictStrategy(unittest.TestCase):
     def test_call(self):
-        factory = AdaptiveGradientDescentFactory()
+        factory = AdaptiveGradientDescentMaterialsFactory()
         neural_network = factory.make_primitive_neural_network()
         network_predict_strategy = factory.make_neural_network_predict_strategy(neural_network)
         self.assertRaises(NotImplementedError, NetworkPredictStrategy.__call__, network_predict_strategy)
 
     def test_activate_neurons(self):
-        factory = AdaptiveGradientDescentFactory()
+        factory = AdaptiveGradientDescentMaterialsFactory()
         neural_network = factory.make_primitive_neural_network()
         network_predict_strategy = factory.make_neural_network_predict_strategy(neural_network)
         self.assertRaises(NotImplementedError, NetworkPredictStrategy.activate_neurons, network_predict_strategy)
@@ -23,7 +23,7 @@ class TestMlpPredictStrategy(unittest.TestCase):
     """
 
     def test_init(self):
-        factory = AdaptiveGradientDescentFactory()
+        factory = AdaptiveGradientDescentMaterialsFactory()
         neural_network = factory.make_primitive_neural_network()
         predict_strategy = MlpNetworkPredictStrategy(neural_network)
         self.assertEqual(predict_strategy.neural_network, neural_network)
@@ -46,7 +46,7 @@ class TestMlpPredictStrategy(unittest.TestCase):
         self.assertTrue((neural_network(input_data) == result).all)
 
     def test_activate_neurons(self):
-        factory = AdaptiveGradientDescentFactory()
+        factory = AdaptiveGradientDescentMaterialsFactory()
         neural_network = mlp_network([3, 2, 1], 'tanh', 'tanh')
         input_data = np.random.rand(2, 3)
         neural_network.read(input_data[1, :])
