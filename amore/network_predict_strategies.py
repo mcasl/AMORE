@@ -41,22 +41,3 @@ class MlpNetworkPredictStrategy(NetworkPredictStrategy):
         for neuron in self.neuron_predict_sequence:
             neuron.predict_strategy()
 
-
-class AdaptiveGradientDescentNetworkPredictStrategy(MlpNetworkPredictStrategy):
-    def __init__(self, neural_network):
-        MlpNetworkPredictStrategy.__init__(self, neural_network)
-
-#
-# class AdaptiveGradientDescentWithMomentumNetworkPredictStrategy(MlpNetworkPredictStrategy):
-#     def __init__(self, neural_network):
-#         MlpNetworkPredictStrategy.__init__(self, neural_network)
-#
-#
-# class BatchGradientDescentNetworkPredictStrategy(MlpNetworkPredictStrategy):
-#     def __init__(self, neural_network):
-#         MlpNetworkPredictStrategy.__init__(self, neural_network)
-#
-#
-# class BatchGradientDescentWithMomentumNetworkPredictStrategy(MlpNetworkPredictStrategy):
-#     def __init__(self, neural_network):
-#         MlpNetworkPredictStrategy.__init__(self, neural_network)

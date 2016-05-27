@@ -64,7 +64,7 @@ class MlpNetwork(Network):
         return list(map(len, self.layers))
 
 
-class Container(list):
+class MlpContainer(list):
     def __init__(self, iterable=[]):
         list.__init__(self, iterable)
 
@@ -105,8 +105,8 @@ class MlpNeuron(Neuron):
         return self.predict_strategy()
 
 
-class Connection(object):
-    """ A simple data structure for linking neurons
+class MlpConnection(object):
+    """ A simple data structure for linking neurons in MLP networks
     """
 
     def __init__(self,

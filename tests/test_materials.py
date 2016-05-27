@@ -19,7 +19,7 @@ class TestConnection(unittest.TestCase):
         factory = AdaptiveGradientDescentFactory()
         neural_network = factory.make_primitive_neural_network()
         neuron = MlpNeuron(neural_network)
-        connection = Connection(neuron)
+        connection = MlpConnection(neuron)
         self.assertEqual(connection.weight, 0.0)
 
     @given(weight=st.floats())
@@ -29,7 +29,7 @@ class TestConnection(unittest.TestCase):
         factory = AdaptiveGradientDescentFactory()
         neural_network = factory.make_primitive_neural_network()
         neuron = MlpNeuron(neural_network)
-        connection = Connection(neuron, weight)
+        connection = MlpConnection(neuron, weight)
         self.assertTrue(connection.weight is weight)
 
 
@@ -78,7 +78,7 @@ class TestNeuralNetwork(unittest.TestCase):
         factory = AdaptiveGradientDescentFactory()
         neural_network = factory.make_primitive_neural_network()
         self.assertEqual(neural_network.factory, factory)
-        self.assertTrue(isinstance(neural_network.predict_strategy, AdaptiveGradientDescentNetworkPredictStrategy))
+        self.assertTrue(isinstance(neural_network.predict_strategy, MlpNetworkPredictStrategy))
         self.assertTrue(isinstance(neural_network.fit_strategy, AdaptiveGradientDescentNetworkFitStrategy))
 
     def test_call(self):
