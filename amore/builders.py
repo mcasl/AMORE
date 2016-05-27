@@ -5,7 +5,7 @@ from .materials import *
 from .neuron_predict_strategies import *
 
 
-class NeuralNetworkBuilder(object, metaclass=ABCMeta):
+class NetworkBuilder(object, metaclass=ABCMeta):
     """ The mother of all neural creators (a.k.a. Interface)
     """
 
@@ -14,7 +14,7 @@ class NeuralNetworkBuilder(object, metaclass=ABCMeta):
         raise NotImplementedError("You shouldn't be calling NeuralNetworkBuilder.create_neural_network")
 
 
-class MlpNeuralNetworkBuilder(NeuralNetworkBuilder):
+class MlpNetworkBuilder(NetworkBuilder):
     """ A simple implementation of the logic for building multilayer feed forward networks
     """
 
@@ -28,10 +28,10 @@ class MlpNeuralNetworkBuilder(NeuralNetworkBuilder):
         """
         neural_network = neural_factory.make_primitive_neural_network()
         if layers_size:
-            MlpNeuralNetworkBuilder.create_primitive_layers(neural_factory, neural_network, layers_size)
-            MlpNeuralNetworkBuilder.create_neuron_fit_and_predict_sequence(neural_network)
-            MlpNeuralNetworkBuilder.connect_network_layers(neural_factory, neural_network)
-            MlpNeuralNetworkBuilder.initialize_network(neural_network)
+            MlpNetworkBuilder.create_primitive_layers(neural_factory, neural_network, layers_size)
+            MlpNetworkBuilder.create_neuron_fit_and_predict_sequence(neural_network)
+            MlpNetworkBuilder.connect_network_layers(neural_factory, neural_network)
+            MlpNetworkBuilder.initialize_network(neural_network)
             neural_network.fit_strategy.set_neurons_fit_strategy(neural_factory)
             return neural_network
 

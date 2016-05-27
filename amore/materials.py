@@ -4,7 +4,7 @@ from typing import List
 import numpy as np
 
 
-class NeuralNetwork(object, metaclass=ABCMeta):
+class Network(object, metaclass=ABCMeta):
     """ The mother of all neural networks (a.k.a Interface)
     """
 
@@ -36,12 +36,12 @@ class NeuralNetwork(object, metaclass=ABCMeta):
         raise NotImplementedError("You shouldn't be calling NeuralNetwork.shape")
 
 
-class MlpNeuralNetwork(NeuralNetwork):
+class MlpNetwork(Network):
     """ Simple implementation of a multilayer feed forward network
     """
 
     def __init__(self, neural_factory):
-        NeuralNetwork.__init__(self, neural_factory)
+        Network.__init__(self, neural_factory)
         self.layers = neural_factory.make_primitive_container()
         self.predict_strategy = neural_factory.make_neural_network_predict_strategy(self)
 
@@ -74,7 +74,7 @@ class Neuron(object, metaclass=ABCMeta):
     """
 
     @abstractmethod
-    def __init__(self, neural_network: NeuralNetwork):
+    def __init__(self, neural_network: Network):
         """ Initializer. An assumption is made that all neurons will have at least these properties.
         """
         self.label = None
@@ -93,7 +93,7 @@ class MlpNeuron(Neuron):
     """ A simple neuron as in multilayer feed forward networks
     """
 
-    def __init__(self, neural_network: MlpNeuralNetwork):
+    def __init__(self, neural_network: MlpNetwork):
         """ Initializer. Python requires explicit call to base class initializer
         """
         Neuron.__init__(self, neural_network)

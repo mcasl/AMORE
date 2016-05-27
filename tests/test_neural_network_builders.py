@@ -1,14 +1,14 @@
 import unittest
 
 from amore.factories import *
-from amore.builders import NeuralNetworkBuilder, MlpNeuralNetworkBuilder
+from amore.builders import NetworkBuilder, MlpNetworkBuilder
 
 
 class TestNeuralNetworkBuilder(unittest.TestCase):
     def test_create_neural_network(self):
         factory = AdaptiveGradientDescentFactory()
         builder = factory.make_neural_network_builder()
-        self.assertRaises(NotImplementedError, NeuralNetworkBuilder.create_neural_network, builder)
+        self.assertRaises(NotImplementedError, NetworkBuilder.create_neural_network, builder)
 
 
 class TestMlpNeuralBuilder(unittest.TestCase):
@@ -19,14 +19,14 @@ class TestMlpNeuralBuilder(unittest.TestCase):
         factory = AdaptiveGradientDescentFactory()
         builder = factory.make_neural_network_builder()
         neural_network = builder.create_neural_network(factory, [3, 5, 2], 'tanh', 'tanh')
-        self.assertTrue(isinstance(neural_network, MlpNeuralNetwork))
+        self.assertTrue(isinstance(neural_network, MlpNetwork))
 
     def test_connect_network_layers(self):
         factory = AdaptiveGradientDescentFactory()
         neural_network = factory.make_primitive_neural_network()
-        MlpNeuralNetworkBuilder.create_primitive_layers(factory, neural_network, [3, 5, 2])
-        MlpNeuralNetworkBuilder.connect_network_layers(factory, neural_network)
-        MlpNeuralNetworkBuilder.initialize_network(neural_network)
+        MlpNetworkBuilder.create_primitive_layers(factory, neural_network, [3, 5, 2])
+        MlpNetworkBuilder.connect_network_layers(factory, neural_network)
+        MlpNetworkBuilder.initialize_network(neural_network)
         labels = []
         for layer in neural_network.layers:
             labels.append([neuron.label for neuron in layer])
@@ -51,13 +51,13 @@ class TestMlpNeuralBuilder(unittest.TestCase):
     def test_initialize_network_empty_layers(self):
         factory = AdaptiveGradientDescentFactory()
         neural_network = factory.make_primitive_neural_network()
-        self.assertRaises(ValueError, MlpNeuralNetworkBuilder.initialize_network, neural_network)
+        self.assertRaises(ValueError, MlpNetworkBuilder.initialize_network, neural_network)
 
     def test_initialize_network_where_weights_and_biases_change(self):
         factory = AdaptiveGradientDescentFactory()
         neural_network = factory.make_primitive_neural_network()
-        MlpNeuralNetworkBuilder.create_primitive_layers(factory, neural_network, [3, 5, 2])
-        MlpNeuralNetworkBuilder.connect_network_layers(factory, neural_network)
+        MlpNetworkBuilder.create_primitive_layers(factory, neural_network, [3, 5, 2])
+        MlpNetworkBuilder.connect_network_layers(factory, neural_network)
 
         pre_initialized_weights = []
         pre_initialized_biases = []
@@ -67,7 +67,7 @@ class TestMlpNeuralBuilder(unittest.TestCase):
                 for connection in neuron.connections:
                     pre_initialized_weights.append(connection.weight)
 
-        MlpNeuralNetworkBuilder.initialize_network(neural_network)
+        MlpNetworkBuilder.initialize_network(neural_network)
 
         post_initialized_weights = []
         post_initialized_biases = []
@@ -84,7 +84,7 @@ class TestMlpNeuralBuilder(unittest.TestCase):
         """ TestSimpleNeuralCreator Unit tests """
         factory = AdaptiveGradientDescentFactory()
         neural_network = factory.make_primitive_neural_network()
-        MlpNeuralNetworkBuilder.create_primitive_layers(factory, neural_network, [3, 5, 2])
+        MlpNetworkBuilder.create_primitive_layers(factory, neural_network, [3, 5, 2])
         self.assertEqual(len(neural_network.layers), 3)
         self.assertEqual(list(map(len, neural_network.layers)), [3, 5, 2])
 

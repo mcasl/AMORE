@@ -1,7 +1,7 @@
 """ Amore: A module for training and simulating neural networks the way researchers need
 """
 from .factories import *
-from .materials import MlpNeuralNetwork
+from .materials import MlpNetwork
 
 # TODO: remember: alternative constructors @classmethod def myalternativeconstructor(class, other arguments):
 
@@ -23,7 +23,7 @@ def fit_adaptive_gradient_descent(mlp_neural_network,
                                   target_data,
                                   learning_rate,
                                   step_length,
-                                  number_of_steps) -> MlpNeuralNetwork:
+                                  number_of_steps) -> MlpNetwork:
     mlp_neural_network.fit_strategy.set_neurons_learning_rate(learning_rate)
     for step in range(number_of_steps):
         for inner_iterations in range(step_length):

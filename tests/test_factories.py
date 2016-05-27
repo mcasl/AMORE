@@ -12,7 +12,7 @@ class TestNeuralFactory(unittest.TestCase):
 
     def test_make_neuron_fit_strategy(self):
         factory = AdaptiveGradientDescentFactory()
-        self.assertRaises(NotImplementedError, NeuralFactory.make_neuron_fit_strategy, factory, factory)
+        self.assertRaises(NotImplementedError, MaterialsFactory.make_neuron_fit_strategy, factory, factory)
 
 
 class MlpNeuralNetworkFactory(unittest.TestCase):
@@ -39,12 +39,12 @@ class MlpNeuralNetworkFactory(unittest.TestCase):
     def test_make_primitive_neural_network(self):
         factory = AdaptiveGradientDescentFactory()
         neural_network = factory.make_primitive_neural_network()
-        self.assertTrue(isinstance(neural_network, MlpNeuralNetwork))
+        self.assertTrue(isinstance(neural_network, MlpNetwork))
 
     def test_make_neural_network_builder(self):
         factory = AdaptiveGradientDescentFactory()
         builder = factory.make_neural_network_builder()
-        self.assertTrue(isinstance(builder, MlpNeuralNetworkBuilder))
+        self.assertTrue(isinstance(builder, MlpNetworkBuilder))
 
     def test_make_activation_function(self):
         factory = AdaptiveGradientDescentFactory()
@@ -85,13 +85,13 @@ class TestAdaptiveGradientDescentFactory(unittest.TestCase):
     def test_make_primitive_neural_network(self):
         factory = AdaptiveGradientDescentFactory()
         neural_network = factory.make_primitive_neural_network()
-        self.assertEqual(type(neural_network), type(MlpNeuralNetwork(factory)))
+        self.assertEqual(type(neural_network), type(MlpNetwork(factory)))
 
     def test_make_neural_network_builder(self):
         factory = AdaptiveGradientDescentFactory()
         neural_network = factory.make_primitive_neural_network()
         neural_network_builder = factory.make_neural_network_builder()
-        self.assertEqual(type(neural_network_builder), type(MlpNeuralNetworkBuilder()))
+        self.assertEqual(type(neural_network_builder), type(MlpNetworkBuilder()))
 
     def test_make_neuron_predict_strategy(self):
         factory = AdaptiveGradientDescentFactory()

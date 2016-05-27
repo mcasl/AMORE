@@ -9,10 +9,9 @@ from .neuron_predict_strategies import *
 
 
 class Factory(object, metaclass=ABCMeta):
-    """ The mother of all neural factories (a.k.a Interface)
+    """ An class for providing a generic make method
     """
 
-    @abstractmethod
     def __init__(self):
         self.class_names = {}
 
@@ -21,8 +20,9 @@ class Factory(object, metaclass=ABCMeta):
         return globals()[class_complete_name](*pargs, **kwargs)
 
 
-class NeuralFactory(Factory):
-    """ The mother of all neural factories (a.k.a Interface)
+class MaterialsFactory(Factory):
+    """ The mother of all neural factories. It provides code that is common for all subclasses. Each of these
+        will use it in accordance to its own self.class_names dictionary
     """
 
     @abstractmethod
@@ -30,28 +30,28 @@ class NeuralFactory(Factory):
         Factory.__init__(self)
 
     def make_neural_network_builder(self):
-        return self.make('neural_network_builder')
+        return self.make('NetworkBuilder')
 
     def make_primitive_neural_network(self):
-        return self.make('neural_network', self)
+        return self.make('Network', self)
 
     def make_primitive_container(self):
-        return self.make('container')
+        return self.make('Container')
 
     def make_primitive_neuron(self, neural_network):
-        return self.make('neuron', neural_network)
+        return self.make('Neuron', neural_network)
 
     def make_primitive_connection(self, neuron):
-        return self.make('connection', neuron)
+        return self.make('Connection', neuron)
 
     def make_neural_network_predict_strategy(self, neural_network):
-        return self.make('neural_network_predict_strategy', neural_network)
+        return self.make('NetworkPredictStrategy', neural_network)
 
     def make_neural_network_fit_strategy(self, neural_network):
-        return self.make('neural_network_fit_strategy', neural_network)
+        return self.make('NetworkFitStrategy', neural_network)
 
     def make_neuron_predict_strategy(self, neuron):
-        return self.make('neuron_predict_strategy', neuron)
+        return self.make('NeuronPredictStrategy', neuron)
 
     @abstractmethod
     def make_neuron_fit_strategy(self, neuron):
@@ -66,72 +66,71 @@ class NeuralFactory(Factory):
         return cost_functions_set[function_name]
 
 
-class MlpNeuralFactory(NeuralFactory):
-    """ Simple implementation of a factories of multilayer feed forward network's elements
+class MlpMaterialsFactory(MaterialsFactory):
+    """ Simple implementation of a factoriy of multilayer feed forward network's elements
     """
 
     @abstractmethod
     def __init__(self):
-        NeuralFactory.__init__(self)
+        MaterialsFactory.__init__(self)
         self.class_names.update({
-            'connection': 'Connection',
-            'container': 'Container',
-            'neuron': 'MlpNeuron',
-            'neural_network': 'MlpNeuralNetwork',
-            'neural_network_builder': 'MlpNeuralNetworkBuilder'})
+            'Connection': 'Connection',
+            'Container': 'Container',
+            'Neuron': 'MlpNeuron',
+            'Network': 'MlpNetwork',
+            'NetworkBuilder': 'MlpNetworkBuilder'})
 
     def make_neuron_fit_strategy(self, neuron):
         is_output_neuron = neuron in neuron.neural_network.layers[-1]
         if is_output_neuron:
-            return self.make('output_neuron_fit_strategy', neuron)
+            return self.make('OutputNeuronFitStrategy', neuron)
         else:
-            return self.make('hidden_neuron_fit_strategy', neuron)
+            return self.make('HiddenNeuronFitStrategy', neuron)
 
 
-class AdaptiveGradientDescentFactory(MlpNeuralFactory):
+class AdaptiveGradientDescentFactory(MlpMaterialsFactory):
     def __init__(self):
-        MlpNeuralFactory.__init__(self)
-        self.class_names.update(
-            {'neural_network_fit_strategy': 'AdaptiveGradientDescentNetworkFitStrategy',
-             'neural_network_predict_strategy': 'AdaptiveGradientDescentNetworkPredictStrategy',
-             'neuron_fit_strategy': 'AdaptiveGradientDescentNeuronFitStrategy',
-             'output_neuron_fit_strategy': 'AdaptiveGradientDescentOutputNeuronFitStrategy',
-             'hidden_neuron_fit_strategy': 'AdaptiveGradientDescentHiddenNeuronFitStrategy',
-             'neuron_predict_strategy': 'AdaptiveGradientDescentNeuronPredictStrategy'})
+        MlpMaterialsFactory.__init__(self)
+        self.class_names.update({name: 'AdaptiveGradientDescent' + name for name in (
+            'NetworkFitStrategy',
+            'NetworkPredictStrategy',
+            'NeuronFitStrategy',
+            'OutputNeuronFitStrategy',
+            'HiddenNeuronFitStrategy',
+            'NeuronPredictStrategy')})
 
 
-class AdaptiveGradientDescentWithMomentumFactory(MlpNeuralFactory):
+class AdaptiveGradientDescentWithMomentumFactory(MlpMaterialsFactory):
     def __init__(self):
-        MlpNeuralFactory.__init__(self)
+        MlpMaterialsFactory.__init__(self)
+        self.class_names.update({name: 'AdaptiveGradientDescentWithMomentum' + name for name in (
+            'NetworkFitStrategy',
+            'NetworkPredictStrategy',
+            'NeuronFitStrategy',
+            'OutputNeuronFitStrategy',
+            'HiddenNeuronFitStrategy',
+            'NeuronPredictStrategy')})
 
-        self.class_names.update(
-            {'neural_network_fit_strategy': 'AdaptiveGradientDescentWithMomentumNetworkFitStrategy',
-             'neural_network_predict_strategy': 'AdaptiveGradientDescentWithMomentumNetworkPredictStrategy',
-             'neuron_fit_strategy': 'AdaptiveGradientDescentWithMomentumNeuronFitStrategy',
-             'output_neuron_fit_strategy': 'AdaptiveGradientDescentWithMomentumOutputNeuronFitStrategy',
-             'hidden_neuron_fit_strategy': 'AdaptiveGradientDescentWithMomentumHiddenNeuronFitStrategy',
-             'neuron_predict_strategy': 'AdaptiveGradientDescentWithMomentumNeuronPredictStrategy'})
 
-
-class BatchGradientDescentFactory(MlpNeuralFactory):
+class BatchGradientDescentFactory(MlpMaterialsFactory):
     def __init__(self):
-        MlpNeuralFactory.__init__(self)
-        self.class_names.update(
-            {'neural_network_fit_strategy': 'BatchGradientDescentNetworkFitStrategy',
-             'neural_network_predict_strategy': 'BatchGradientDescentNetworkPredictStrategy',
-             'neuron_fit_strategy': 'BatchGradientDescentNeuronFitStrategy',
-             'output_neuron_fit_strategy': 'BatchGradientDescentOutputNeuronFitStrategy',
-             'hidden_neuron_fit_strategy': 'BatchGradientDescentHiddenNeuronFitStrategy',
-             'neuron_predict_strategy': 'BatchGradientDescentPredictStrategy'})
+        MlpMaterialsFactory.__init__(self)
+        self.class_names.update({name: 'BatchGradientDescent' + name for name in (
+            'NetworkFitStrategy',
+            'NetworkPredictStrategy',
+            'NeuronFitStrategy',
+            'OutputNeuronFitStrategy',
+            'HiddenNeuronFitStrategy',
+            'NeuronPredictStrategy')})
 
 
-class BatchGradientDescentWithMomentumFactory(MlpNeuralFactory):
+class BatchGradientDescentWithMomentumFactory(MlpMaterialsFactory):
     def __init__(self):
-        MlpNeuralFactory.__init__(self)
-        self.class_names.update(
-            {'neural_network_fit_strategy': 'BatchGradientDescentWithMomentumNetworkFitStrategy',
-             'neural_network_predict_strategy': 'BatchGradientDescentWithMomentumNetworkPredictStrategy',
-             'neuron_fit_strategy': 'BatchGradientDescentWithMomentumNeuronFitStrategy',
-             'output_neuron_fit_strategy': 'BatchGradientDescentWithMomentumOutputNeuronFitStrategy',
-             'hidden_neuron_fit_strategy': 'BatchGradientDescentWithMomentumHiddenNeuronFitStrategy',
-             'neuron_predict_strategy': 'BatchGradientDescentWithMomentumNeuronPredictStrategy'})
+        MlpMaterialsFactory.__init__(self)
+        self.class_names.update({name: 'BatchGradientDescentWithMomentum' + name for name in (
+            'NetworkFitStrategy',
+            'NetworkPredictStrategy',
+            'NeuronFitStrategy',
+            'OutputNeuronFitStrategy',
+            'HiddenNeuronFitStrategy',
+            'NeuronPredictStrategy')})

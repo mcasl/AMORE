@@ -84,18 +84,18 @@ class TestNeuralNetwork(unittest.TestCase):
     def test_call(self):
         factory = AdaptiveGradientDescentFactory()
         neural_network = factory.make_primitive_neural_network()
-        self.assertRaises(NotImplementedError, NeuralNetwork.__call__, neural_network)
+        self.assertRaises(NotImplementedError, Network.__call__, neural_network)
 
     def test_read(self):
         factory = AdaptiveGradientDescentFactory()
         neural_network = factory.make_primitive_neural_network()
         data = None
-        self.assertRaises(NotImplementedError, NeuralNetwork.read, neural_network, data)
+        self.assertRaises(NotImplementedError, Network.read, neural_network, data)
 
     def test_inspect_output(self):
         factory = AdaptiveGradientDescentFactory()
         neural_network = factory.make_primitive_neural_network()
-        self.assertRaises(NotImplementedError, NeuralNetwork.inspect_output, neural_network)
+        self.assertRaises(NotImplementedError, Network.inspect_output, neural_network)
 
         # def test_shape(self):
         #     factory = AdaptiveGradientDescentFactory()
