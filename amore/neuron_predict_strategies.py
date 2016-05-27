@@ -25,22 +25,3 @@ class MlpNeuronPredictStrategy(NeuronPredictStrategy):
         self.neuron.output = self.neuron.activation_function(self.induced_local_field)
         return self.neuron.output
 
-
-class AdaptiveGradientDescentNeuronPredictStrategy(MlpNeuronPredictStrategy):
-    def __init__(self, neuron):
-        MlpNeuronPredictStrategy.__init__(self, neuron)
-
-#
-# class AdaptiveGradientDescentWithMomentumNeuronPredictStrategy(MlpNeuronPredictStrategy):
-#     def __init__(self, neuron):
-#         MlpNeuronPredictStrategy.__init__(self, neuron)
-
-#
-# class BatchGradientDescentNeuronPredictStrategy(MlpNeuronPredictStrategy):
-#     def __init__(self, neuron):
-#         MlpNeuronPredictStrategy.__init__(self, neuron)
-#
-#
-# class BatchGradientDescentWithMomentumNeuronPredictStrategy(MlpNeuronPredictStrategy):
-#     def __init__(self, neuron):
-#         MlpNeuronPredictStrategy.__init__(self, neuron)

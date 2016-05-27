@@ -97,8 +97,8 @@ class TestAdaptiveGradientDescentFactory(unittest.TestCase):
         factory = AdaptiveGradientDescentFactory()
         neural_network = factory.make_primitive_neural_network()
         neuron = factory.make_primitive_neuron(neural_network)
-        predict_strategy = AdaptiveGradientDescentNeuronPredictStrategy(neuron)
-        self.assertTrue(type(predict_strategy), type(AdaptiveGradientDescentNeuronPredictStrategy))
+        predict_strategy = factory.make_neuron_predict_strategy(neuron)
+        self.assertTrue(type(predict_strategy), type(MlpNeuronPredictStrategy))
 
     def test_make_neuron_fit_strategy_neuron_in_output_layer(self):
         factory = AdaptiveGradientDescentFactory()

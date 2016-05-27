@@ -77,8 +77,9 @@ class MlpMaterialsFactory(MaterialsFactory):
             'Connection',
             'Container',
             'Neuron',
-            'NetworkPredictStrategy',
             'Network',
+            'NeuronPredictStrategy',
+            'NetworkPredictStrategy',
             'NetworkBuilder')})
 
 
@@ -95,10 +96,8 @@ class AdaptiveGradientDescentFactory(MlpMaterialsFactory):
         MlpMaterialsFactory.__init__(self)
         self.class_names.update({name: 'AdaptiveGradientDescent' + name for name in (
             'NetworkFitStrategy',
-            'NeuronFitStrategy',
             'OutputNeuronFitStrategy',
-            'HiddenNeuronFitStrategy',
-            'NeuronPredictStrategy')})
+            'HiddenNeuronFitStrategy')})
 
 
 class AdaptiveGradientDescentWithMomentumFactory(MlpMaterialsFactory):
@@ -106,10 +105,8 @@ class AdaptiveGradientDescentWithMomentumFactory(MlpMaterialsFactory):
         MlpMaterialsFactory.__init__(self)
         self.class_names.update({name: 'AdaptiveGradientDescentWithMomentum' + name for name in (
             'NetworkFitStrategy',
-            'NeuronFitStrategy',
             'OutputNeuronFitStrategy',
-            'HiddenNeuronFitStrategy',
-            'NeuronPredictStrategy')})
+            'HiddenNeuronFitStrategy')})
 
 
 class BatchGradientDescentFactory(MlpMaterialsFactory):
@@ -117,10 +114,8 @@ class BatchGradientDescentFactory(MlpMaterialsFactory):
         MlpMaterialsFactory.__init__(self)
         self.class_names.update({name: 'BatchGradientDescent' + name for name in (
             'NetworkFitStrategy',
-            'NeuronFitStrategy',
             'OutputNeuronFitStrategy',
-            'HiddenNeuronFitStrategy',
-            'NeuronPredictStrategy')})
+            'HiddenNeuronFitStrategy',)})
 
 
 class BatchGradientDescentWithMomentumFactory(MlpMaterialsFactory):
@@ -128,7 +123,5 @@ class BatchGradientDescentWithMomentumFactory(MlpMaterialsFactory):
         MlpMaterialsFactory.__init__(self)
         self.class_names.update({name: 'BatchGradientDescentWithMomentum' + name for name in (
             'NetworkFitStrategy',
-            'NeuronFitStrategy',
             'OutputNeuronFitStrategy',
-            'HiddenNeuronFitStrategy',
-            'NeuronPredictStrategy')})
+            'HiddenNeuronFitStrategy')})

@@ -52,7 +52,7 @@ class TestMlpNeuron(unittest.TestCase):
         self.assertEqual(neuron.label, None)
         self.assertEqual(neuron.output, 0.0)
         self.assertEqual(neuron.connections, [])
-        self.assertTrue(isinstance(neuron.predict_strategy, AdaptiveGradientDescentNeuronPredictStrategy))
+        self.assertTrue(isinstance(neuron.predict_strategy, MlpNeuronPredictStrategy))
 
     def test___call__(self):
         factory = AdaptiveGradientDescentFactory()
