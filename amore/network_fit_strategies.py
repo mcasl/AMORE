@@ -41,7 +41,7 @@ class MlpNetworkFitStrategy(NetworkFitStrategy):
                 neuron.fit_strategy.learning_rate = learning_rate
 
 
-class AdaptiveGradientDescentNetworkFitStrategy(MlpNetworkFitStrategy):
+class AdaptiveNetworkFitStrategy(MlpNetworkFitStrategy):
     def __init__(self, neural_network):
         MlpNetworkFitStrategy.__init__(self, neural_network)
 

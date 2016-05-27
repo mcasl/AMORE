@@ -133,8 +133,8 @@ class TestAdaptiveGradientDescentFactory(unittest.TestCase):
     def test_make_neural_network_fit_strategy(self):
         factory = AdaptiveGradientDescentMaterialsFactory()
         neural_network = factory.make_primitive_neural_network()
-        fit_strategy = AdaptiveGradientDescentNetworkFitStrategy(neural_network)
-        self.assertTrue(type(fit_strategy), type(AdaptiveGradientDescentNetworkFitStrategy(neural_network)))
+        fit_strategy = AdaptiveNetworkFitStrategy(neural_network)
+        self.assertTrue(type(fit_strategy), type(AdaptiveNetworkFitStrategy(neural_network)))
 
     def test_make_activation_function(self):
         factory = AdaptiveGradientDescentMaterialsFactory()

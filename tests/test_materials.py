@@ -79,7 +79,7 @@ class TestNeuralNetwork(unittest.TestCase):
         neural_network = factory.make_primitive_neural_network()
         self.assertEqual(neural_network.factory, factory)
         self.assertTrue(isinstance(neural_network.predict_strategy, MlpNetworkPredictStrategy))
-        self.assertTrue(isinstance(neural_network.fit_strategy, AdaptiveGradientDescentNetworkFitStrategy))
+        self.assertTrue(isinstance(neural_network.fit_strategy, AdaptiveNetworkFitStrategy))
 
     def test_call(self):
         factory = AdaptiveGradientDescentMaterialsFactory()
