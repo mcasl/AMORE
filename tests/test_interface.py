@@ -3,7 +3,7 @@ import unittest
 from amore.interface import *
 
 
-class TestAmore(unittest.TestCase):
+class TestInterface(unittest.TestCase):
     def test_mlp_network(self):
         neural_network = mlp_network(layers_size=[3, 5, 2],
                                      hidden_layers_activation_function_name='tanh',

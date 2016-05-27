@@ -64,6 +64,11 @@ class MlpNeuralNetwork(NeuralNetwork):
         return list(map(len, self.layers))
 
 
+class Container(list):
+    def __init__(self, iterable=[]):
+        list.__init__(self, iterable)
+
+
 class Neuron(object, metaclass=ABCMeta):
     """ The mother of all neurons (a.k.a. Interface)
     """

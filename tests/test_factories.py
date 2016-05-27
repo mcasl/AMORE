@@ -10,25 +10,9 @@ from amore.neuron_predict_strategies import *
 
 class TestNeuralFactory(unittest.TestCase):
 
-    def test_make_neural_network_builder(self):
-        factory = AdaptiveGradientDescentFactory()
-        self.assertRaises(NotImplementedError, Factory.make_neural_network_builder, factory)
-
-    def test_make_neural_network_predict_strategy(self):
-        factory = AdaptiveGradientDescentFactory()
-        self.assertRaises(NotImplementedError, Factory.make_neural_network_predict_strategy, factory, factory)
-
-    def test_make_neural_network_fit_strategy(self):
-        factory = AdaptiveGradientDescentFactory()
-        self.assertRaises(NotImplementedError, Factory.make_neural_network_fit_strategy, factory, factory)
-
-    def test_make_neuron_predict_strategy(self):
-        factory = AdaptiveGradientDescentFactory()
-        self.assertRaises(NotImplementedError, Factory.make_neuron_predict_strategy, factory, factory)
-
     def test_make_neuron_fit_strategy(self):
         factory = AdaptiveGradientDescentFactory()
-        self.assertRaises(NotImplementedError, Factory.make_neuron_fit_strategy, factory, factory)
+        self.assertRaises(NotImplementedError, NeuralFactory.make_neuron_fit_strategy, factory, factory)
 
 
 class MlpNeuralNetworkFactory(unittest.TestCase):
