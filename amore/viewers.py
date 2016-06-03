@@ -28,23 +28,31 @@ class MlpNeuralViewer(NeuralViewerConsole):
     def show_neuron(neuron):
         result = ('\n\n'
                   '-----------------------------------\n'
-                  ' Id label: {label}\n'
+                  ' Neuron: {label}\n'
                   '-----------------------------------\n'
                   ' Output: {output}\n'
                   '-----------------------------------\n'
-                  # TODO:    '{predict_behavior}'
-                  ' Target: {target}\n'
-                  '-----------------------------------\n').format(label=neuron.label,
-                                                                  output=neuron.output,
-                                                                  # TODO:  predict_behavior=repr(self.predictBehavior),
-                                                                  target=neuron.target)
-        result += repr(neuron.connections)
-        #          '\n-----------------------------------\n'
-        #                   'Neuron Train Behavior: {train_behavior}'.format(train_behavior=self.train_behavior),
-        #         '\n-----------------------------------'
+                  ' Neuron predict strategy: {predict_strategy}'
+                  '\n-----------------------------------\n'
+                  ' Neuron fit strategy: {fit_strategy}'
+                  '\n-----------------------------------'
+                  '\n Connections:'
+                  '\n-----------------------------------\n'
+                  ).format(label=neuron.label,
+                           output=round(neuron.output, 8),
+                           predict_strategy=neuron.predict_strategy.__class__,
+                           fit_strategy=neuron.fit_strategy.__class__,
+                           )
+        for connection in neuron.connections:
+            result += ' Neuron: {label}, weight: {weight}\n'.format(label=connection.neuron.label,
+                                                                    weight=connection.weight)
+        result += '-----------------------------------\n'
         print(result)
+        return result
+
 
     @staticmethod
+
     def show_neural_network(neural_network):
         """ Pretty print
         """
@@ -54,15 +62,23 @@ class MlpNeuralViewer(NeuralViewerConsole):
                   '     INPUT LAYER:\n'
                   '----------------------------------------------\n'
                   )
-        result += repr(neural_network.layers[0])
+        for neuron in neural_network.layers[0]:
+            result += MlpNeuralViewer.show_neuron(neuron)
+
         result += ('\n----------------------------------------------\n'
                    '     HIDDEN LAYERS:\n'
                    '----------------------------------------------\n'
                    )
-        result += repr(neural_network.layers[1:-1])
+        for layer in neural_network.layers[1:-1]:
+            result += '##############################################'
+            for neuron in layer:
+                result += MlpNeuralViewer.show_neuron(neuron)
+
         result += ('\n----------------------------------------------\n'
                    '     OUTPUT LAYER:\n'
                    '----------------------------------------------\n'
                    )
-        result += repr(neural_network.layers[-1])
+        for neuron in neural_network.layers[-1]:
+            result += MlpNeuralViewer.show_neuron(neuron)
         print(result)
+        return result

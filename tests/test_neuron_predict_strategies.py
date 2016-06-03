@@ -2,19 +2,20 @@ import math
 import unittest
 
 from amore.interface import *
+from amore.neuron_predict_strategies import NeuronPredictStrategy
 
 
 class TestNeuronPredictStrategies(unittest.TestCase):
     def test_init(self):
         factory = AdaptiveGradientDescentMaterialsFactory()
-        neural_network = factory.make_primitive_neural_network()
+        neural_network = factory.make_primitive_network()
         neuron = factory.make_primitive_neuron(neural_network)
         predict_strategy = factory.make_neuron_predict_strategy(neuron)
         self.assertEqual(predict_strategy.neuron, neuron)
 
     def test_call(self):
         factory = AdaptiveGradientDescentMaterialsFactory()
-        neural_network = factory.make_primitive_neural_network()
+        neural_network = factory.make_primitive_network()
         neuron = factory.make_primitive_neuron(neural_network)
         predict_strategy = factory.make_neuron_predict_strategy(neuron)
         self.assertRaises(NotImplementedError, NeuronPredictStrategy.__call__, predict_strategy)
@@ -23,7 +24,7 @@ class TestNeuronPredictStrategies(unittest.TestCase):
 class TestMlpNeuronPredictStrategy(unittest.TestCase):
     def test_init(self):
         factory = AdaptiveGradientDescentMaterialsFactory()
-        neural_network = factory.make_primitive_neural_network()
+        neural_network = factory.make_primitive_network()
         neuron = factory.make_primitive_neuron(neural_network)
         predict_strategy = factory.make_neuron_predict_strategy(neuron)
         self.assertEqual(predict_strategy.induced_local_field, 0.0)

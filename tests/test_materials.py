@@ -8,6 +8,19 @@ from amore.materials import *
 from amore.network_fit_strategies import *
 from amore.network_predict_strategies import *
 from amore.neuron_predict_strategies import *
+from amore.interface import mlp_network
+
+
+class TestMlpContainer(unittest.TestCase):
+    """ Tests for Container class, currently a list subclass"""
+
+    def test_init_where_iterable_is_default(self):
+        container = MlpContainer()
+        self.assertEqual(container, [])
+
+    def test_init_where_iterable_is_sequence(self):
+        container = MlpContainer([2, 5, 67])
+        self.assertEqual(container, [2, 5, 67])
 
 
 class TestConnection(unittest.TestCase):
@@ -17,26 +30,28 @@ class TestConnection(unittest.TestCase):
         """ Connection constructor test. weight attribute initialization is checked
         """
         factory = AdaptiveGradientDescentMaterialsFactory()
-        neural_network = factory.make_primitive_neural_network()
+        neural_network = factory.make_primitive_network()
         neuron = MlpNeuron(neural_network)
         connection = MlpConnection(neuron)
         self.assertEqual(connection.weight, 0.0)
+        self.assertTrue(connection.neuron is neuron)
 
     @given(weight=st.floats())
     def test_init_where_weight_is_given(self, weight):
         """ Connection constructor test. weight attribute initialization is checked
         """
         factory = AdaptiveGradientDescentMaterialsFactory()
-        neural_network = factory.make_primitive_neural_network()
+        neural_network = factory.make_primitive_network()
         neuron = MlpNeuron(neural_network)
         connection = MlpConnection(neuron, weight)
         self.assertTrue(connection.weight is weight)
+        self.assertTrue(connection.neuron is neuron)
 
 
 class TestNeuron(unittest.TestCase):
     def test_call(self):
         factory = AdaptiveGradientDescentMaterialsFactory()
-        neural_network = factory.make_primitive_neural_network()
+        neural_network = factory.make_primitive_network()
         neuron = MlpNeuron(neural_network)
         self.assertRaises(NotImplementedError, Neuron.__call__, neuron)
 
@@ -47,109 +62,82 @@ class TestMlpNeuron(unittest.TestCase):
 
     def test_init(self):
         factory = AdaptiveGradientDescentMaterialsFactory()
-        neural_network = factory.make_primitive_neural_network()
+        neural_network = factory.make_primitive_network()
         neuron = MlpNeuron(neural_network)
-        self.assertEqual(neuron.label, None)
-        self.assertEqual(neuron.output, 0.0)
-        self.assertEqual(neuron.connections, [])
-        self.assertTrue(isinstance(neuron.predict_strategy, MlpNeuronPredictStrategy))
+        self.assertEquals(neuron.label, None)
+        self.assertEquals(neuron.output, 0.0)
+        self.assertEquals(neuron.predict_strategy, None)
+        self.assertEquals(neuron.fit_strategy, None)
+        self.assertEquals(neuron.connections, [])
+        self.assertEquals(neuron.bias, 0.0)
+        self.assertTrue(neuron.activation_function is activation_functions_set['default'])
 
-    def test___call__(self):
-        factory = AdaptiveGradientDescentMaterialsFactory()
-        neural_network = factory.make_primitive_neural_network()
-        # Prepare ad-hoc input_layer
-        input_layer = factory.make_primitive_container()
-        for dummy in range(5):
-            neuron = factory.make_primitive_neuron(neural_network)
-            neuron.output = random.random()
-            input_layer.append(neuron)
-
-        # Setup test neuron
-        test_neuron = factory.make_primitive_neuron(neural_network)
-        for neuron in input_layer:
-            connection = factory.make_primitive_connection(neuron)
-            connection.weight = random.random()
-            test_neuron.connections.append(connection)
+    def test_call(self):
+        neural_network = mlp_network([4, 3, 2], 'tanh', 'identity')
+        test_neuron = neural_network.layers[1][1]
         self.assertEqual(test_neuron(), test_neuron.predict_strategy())
 
 
-class TestNeuralNetwork(unittest.TestCase):
+class TestNetwork(unittest.TestCase):
     def test_init(self):
-        factory = AdaptiveGradientDescentMaterialsFactory()
-        neural_network = factory.make_primitive_neural_network()
-        self.assertEqual(neural_network.factory, factory)
+        neural_network = mlp_network([4, 3, 2], 'tanh', 'identity')
+        self.assertTrue(isinstance(neural_network.factory, AdaptiveGradientDescentMaterialsFactory))
         self.assertTrue(isinstance(neural_network.predict_strategy, MlpNetworkPredictStrategy))
         self.assertTrue(isinstance(neural_network.fit_strategy, AdaptiveNetworkFitStrategy))
 
     def test_call(self):
-        factory = AdaptiveGradientDescentMaterialsFactory()
-        neural_network = factory.make_primitive_neural_network()
+        neural_network = mlp_network([4, 3, 2], 'tanh', 'identity')
         self.assertRaises(NotImplementedError, Network.__call__, neural_network)
 
-    def test_read(self):
-        factory = AdaptiveGradientDescentMaterialsFactory()
-        neural_network = factory.make_primitive_neural_network()
+    def test_poke_inputs(self):
+        neural_network = mlp_network([4, 3, 2], 'tanh', 'identity')
         data = None
-        self.assertRaises(NotImplementedError, Network.read, neural_network, data)
+        self.assertRaises(NotImplementedError, Network.poke_inputs, neural_network, data)
 
-    def test_inspect_output(self):
-        factory = AdaptiveGradientDescentMaterialsFactory()
-        neural_network = factory.make_primitive_neural_network()
-        self.assertRaises(NotImplementedError, Network.inspect_output, neural_network)
+    def test_pick_outputs(self):
+        neural_network = mlp_network([4, 3, 2], 'tanh', 'identity')
+        self.assertRaises(NotImplementedError, Network.pick_outputs, neural_network)
 
-        # def test_shape(self):
-        #     factory = AdaptiveGradientDescentFactory()
-        #     neural_network = factory.make_primitive_neural_network()
-        #     self.assertRaises(NotImplementedError, NeuralNetwork.shape, neural_network)
+    def test_shape(self):
+        neural_network = mlp_network([4, 3, 2], 'tanh', 'identity')
+        self.assertRaises(NotImplementedError, Network.shape.__get__, neural_network)
 
 
-class TestMlpNeuralNetwork(unittest.TestCase):
+class TestMlpNetwork(unittest.TestCase):
     def test_init(self):
         factory = AdaptiveGradientDescentMaterialsFactory()
-        neural_network = factory.make_primitive_neural_network()
+        neural_network = MlpNetwork(factory)
         self.assertEqual(neural_network.layers, factory.make_primitive_container())
 
-    def test_call(self):
-        factory = AdaptiveGradientDescentMaterialsFactory()
-        builder = factory.make_neural_network_builder()
-        neural_network = builder.create_neural_network(factory, [3, 6, 2], 'tanh', 'identity')
-        input_data = np.ones((100, 3))
+    def test_call(self, input_size=100, shape=(4, 3, 2)):
+        neural_network = mlp_network(shape, 'tanh', 'identity')
+        input_data = np.random.rand(input_size, shape[0])
         self.assertTrue((neural_network(input_data) == neural_network.predict_strategy(input_data)).all)
 
-    def test_read(self, shape=(40, 3, 2)):
-        factory = AdaptiveGradientDescentMaterialsFactory()
-        neural_network = factory.make_primitive_neural_network()
-        neural_network_builder = factory.make_neural_network_builder()
-        neural_network = neural_network_builder.create_neural_network(factory, shape, 'tanh', 'identity')
-        sample_data = [random.random() for dummy in range(shape[0])]
-        neural_network.read(sample_data)
-        result = np.asarray([neuron.output for neuron in neural_network.layers[0]])
-        self.assertTrue((result == sample_data).all)
+    def test_poke_inputs(self, shape=(40, 3, 2)):
+        # Stage 1: Poke data
+        neural_network = mlp_network(shape, 'tanh', 'identity')
+        sample_data = np.random.rand(shape[0])
+        neural_network.poke_inputs(sample_data)
+        # Stage 2: Verify previous operation
+        input_layer = neural_network.layers[0]
+        observed_data = np.asarray([neuron.output for neuron in input_layer])
+        self.assertTrue((observed_data == sample_data).all)
 
-    def test_write_targets_in_output_layer(self, shape=(4, 6, 78)):
-        factory = AdaptiveGradientDescentMaterialsFactory()
-        neural_creator = factory.make_neural_network_builder()
-        neural_network = neural_creator.create_neural_network(factory, shape, 'tanh', 'identity')
-        sample_data = [random.random() for dummy in range(shape[-1])]
-        neural_network.fit_strategy.write_targets_in_output_layer(sample_data)
-        result = [neuron.fit_strategy.target for neuron in neural_network.layers[-1]]
-        self.assertEqual(result, sample_data)
+    def test_pick_outputs(self, shape=(4, 6, 78)):
+        # Stage 1: Write data in last layer neuron outputs
+        neural_network = mlp_network(shape, 'tanh', 'identity')
+        sample_data = np.random.rand(shape[-1])
+        last_layer = neural_network.layers[-1]
+        for neuron, output_value in zip(last_layer, sample_data):
+            neuron.output = output_value
+        # Stage 2: Check pick_outputs
+        observed_data = np.asarray(neural_network.pick_outputs())
+        self.assertTrue((observed_data == sample_data).all)
 
     def test_shape(self, shape=(40, 52, 1, 7, 4)):
-        factory = AdaptiveGradientDescentMaterialsFactory()
-        neural_creator = factory.make_neural_network_builder()
-        neural_network = neural_creator.create_neural_network(factory, shape, 'tanh', 'identity')
+        neural_network = mlp_network(shape, 'tanh', 'identity')
         self.assertEqual(neural_network.shape, list(shape))
-
-    def test_inspect_output(self, shape=(4, 6, 78)):
-        factory = AdaptiveGradientDescentMaterialsFactory()
-        neural_creator = factory.make_neural_network_builder()
-        neural_network = neural_creator.create_neural_network(factory, shape, 'tanh', 'identity')
-        sample_data = [random.random() for dummy in range(shape[-1])]
-        for neuron, output_value in zip(neural_network.layers[-1], sample_data):
-            neuron.output = output_value
-        result = neural_network.inspect_output()
-        self.assertEqual(result, sample_data)
 
 
 if __name__ == '__main__':

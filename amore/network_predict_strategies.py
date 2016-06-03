@@ -32,9 +32,9 @@ class MlpNetworkPredictStrategy(NetworkPredictStrategy):
 
         output_data = np.zeros((data_number_of_rows, output_layer_size))
         for row, input_data in enumerate(input_data):
-            self.neural_network.read(input_data)
+            self.neural_network.poke_inputs(input_data)
             self.activate_neurons()
-            output_data[row, :] = self.neural_network.inspect_output()
+            output_data[row, :] = self.neural_network.pick_outputs()
         return output_data
 
     def activate_neurons(self):

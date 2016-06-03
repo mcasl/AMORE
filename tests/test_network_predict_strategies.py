@@ -2,19 +2,20 @@ import unittest
 
 from amore.interface import *
 from amore.materials import *
+from amore.network_predict_strategies import NetworkPredictStrategy
 
 
 class TestNetworkPredictStrategy(unittest.TestCase):
     def test_call(self):
         factory = AdaptiveGradientDescentMaterialsFactory()
-        neural_network = factory.make_primitive_neural_network()
-        network_predict_strategy = factory.make_neural_network_predict_strategy(neural_network)
+        neural_network = factory.make_primitive_network()
+        network_predict_strategy = factory.make_network_predict_strategy(neural_network)
         self.assertRaises(NotImplementedError, NetworkPredictStrategy.__call__, network_predict_strategy)
 
     def test_activate_neurons(self):
         factory = AdaptiveGradientDescentMaterialsFactory()
-        neural_network = factory.make_primitive_neural_network()
-        network_predict_strategy = factory.make_neural_network_predict_strategy(neural_network)
+        neural_network = factory.make_primitive_network()
+        network_predict_strategy = factory.make_network_predict_strategy(neural_network)
         self.assertRaises(NotImplementedError, NetworkPredictStrategy.activate_neurons, network_predict_strategy)
 
 
@@ -24,7 +25,7 @@ class TestMlpPredictStrategy(unittest.TestCase):
 
     def test_init(self):
         factory = AdaptiveGradientDescentMaterialsFactory()
-        neural_network = factory.make_primitive_neural_network()
+        neural_network = factory.make_primitive_network()
         predict_strategy = MlpNetworkPredictStrategy(neural_network)
         self.assertEqual(predict_strategy.neural_network, neural_network)
 
@@ -40,16 +41,16 @@ class TestMlpPredictStrategy(unittest.TestCase):
         input_data = np.random.rand(4, 3)
         result = np.zeros((4, 1))
         for row, data in enumerate(input_data):
-            neural_network.read(data)
+            neural_network.poke_inputs(data)
             neural_network.predict_strategy.activate_neurons()
-            result[row, :] = neural_network.inspect_output()
+            result[row, :] = neural_network.pick_outputs()
         self.assertTrue((neural_network(input_data) == result).all)
 
     def test_activate_neurons(self):
         factory = AdaptiveGradientDescentMaterialsFactory()
         neural_network = mlp_network([3, 2, 1], 'tanh', 'tanh')
         input_data = np.random.rand(2, 3)
-        neural_network.read(input_data[1, :])
+        neural_network.poke_inputs(input_data[1, :])
         neural_network.predict_strategy.activate_neurons()
         input_layer = neural_network.layers[0]
         hidden_layer = neural_network.layers[1]
@@ -61,7 +62,7 @@ class TestMlpPredictStrategy(unittest.TestCase):
         b = neuron_b()
         c = neuron_c()
         result = c
-        self.assertEqual(neural_network.inspect_output(), [result])
+        self.assertEqual(neural_network.pick_outputs(), [result])
 
 
 if __name__ == '__main__':

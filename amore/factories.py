@@ -1,11 +1,9 @@
-from .activation_functions import activation_functions_set
-from .cost_functions import cost_functions_set
-from .builders import *
 from .materials import *
-from .network_fit_strategies import *
 from .network_predict_strategies import *
-from .neuron_fit_strategies import *
 from .neuron_predict_strategies import *
+from .network_fit_strategies import *
+from .neuron_fit_strategies import *
+from .builders import *
 
 
 class Factory(object, metaclass=ABCMeta):
@@ -29,10 +27,10 @@ class MaterialsFactory(Factory):
     def __init__(self):
         Factory.__init__(self)
 
-    def make_neural_network_builder(self):
+    def make_network_builder(self):
         return self.make('NetworkBuilder')
 
-    def make_primitive_neural_network(self):
+    def make_primitive_network(self):
         return self.make('Network', self)
 
     def make_primitive_container(self):
@@ -44,10 +42,10 @@ class MaterialsFactory(Factory):
     def make_primitive_connection(self, neuron):
         return self.make('Connection', neuron)
 
-    def make_neural_network_predict_strategy(self, neural_network):
+    def make_network_predict_strategy(self, neural_network):
         return self.make('NetworkPredictStrategy', neural_network)
 
-    def make_neural_network_fit_strategy(self, neural_network):
+    def make_network_fit_strategy(self, neural_network):
         return self.make('NetworkFitStrategy', neural_network)
 
     def make_neuron_predict_strategy(self, neuron):
@@ -83,8 +81,8 @@ class MlpMaterialsFactory(MaterialsFactory):
             'NetworkBuilder')})
 
     def make_neuron_fit_strategy(self, neuron):
-        is_output_neuron = neuron in neuron.neural_network.layers[-1]
-        if is_output_neuron:
+        last_layer = neuron.neural_network.layers[-1]
+        if neuron in last_layer:
             return self.make('OutputNeuronFitStrategy', neuron)
         else:
             return self.make('HiddenNeuronFitStrategy', neuron)
@@ -93,7 +91,6 @@ class MlpMaterialsFactory(MaterialsFactory):
 class AdaptiveMaterialsFactory(MlpMaterialsFactory):
     """ Simple implementation of a factory of multilayer feed forward network's elements
     """
-
     @abstractmethod
     def __init__(self):
         MlpMaterialsFactory.__init__(self)

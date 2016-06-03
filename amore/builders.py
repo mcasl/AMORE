@@ -1,8 +1,9 @@
 import math
 import random
+from typing import List
 
-from .materials import *
-from .neuron_predict_strategies import *
+from abc import ABCMeta, abstractmethod
+from .materials import MlpNetwork
 
 
 class NetworkBuilder(object, metaclass=ABCMeta):
@@ -26,14 +27,38 @@ class MlpNetworkBuilder(NetworkBuilder):
 
         """ A method for creating a multilayer feed forward network
         """
-        neural_network = neural_factory.make_primitive_neural_network()
+        neural_network = neural_factory.make_primitive_network()
         if layers_size:
             MlpNetworkBuilder.create_primitive_layers(neural_factory, neural_network, layers_size)
             MlpNetworkBuilder.create_neuron_fit_and_predict_sequence(neural_network)
             MlpNetworkBuilder.connect_network_layers(neural_factory, neural_network)
             MlpNetworkBuilder.initialize_network(neural_network)
-            neural_network.fit_strategy.set_neurons_fit_strategy(neural_factory)
+            MlpNetworkBuilder.set_neurons_predict_strategy(neural_factory, neural_network)
+            MlpNetworkBuilder.set_neurons_fit_strategy(neural_factory, neural_network)
             return neural_network
+
+    @staticmethod
+    def set_neurons_fit_strategy(neural_factory,
+                                 neural_network: MlpNetwork):
+        # Providing input neurons with a fit strategy simplifies
+        # the code for adjusting the weights and biases
+        for layer in neural_network.layers:
+            for neuron in layer:
+                neuron.fit_strategy = neural_factory.make_neuron_fit_strategy(neuron)
+
+    @staticmethod
+    def set_neurons_predict_strategy(neural_factory,
+                                     neural_network: MlpNetwork):
+        # Providing input neurons with a fit strategy simplifies
+        # the code for adjusting the weights and biases
+        for layer in neural_network.layers:
+            for neuron in layer:
+                neuron.predict_strategy = neural_factory.make_neuron_predict_strategy(neuron)
+
+    @staticmethod
+    def set_neurons_learning_rate(neural_network, learning_rate):
+        for neuron in neural_network.fit_strategy.neuron_fit_sequence:
+            neuron.fit_strategy.learning_rate = learning_rate
 
     @staticmethod
     def create_primitive_layers(neural_factory,
@@ -116,4 +141,3 @@ class MlpNetworkBuilder(NetworkBuilder):
                 # Initialize other neuron attributes
                 neuron.label, label_number = label_number, label_number + 1
                 neuron.neural_network = neural_network
-                # TODO : more to come, remember to change the comments above
