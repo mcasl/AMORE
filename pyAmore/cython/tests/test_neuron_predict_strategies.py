@@ -1,8 +1,9 @@
 import math
 import unittest
 
-from amore.interface import *
-from amore.neuron_predict_strategies import NeuronPredictStrategy
+from pyAmore.cython.interface import *
+
+from pyAmore.cython.neuron_predict_strategies import NeuronPredictStrategy
 
 
 class TestNeuronPredictStrategies(unittest.TestCase):

@@ -1,8 +1,9 @@
 import unittest
 
-from amore.interface import *
-from amore.materials import *
-from amore.network_predict_strategies import NetworkPredictStrategy
+from pyAmore.cython.interface import *
+from pyAmore.cython.network_predict_strategies import NetworkPredictStrategy
+
+from pyAmore.cython.materials import *
 
 
 class TestNetworkPredictStrategy(unittest.TestCase):

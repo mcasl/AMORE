@@ -1,14 +1,13 @@
-import random
 import unittest
 
 from hypothesis import given, strategies as st
+from pyAmore.cython.interface import mlp_network
+from pyAmore.cython.materials import *
+from pyAmore.cython.network_fit_strategies import *
+from pyAmore.cython.network_predict_strategies import *
+from pyAmore.cython.neuron_predict_strategies import *
 
-from amore.factories import *
-from amore.materials import *
-from amore.network_fit_strategies import *
-from amore.network_predict_strategies import *
-from amore.neuron_predict_strategies import *
-from amore.interface import mlp_network
+from pyAmore.cython.factories import *
 
 
 class TestMlpContainer(unittest.TestCase):

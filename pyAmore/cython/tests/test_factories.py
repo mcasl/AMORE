@@ -1,12 +1,13 @@
 import unittest
 
-from amore.factories import *
-from amore.materials import *
-from amore.network_fit_strategies import *
-from amore.network_predict_strategies import *
-from amore.neuron_fit_strategies import *
-from amore.neuron_predict_strategies import *
-from amore.interface import mlp_network
+from pyAmore.cython.interface import mlp_network
+from pyAmore.cython.materials import *
+from pyAmore.cython.network_fit_strategies import *
+from pyAmore.cython.network_predict_strategies import *
+from pyAmore.cython.neuron_fit_strategies import *
+from pyAmore.cython.neuron_predict_strategies import *
+
+from pyAmore.cython.factories import *
 
 
 class TestFactory(unittest.TestCase):
@@ -223,6 +224,7 @@ class TestBatchGradientDescentWithMomentumMaterialsFactory(unittest.TestCase):
                                 'HiddenNeuronFitStrategy': 'BatchGradientDescentWithMomentumHiddenNeuronFitStrategy',
                                 }
         self.assertEqual(factory.class_names, expected_class_names)
+
 
 if __name__ == '__main__':
     unittest.main()

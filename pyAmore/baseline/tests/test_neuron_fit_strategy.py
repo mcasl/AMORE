@@ -1,7 +1,8 @@
 import unittest
 
-from amore.interface import *
-from amore.neuron_fit_strategies import *
+from pyAmore.baseline.interface import *
+
+from pyAmore.baseline.neuron_fit_strategies import *
 
 
 class TestNeuronFitStrategy(unittest.TestCase):

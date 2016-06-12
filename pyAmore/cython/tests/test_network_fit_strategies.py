@@ -1,9 +1,10 @@
 import unittest
 
-from amore.interface import *
-from amore.materials import *
-from amore.network_fit_strategies import *
-from amore.neuron_fit_strategies import *
+from pyAmore.cython.interface import *
+from pyAmore.cython.materials import *
+from pyAmore.cython.network_fit_strategies import *
+
+from pyAmore.cython.neuron_fit_strategies import *
 
 
 class TestNetworkFitStrategies(unittest.TestCase):

@@ -1,7 +1,7 @@
 import unittest
 from math import log
 
-from amore.cost_functions import *
+from pyAmore.baseline.cost_functions import *
 
 
 class TestCostFunctions(unittest.TestCase):

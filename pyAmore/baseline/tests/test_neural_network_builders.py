@@ -1,7 +1,8 @@
 import unittest
 
-from amore.factories import *
-from amore.builders import NetworkBuilder, MlpNetworkBuilder
+from pyAmore.baseline.factories import *
+
+from pyAmore.baseline.builders import NetworkBuilder, MlpNetworkBuilder
 
 
 class TestNeuralNetworkBuilder(unittest.TestCase):

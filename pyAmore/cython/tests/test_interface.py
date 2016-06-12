@@ -1,6 +1,5 @@
 import unittest
-
-from amore.interface import *
+from pyAmore.cython.interface import *
 
 
 class TestInterface(unittest.TestCase):

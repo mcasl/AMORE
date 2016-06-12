@@ -1,5 +1,5 @@
 import unittest
-from amore.interface import *
+from pyAmore.baseline.interface import *
 
 
 class TestBuilders(unittest.TestCase):

@@ -1,6 +1,6 @@
 import unittest
 
-from amore.activation_functions import *
+from pyAmore.cython.activation_functions import *
 
 
 class TestActivationFunctions(unittest.TestCase):
