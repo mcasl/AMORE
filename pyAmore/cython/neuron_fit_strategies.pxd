@@ -1,10 +1,11 @@
 from common cimport *
 from materials cimport *
+from cost_functions cimport *
 
 cdef class NeuronFitStrategy(object):
     cdef public:
         Neuron neuron
-        object cost_function  # TODO: change object declaration
+        CostFunction cost_function  # TODO: change object declaration
 
 cdef class MlpNeuronFitStrategy(NeuronFitStrategy):
     pass

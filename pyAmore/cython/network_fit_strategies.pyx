@@ -1,6 +1,6 @@
 from pyAmore.cython.neuron_predict_strategies import *
 
-cdef class NetworkFitStrategy(object):
+cdef class NetworkFitStrategy:
     def __init__(self, neural_network):
         self.neural_network = neural_network
 
@@ -15,7 +15,7 @@ cdef class MlpNetworkFitStrategy(NetworkFitStrategy):
     def __call__(self, *args, **kwargs):
         raise NotImplementedError("You shouldn't be calling MlpNetworkFitStrategy.__call__")
 
-    def poke_targets(self, data):
+    cpdef poke_targets(MlpNetworkFitStrategy self, RealNumber[:] data):
         output_layer = self.neural_network.layers[-1]
         for neuron, value in zip(output_layer, data):
             neuron.fit_strategy.target = value
