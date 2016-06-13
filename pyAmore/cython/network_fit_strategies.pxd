@@ -1,12 +1,11 @@
-from .neuron_predict_strategies import *
+from materials cimport *
 
+cdef class NetworkFitStrategy(object):
+    cdef public Network neural_network
 
-cdef class NetworkFitStrategy(object, metaclass=ABCMeta):
-    cdef NeuralNetwork neural_network
-
-
-class MlpNetworkFitStrategy(NetworkFitStrategy):
-    cdef Container neuron_fit_sequence
-
+cdef class MlpNetworkFitStrategy(NetworkFitStrategy):
+    cdef public MlpContainer neuron_fit_sequence
+    cpdef backpropagate(MlpNetworkFitStrategy self)
 
 cdef class AdaptiveNetworkFitStrategy(MlpNetworkFitStrategy):
+    pass

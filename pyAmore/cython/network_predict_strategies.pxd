@@ -1,12 +1,8 @@
-import numpy as np
+from materials cimport *
 
-from .neuron_predict_strategies import *
-
-
-cdef class NetworkPredictStrategy(object, metaclass=ABCMeta):
-    cdef NeuralNetwork neural_network
-
+cdef class NetworkPredictStrategy(object):
+    cdef public Network neural_network
 
 cdef class MlpNetworkPredictStrategy(NetworkPredictStrategy):
-    cdef NeuronPredictStrategy neuron_predict_strategy
-
+    cdef public MlpContainer neuron_predict_sequence
+    cpdef activate_neurons(MlpNetworkPredictStrategy self)

@@ -1,22 +1,21 @@
+from common cimport *
+from materials cimport *
+
 from .cost_functions import *
 from .neuron_predict_strategies import *
 
+cdef class NeuronFitStrategy(object):
 
-class NeuronFitStrategy(object, metaclass=ABCMeta):
-    @abstractmethod
     def __init__(self, neuron):
         self.neuron = neuron
         self.cost_function = cost_functions_set['default']
 
-
-class MlpNeuronFitStrategy(NeuronFitStrategy):
-    @abstractmethod
+cdef class MlpNeuronFitStrategy(NeuronFitStrategy):
     def __init__(self, neuron):
         NeuronFitStrategy.__init__(self, neuron)
 
+cdef class AdaptiveGradientDescentNeuronFitStrategy(MlpNeuronFitStrategy):
 
-class AdaptiveGradientDescentNeuronFitStrategy(MlpNeuronFitStrategy):
-    @abstractmethod
     def __init__(self, neuron):
         MlpNeuronFitStrategy.__init__(self, neuron)
         self.delta = 0.0
@@ -24,8 +23,7 @@ class AdaptiveGradientDescentNeuronFitStrategy(MlpNeuronFitStrategy):
         self.output_derivative = 0.0
         self.target = 0.0
 
-
-class AdaptiveGradientDescentOutputNeuronFitStrategy(AdaptiveGradientDescentNeuronFitStrategy):
+cdef class AdaptiveGradientDescentOutputNeuronFitStrategy(AdaptiveGradientDescentNeuronFitStrategy):
     def __init__(self, neuron):
         AdaptiveGradientDescentNeuronFitStrategy.__init__(self, neuron)
 
@@ -42,8 +40,7 @@ class AdaptiveGradientDescentOutputNeuronFitStrategy(AdaptiveGradientDescentNeur
             connection.neuron.fit_strategy.delta += self.delta * connection.weight
         self.delta = 0.0
 
-
-class AdaptiveGradientDescentHiddenNeuronFitStrategy(AdaptiveGradientDescentNeuronFitStrategy):
+cdef class AdaptiveGradientDescentHiddenNeuronFitStrategy(AdaptiveGradientDescentNeuronFitStrategy):
     def __init__(self, neuron):
         AdaptiveGradientDescentNeuronFitStrategy.__init__(self, neuron)
 
@@ -54,7 +51,10 @@ class AdaptiveGradientDescentHiddenNeuronFitStrategy(AdaptiveGradientDescentNeur
         self.delta *= self.output_derivative
         minus_learning_rate_x_delta = - self.learning_rate * self.delta
         neuron.bias += minus_learning_rate_x_delta
-        for connection in self.neuron.connections:
+        cdef int position
+        cdef int neuron_connections_length = len(self.neuron.connections)
+        for position in range(neuron_connections_length):
+            connection = self.neuron.connections[position]
             input_value = connection.neuron.output
             connection.weight += minus_learning_rate_x_delta * input_value
             connection.neuron.fit_strategy.delta += self.delta * connection.weight

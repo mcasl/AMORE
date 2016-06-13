@@ -1,23 +1,19 @@
+from materials cimport *
+
 from .neuron_predict_strategies import *
 
-
-class NetworkFitStrategy(object, metaclass=ABCMeta):
-    @abstractmethod
+cdef class NetworkFitStrategy(object):
     def __init__(self, neural_network):
         self.neural_network = neural_network
 
-    @abstractmethod
     def __call__(self, *args, **kwargs):
         raise NotImplementedError("You shouldn't be calling NetworkFitStrategy.__call__")
 
-
-class MlpNetworkFitStrategy(NetworkFitStrategy):
-    @abstractmethod
+cdef class MlpNetworkFitStrategy(NetworkFitStrategy):
     def __init__(self, neural_network):
         NetworkFitStrategy.__init__(self, neural_network)
         self.neuron_fit_sequence = neural_network.factory.make_primitive_container()
 
-    @abstractmethod
     def __call__(self, *args, **kwargs):
         raise NotImplementedError("You shouldn't be calling MlpNetworkFitStrategy.__call__")
 
@@ -26,11 +22,14 @@ class MlpNetworkFitStrategy(NetworkFitStrategy):
         for neuron, value in zip(output_layer, data):
             neuron.fit_strategy.target = value
 
-    def backpropagate(self):
-        [neuron.fit_strategy() for neuron in self.neuron_fit_sequence]
+    cpdef backpropagate(self):
+        cdef int position
+        cdef neuron_fit_sequence_length = len(self.neuron_fit_sequence)
+        for position in range(neuron_fit_sequence_length):
+            neuron = self.neuron_fit_sequence[position]
+            neuron.fit_strategy()
 
-
-class AdaptiveNetworkFitStrategy(MlpNetworkFitStrategy):
+cdef class AdaptiveNetworkFitStrategy(MlpNetworkFitStrategy):
     def __init__(self, neural_network):
         MlpNetworkFitStrategy.__init__(self, neural_network)
 

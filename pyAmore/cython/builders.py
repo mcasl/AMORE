@@ -97,12 +97,13 @@ class MlpNetworkBuilder(NetworkBuilder):
 
     @staticmethod
     def create_neuron_fit_and_predict_sequence(neural_network):
-        predict_sequence = []
+        predict_sequence = neural_network.factory.make_primitive_container()
         for layer in neural_network.layers[1:]:
             for neuron in layer:
                 predict_sequence.append(neuron)
         neural_network.predict_strategy.neuron_predict_sequence = predict_sequence
-        neural_network.fit_strategy.neuron_fit_sequence = list(reversed(predict_sequence))
+        neural_network.fit_strategy.neuron_fit_sequence = neural_network.factory.make_primitive_container()
+        neural_network.fit_strategy.neuron_fit_sequence.extend(reversed(predict_sequence))
 
     @staticmethod
     def initialize_network(neural_network):
@@ -139,5 +140,5 @@ class MlpNetworkBuilder(NetworkBuilder):
                 neuron.bias = random.uniform(-extreme, extreme)
 
                 # Initialize other neuron attributes
-                neuron.label, label_number = label_number, label_number + 1
+                neuron.label, label_number = str(label_number), label_number + 1
                 neuron.neural_network = neural_network

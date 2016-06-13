@@ -1,6 +1,6 @@
 import unittest
-
-from hypothesis import given, strategies as st
+from math import isnan
+from hypothesis import given, assume, strategies as st
 from pyAmore.cython.interface import mlp_network
 from pyAmore.cython.materials import *
 from pyAmore.cython.network_fit_strategies import *
@@ -39,11 +39,12 @@ class TestConnection(unittest.TestCase):
     def test_init_where_weight_is_given(self, weight):
         """ Connection constructor test. weight attribute initialization is checked
         """
+        assume(not isnan(weight))
         factory = AdaptiveGradientDescentMaterialsFactory()
         neural_network = factory.make_primitive_network()
         neuron = MlpNeuron(neural_network)
         connection = MlpConnection(neuron, weight)
-        self.assertTrue(connection.weight is weight)
+        self.assertEquals(connection.weight, weight)
         self.assertTrue(connection.neuron is neuron)
 
 

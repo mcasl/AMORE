@@ -1,6 +1,5 @@
 import unittest
-from pyAmore.cython.interface import *
-
+from pyAmore.baseline.interface import *
 
 class TestInterface(unittest.TestCase):
     def test_mlp_network(self):
@@ -15,17 +14,17 @@ class TestInterface(unittest.TestCase):
         self.assertEqual(network_connections, [[],
                                                [],
                                                [],
-                                               [0, 1, 2],
-                                               [0, 1, 2],
-                                               [0, 1, 2],
-                                               [0, 1, 2],
-                                               [0, 1, 2],
-                                               [3, 4, 5, 6, 7],
-                                               [3, 4, 5, 6, 7]])
+                                               ['0', '1', '2'],
+                                               ['0', '1', '2'],
+                                               ['0', '1', '2'],
+                                               ['0', '1', '2'],
+                                               ['0', '1', '2'],
+                                               ['3', '4', '5', '6', '7'],
+                                               ['3', '4', '5', '6', '7']])
         neuron_labels = []
         for layer in neural_network.layers:
             neuron_labels.extend([neuron.label for neuron in layer])
-        self.assertEqual(neuron_labels, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+        self.assertEqual(neuron_labels, ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'])
 
     def test_fit_adaptive_gradient_descent(self):
         random.seed(2016)

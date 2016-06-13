@@ -1,26 +1,22 @@
-import numpy as np
+from materials cimport *
 
+import numpy as np
 from .neuron_predict_strategies import *
 
-
-class NetworkPredictStrategy(object, metaclass=ABCMeta):
-    @abstractmethod
+cdef class NetworkPredictStrategy(object):
     def __init__(self, neural_network):
         self.neural_network = neural_network
 
-    @abstractmethod
     def __call__(self, *args, **kwargs):
         raise NotImplementedError("You shouldn't be calling NetworkPredictStrategy.__call__")
 
-    @abstractmethod
     def activate_neurons(self, *args, **kwargs):
         raise NotImplementedError("You shouldn't be calling NetworkPredictStrategy.activate_neurons")
 
-
-class MlpNetworkPredictStrategy(NetworkPredictStrategy):
+cdef class MlpNetworkPredictStrategy(NetworkPredictStrategy):
     def __init__(self, neural_network):
         NetworkPredictStrategy.__init__(self, neural_network)
-        self.neuron_predict_sequence = []
+        self.neuron_predict_sequence = self.neural_network.factory.make_primitive_container()
 
     def __call__(self, input_data):
         data_number_of_rows, data_number_of_columns = input_data.shape
@@ -37,6 +33,10 @@ class MlpNetworkPredictStrategy(NetworkPredictStrategy):
             output_data[row, :] = self.neural_network.pick_outputs()
         return output_data
 
-    def activate_neurons(self):
-        for neuron in self.neuron_predict_sequence:
+    cpdef activate_neurons(self):
+        cdef int position
+        cdef neuron_predict_sequence_length = len(self.neuron_predict_sequence)
+        for position in range(neuron_predict_sequence_length):
+            neuron = self.neuron_predict_sequence[position]
             neuron.predict_strategy()
+

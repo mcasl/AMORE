@@ -1,35 +1,29 @@
-from abc import ABCMeta, abstractmethod
+from common cimport *
 import numpy as np
 from .activation_functions import activation_functions_set
 from .cost_functions import cost_functions_set
 
-
-cdef class Network(object, metaclass=ABCMeta):
+cdef class Network(object):
     """ The mother of all neural networks (a.k.a Interface)
     """
 
-    @abstractmethod
     def __init__(self, neural_factory):
         self.factory = neural_factory
         self.predict_strategy = neural_factory.make_network_predict_strategy(self)
         self.fit_strategy = neural_factory.make_network_fit_strategy(self)
 
-    @abstractmethod
     def __call__(self, *args, **kwargs):
         """ Method for obtaining outputs from inputs
         """
         raise NotImplementedError("You shouldn't be calling NeuralNetwork.__call__")
 
-    @abstractmethod
     def poke_inputs(self, input_data):
         raise NotImplementedError("You shouldn't be calling NeuralNetwork.poke_inputs")
 
-    @abstractmethod
     def pick_outputs(self):
         raise NotImplementedError("You shouldn't be calling NeuralNetwork.pick_outputs")
 
     @property
-    @abstractmethod
     def shape(self):
         """ Gives information about the number of neurons in the neural network
         """
@@ -60,20 +54,10 @@ cdef class MlpNetwork(Network):
         """
         return list(map(len, self.layers))
 
-
-cdef class MlpContainer(list):
-    def __init__(self, iterable=None):
-        if iterable is None:
-            iterable = []
-        # noinspection PyTypeChecker
-        list.__init__(self, iterable)
-
-
-cdef class Neuron(object, metaclass=ABCMeta):
+cdef class Neuron(object):
     """ The mother of all neurons (a.k.a. Interface)
     """
 
-    @abstractmethod
     def __init__(self, neural_network):
         """ Initializer. An assumption is made that all neurons will have at least these properties.
         """
@@ -87,7 +71,6 @@ cdef class Neuron(object, metaclass=ABCMeta):
         # Similarly, self.predict_strategy is not assigned here for versatility.
         # It's the builder that assigns it.
 
-    @abstractmethod
     def __call__(self, *args, **kwargs):
         raise NotImplementedError("You shouldn't be calling Neuron.__call__()")
 
@@ -106,7 +89,6 @@ cdef class MlpNeuron(Neuron):
 
     def __call__(self, *args, **kwargs):
         return self.predict_strategy()
-
 
 cdef class MlpConnection(object):
     """ A simple data structure for linking neurons in MLP networks

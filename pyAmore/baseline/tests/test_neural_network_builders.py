@@ -53,7 +53,7 @@ class TestMlpNeuralBuilder(unittest.TestCase):
         labels = []
         for layer in neural_network.layers:
             labels.append([neuron.label for neuron in layer])
-        self.assertEqual(labels, [[0, 1, 2], [3, 4, 5, 6, 7], [8, 9]])
+        self.assertEqual(labels, [['0', '1', '2'], ['3', '4', '5', '6', '7'], ['8', '9']])
 
         network_connections = []
         for layer in neural_network.layers:
@@ -62,13 +62,13 @@ class TestMlpNeuralBuilder(unittest.TestCase):
         self.assertEqual(network_connections, [[],
                                                [],
                                                [],
-                                               [0, 1, 2],
-                                               [0, 1, 2],
-                                               [0, 1, 2],
-                                               [0, 1, 2],
-                                               [0, 1, 2],
-                                               [3, 4, 5, 6, 7],
-                                               [3, 4, 5, 6, 7]
+                                               ['0', '1', '2'],
+                                               ['0', '1', '2'],
+                                               ['0', '1', '2'],
+                                               ['0', '1', '2'],
+                                               ['0', '1', '2'],
+                                               ['3', '4', '5', '6', '7'],
+                                               ['3', '4', '5', '6', '7']
                                                ])
 
     def test_initialize_network_empty_layers(self):

@@ -1,12 +1,7 @@
-from abc import ABCMeta, abstractmethod
-
-
-cdef class NeuronPredictStrategy(object, metaclass=ABCMeta):
-    @abstractmethod
+cdef class NeuronPredictStrategy(object):
     def __init__(self, neuron):
         self.neuron = neuron
 
-    @abstractmethod
     def __call__(self, *args, **kwargs):
         raise NotImplementedError("You shouldn't be calling NeuronPredictStrategy.__call__")
 
@@ -24,4 +19,3 @@ cdef class MlpNeuronPredictStrategy(NeuronPredictStrategy):
 
         self.neuron.output = self.neuron.activation_function(self.induced_local_field)
         return self.neuron.output
-

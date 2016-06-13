@@ -139,5 +139,5 @@ class MlpNetworkBuilder(NetworkBuilder):
                 neuron.bias = random.uniform(-extreme, extreme)
 
                 # Initialize other neuron attributes
-                neuron.label, label_number = label_number, label_number + 1
+                neuron.label, label_number = str(label_number), label_number + 1
                 neuron.neural_network = neural_network

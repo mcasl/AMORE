@@ -1,8 +1,9 @@
+from common cimport *
+from materials cimport *
 
-cdef class NeuronPredictStrategy:
-    cdef Neuron neuron
+cdef class NeuronPredictStrategy(object):
+    cdef public Neuron neuron
+
 
 cdef class MlpNeuronPredictStrategy(NeuronPredictStrategy):
-    cdef double induced_local_field
-
-
+    cdef public RealNumber induced_local_field
