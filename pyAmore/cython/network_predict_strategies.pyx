@@ -1,7 +1,5 @@
-from materials cimport *
-
 import numpy as np
-from .neuron_predict_strategies import *
+from pyAmore.cython.neuron_predict_strategies import *
 
 cdef class NetworkPredictStrategy(object):
     def __init__(self, neural_network):

@@ -10,7 +10,7 @@ class TestNeuronFitStrategy(unittest.TestCase):
         neural_network = mlp_network([3, 2, 1], 'tanh', 'tanh')
         neuron = neural_network.layers[1][0]
         self.assertEqual(neuron.fit_strategy.neuron, neuron)
-        self.assertEqual(neuron.fit_strategy.cost_function, cost_functions_set['adaptLMS'])
+        self.assertEqual(neuron.fit_strategy.cost_function, cost_functions_set['default'])
 
 
 class TestAdaptiveGradientDescentNeuronFitStrategy(unittest.TestCase):

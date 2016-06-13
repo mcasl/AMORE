@@ -1,8 +1,8 @@
 from common cimport *
-from neuron_fit_strategies cimport *
-from neuron_predict_strategies cimport *
 from network_fit_strategies cimport *
 from network_predict_strategies cimport *
+from neuron_fit_strategies cimport *
+from neuron_predict_strategies cimport *
 
 cdef class Network(object):
     cdef public:

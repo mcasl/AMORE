@@ -1,3 +1,3 @@
 ctypedef double RealNumber
-ctypedef RealNumber (*ActivationFunction)(RealNumber)
-ctypedef RealNumber (*CostFunction)(RealNumber, RealNumber)
+ctypedef RealNumber (*f1param)(RealNumber)
+ctypedef RealNumber (*f2param)(RealNumber, RealNumber)

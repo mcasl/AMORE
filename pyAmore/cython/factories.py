@@ -1,9 +1,9 @@
-from .materials import *
-from .network_predict_strategies import *
-from .neuron_predict_strategies import *
-from .network_fit_strategies import *
-from .neuron_fit_strategies import *
-from .builders import *
+from pyAmore.cython.materials import *
+from pyAmore.cython.network_predict_strategies import *
+from pyAmore.cython.neuron_predict_strategies import *
+from pyAmore.cython.network_fit_strategies import *
+from pyAmore.cython.neuron_fit_strategies import *
+from pyAmore.cython.builders import *
 
 
 class Factory(object, metaclass=ABCMeta):

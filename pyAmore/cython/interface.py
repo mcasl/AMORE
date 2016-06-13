@@ -1,7 +1,7 @@
 """ Amore: A module for training and simulating neural networks the way researchers need
 """
-from .factories import *
-from .materials import MlpNetwork
+from pyAmore.cython.factories import *
+from pyAmore.cython.materials import MlpNetwork
 
 
 # TODO: remember: alternative constructors @classmethod def myalternativeconstructor(class, other arguments):

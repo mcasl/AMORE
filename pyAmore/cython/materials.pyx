@@ -1,7 +1,6 @@
-from common cimport *
 import numpy as np
-from .activation_functions import activation_functions_set
-from .cost_functions import cost_functions_set
+from pyAmore.cython.activation_functions import activation_functions_set
+from pyAmore.cython.cost_functions import cost_functions_set
 
 cdef class Network(object):
     """ The mother of all neural networks (a.k.a Interface)

@@ -3,7 +3,7 @@ import random
 from typing import List
 
 from abc import ABCMeta, abstractmethod
-from .materials import MlpNetwork
+from pyAmore.cython.materials import MlpNetwork
 
 
 class NetworkBuilder(object, metaclass=ABCMeta):

@@ -23,6 +23,8 @@ class TestCostFunctions(unittest.TestCase):
         self.assertEqual(test_function.derivative(0.1, 0.1), 0.0)
         self.assertEqual(test_function.derivative(0.1, 0.6), -0.5 / 1.125)
 
+
+"""
     def test_batch_lms(self):
         # function
         test_function = cost_functions_set['batchLMS']
@@ -33,3 +35,4 @@ class TestCostFunctions(unittest.TestCase):
         # derivative
         self.assertEqual(test_function.derivative(output, output), 0.0)
         self.assertEqual(test_function.derivative(output, target), np.mean(output - target))
+"""

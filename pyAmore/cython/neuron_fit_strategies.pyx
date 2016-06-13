@@ -1,8 +1,4 @@
-from common cimport *
-from materials cimport *
-
-from .cost_functions import *
-from .neuron_predict_strategies import *
+from pyAmore.cython.cost_functions import *
 
 cdef class NeuronFitStrategy(object):
 

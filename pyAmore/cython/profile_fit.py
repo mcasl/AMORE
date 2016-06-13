@@ -13,7 +13,7 @@ def test():
     target = data ** 2
     net = am.mlp_network([1, 5, 1], 'tanh', 'identity')
     print('\nNet created.\n')
-    am.fit_adaptive_gradient_descent(net, data, target, 0.1, 10, 5)
+    am.fit_adaptive_gradient_descent(net, data, target, 0.1, 100, 5)
     print('\nFinished.\n')
     return net
 
