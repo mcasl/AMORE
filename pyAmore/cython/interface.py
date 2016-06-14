@@ -1,6 +1,6 @@
 """ Amore: A module for training and simulating neural networks the way researchers need
 """
-from pyAmore.cython.factories import *
+from pyAmore.cython.factories import AdaptiveGradientDescentMaterialsFactory
 from pyAmore.cython.materials import MlpNetwork
 
 

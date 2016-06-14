@@ -5,7 +5,7 @@ from cost_functions cimport *
 cdef class NeuronFitStrategy(object):
     cdef public:
         Neuron neuron
-        CostFunction cost_function  # TODO: change object declaration
+        object cost_function  # TODO: change object declaration
 
 cdef class MlpNeuronFitStrategy(NeuronFitStrategy):
     pass
