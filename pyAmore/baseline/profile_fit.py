@@ -1,6 +1,6 @@
 import numpy as np
 
-import pyAmore.pyAmore.baseline.interface as am
+import pyAmore.baseline.interface as am
 
 """
 Reference:

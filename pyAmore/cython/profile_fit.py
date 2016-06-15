@@ -1,6 +1,6 @@
 import numpy as np
 
-import pyAmore.pyAmore.cython.interface as am
+import pyAmore.cython.interface as am
 
 """
 Reference:

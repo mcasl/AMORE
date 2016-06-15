@@ -3,7 +3,7 @@
 import numpy as np
 from pyAmore.cython.factories import AdaptiveGradientDescentMaterialsFactory
 from pyAmore.cython.materials import MlpNetwork
-
+from pyAmore.cython.builders import MlpNetworkBuilder
 
 # TODO: remember: alternative constructors @classmethod def myalternativeconstructor(class, other arguments):
 
