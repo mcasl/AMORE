@@ -1,4 +1,4 @@
-from common cimport RealNumber
+from common cimport RealNumber, f2param
 
 cdef class CostFunction:
     cdef public:

@@ -1,9 +1,8 @@
 from common cimport RealNumber
-
-#from network_fit_strategies     cimport *
-#from network_predict_strategies cimport *
-#from neuron_fit_strategies      cimport *
-#from neuron_predict_strategies  cimport *
+from network_fit_strategies     cimport *
+from network_predict_strategies cimport *
+from neuron_fit_strategies      cimport *
+from neuron_predict_strategies  cimport *
 
 
 cdef class MlpContainer(list):
@@ -12,11 +11,8 @@ cdef class MlpContainer(list):
 cdef class Network(object):
     cdef public:
         object factory
-        #NetworkPredictStrategy predict_strategy
-        object predict_strategy
-
-        #NetworkFitStrategy fit_strategy
-        object fit_strategy
+        NetworkPredictStrategy predict_strategy
+        NetworkFitStrategy fit_strategy
 
 cdef class MlpNetwork(Network):
     cdef public:
@@ -26,12 +22,9 @@ cdef class Neuron(object):
     cdef public:
         object label
         RealNumber output
-        # Network neural_network
-        object neural_network
-        #        NeuronPredictStrategy predict_strategy
-        #        NeuronFitStrategy fit_strategy
-        object predict_strategy
-        object fit_strategy
+        Network neural_network
+        NeuronPredictStrategy predict_strategy
+        NeuronFitStrategy fit_strategy
 
 cdef class MlpNeuron(Neuron):
     cdef public:

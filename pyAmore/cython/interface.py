@@ -5,8 +5,6 @@ from pyAmore.cython.factories import AdaptiveGradientDescentMaterialsFactory
 from pyAmore.cython.materials import MlpNetwork
 from pyAmore.cython.builders import MlpNetworkBuilder
 
-# TODO: remember: alternative constructors @classmethod def myalternativeconstructor(class, other arguments):
-
 
 def mlp_network(layers_size,
                 hidden_layers_activation_function_name,
