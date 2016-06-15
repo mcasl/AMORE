@@ -17,8 +17,8 @@ cdef class AdaptiveGradientDescentNeuronFitStrategy(MlpNeuronFitStrategy):
         RealNumber output_derivative
         RealNumber target
 
-cdef class AdaptiveGradientDescentOutputNeuronFitStrategy(AdaptiveGradientDescentNeuronFitStrategy):
-    pass
+cdef class           AdaptiveGradientDescentOutputNeuronFitStrategy(AdaptiveGradientDescentNeuronFitStrategy):
+    cdef perform_fit(AdaptiveGradientDescentOutputNeuronFitStrategy self)
 
-cdef class AdaptiveGradientDescentHiddenNeuronFitStrategy(AdaptiveGradientDescentNeuronFitStrategy):
-    pass
+cdef class           AdaptiveGradientDescentHiddenNeuronFitStrategy(AdaptiveGradientDescentNeuronFitStrategy):
+    cdef perform_fit(AdaptiveGradientDescentHiddenNeuronFitStrategy self):

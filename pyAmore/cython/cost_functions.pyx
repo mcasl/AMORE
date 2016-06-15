@@ -13,7 +13,7 @@ cdef class AdaptLmsCostFunction(CostFunction):
         residual = prediction - target
         return residual ** 2
 
-    cpdef RealNumber derivative(self, RealNumber prediction, RealNumber target):
+    cdef RealNumber derivative(self, RealNumber prediction, RealNumber target):
         residual = prediction - target
         return residual
 
@@ -27,7 +27,7 @@ cdef class AdaptLmLsCostFunction(CostFunction):
         result = np.mean(np.log(1 + residual ** 2 / 2))
         return result
 
-    cpdef RealNumber derivative(self, RealNumber prediction, RealNumber target):
+    cdef RealNumber derivative(self, RealNumber prediction, RealNumber target):
         residual = prediction - target
         result = residual / (1 + residual ** 2 / 2)
         return result
@@ -41,7 +41,7 @@ cdef class BatchLmsCostFunction(CostFunction):
         residual = prediction - target
         return np.mean(residual ** 2)
 
-    cpdef RealNumber derivative(self, RealNumber prediction, RealNumber target):
+    cdef RealNumber derivative(self, RealNumber prediction, RealNumber target):
         residual = prediction - target
         return np.mean(residual)
 

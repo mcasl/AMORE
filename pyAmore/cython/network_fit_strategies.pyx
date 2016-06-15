@@ -23,7 +23,7 @@ cdef class MlpNetworkFitStrategy(NetworkFitStrategy):
         cdef neuron_fit_sequence_length = len(self.neuron_fit_sequence)
         for position in range(neuron_fit_sequence_length):
             neuron = self.neuron_fit_sequence[position]
-            neuron.fit_strategy()
+            neuron.fit_strategy.perform_fit()
 
 cdef class AdaptiveNetworkFitStrategy(MlpNetworkFitStrategy):
     def __init__(self, neural_network):

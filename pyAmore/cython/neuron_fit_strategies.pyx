@@ -1,15 +1,20 @@
 from pyAmore.cython.cost_functions import cost_functions_set
 
 cdef class NeuronFitStrategy(object):
+
     def __init__(self, neuron):
         self.neuron = neuron
         self.cost_function = cost_functions_set['default']
 
+
 cdef class MlpNeuronFitStrategy(NeuronFitStrategy):
+
     def __init__(self, neuron):
         NeuronFitStrategy.__init__(self, neuron)
 
+
 cdef class AdaptiveGradientDescentNeuronFitStrategy(MlpNeuronFitStrategy):
+
     def __init__(self, neuron):
         MlpNeuronFitStrategy.__init__(self, neuron)
         self.delta = 0.0
@@ -17,11 +22,13 @@ cdef class AdaptiveGradientDescentNeuronFitStrategy(MlpNeuronFitStrategy):
         self.output_derivative = 0.0
         self.target = 0.0
 
+
 cdef class AdaptiveGradientDescentOutputNeuronFitStrategy(AdaptiveGradientDescentNeuronFitStrategy):
+
     def __init__(self, neuron):
         AdaptiveGradientDescentNeuronFitStrategy.__init__(self, neuron)
 
-    def __call__(self):
+    cdef perform_fit(AdaptiveGradientDescentOutputNeuronFitStrategy self):
         neuron = self.neuron
         self.output_derivative = neuron.activation_function.derivative(neuron.predict_strategy.induced_local_field,
                                                                        self.neuron.output)
@@ -34,11 +41,13 @@ cdef class AdaptiveGradientDescentOutputNeuronFitStrategy(AdaptiveGradientDescen
             connection.neuron.fit_strategy.delta += self.delta * connection.weight
         self.delta = 0.0
 
+
 cdef class AdaptiveGradientDescentHiddenNeuronFitStrategy(AdaptiveGradientDescentNeuronFitStrategy):
+
     def __init__(self, neuron):
         AdaptiveGradientDescentNeuronFitStrategy.__init__(self, neuron)
 
-    def __call__(self):
+    cdef perform_fit(AdaptiveGradientDescentHiddenNeuronFitStrategy self):
         neuron = self.neuron
         self.output_derivative = neuron.activation_function.derivative(neuron.predict_strategy.induced_local_field,
                                                                        neuron.output)
