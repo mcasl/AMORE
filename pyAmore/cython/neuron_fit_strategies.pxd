@@ -1,11 +1,11 @@
 from common cimport RealNumber
-#from cost_functions cimport *
+from cost_functions cimport *
 from materials cimport Neuron
 
 cdef class NeuronFitStrategy(object):
     cdef public:
         Neuron neuron
-        object cost_function  # TODO: change object declaration
+        CostFunction cost_function
 
 cdef class MlpNeuronFitStrategy(NeuronFitStrategy):
     pass
