@@ -1,14 +1,14 @@
 from abc import ABCMeta, abstractmethod
 
 
-class NeuronPredictStrategy(object, metaclass=ABCMeta):
+class NeuronPredictStrategy(metaclass=ABCMeta):
     @abstractmethod
     def __init__(self, neuron):
         self.neuron = neuron
 
     @abstractmethod
-    def __call__(self, *args, **kwargs):
-        raise NotImplementedError("You shouldn't be calling NeuronPredictStrategy.__call__")
+    def predict(self, *args, **kwargs):
+        raise NotImplementedError("You shouldn't be calling NeuronPredictStrategy.predict")
 
 
 class MlpNeuronPredictStrategy(NeuronPredictStrategy):
@@ -16,11 +16,11 @@ class MlpNeuronPredictStrategy(NeuronPredictStrategy):
         NeuronPredictStrategy.__init__(self, neuron)
         self.induced_local_field = 0.0
 
-    def __call__(self):
+    def predict(self):
         accumulator = self.neuron.bias
         for connection in self.neuron.connections:
             accumulator += connection.neuron.output * connection.weight
         self.induced_local_field = accumulator
 
-        self.neuron.output = self.neuron.activation_function(self.induced_local_field)
+        self.neuron.output = self.neuron.activation_function.original(self.induced_local_field)
         return self.neuron.output

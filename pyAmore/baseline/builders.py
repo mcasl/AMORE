@@ -6,7 +6,7 @@ from abc import ABCMeta, abstractmethod
 from .materials import MlpNetwork
 
 
-class NetworkBuilder(object, metaclass=ABCMeta):
+class NetworkBuilder(metaclass=ABCMeta):
     """ The mother of all neural creators (a.k.a. Interface)
     """
 

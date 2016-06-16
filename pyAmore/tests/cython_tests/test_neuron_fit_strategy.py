@@ -34,7 +34,7 @@ class TestAdaptiveGradientDescentOutputNeuronFitStrategy(unittest.TestCase):
         neural_network(input_data)
         previous_weights_and_bias = [neuron.bias] + [connection.weight for connection in neuron.connections]
         neuron.fit_strategy.target = 0.6
-        neuron.fit_strategy()
+        neuron.fit_strategy.fit()
         post_weights_and_bias = [neuron.bias] + [connection.weight for connection in neuron.connections]
         self.assertTrue(isinstance(neuron.fit_strategy, AdaptiveGradientDescentOutputNeuronFitStrategy))
         self.assertNotEqual(previous_weights_and_bias, post_weights_and_bias)
@@ -52,7 +52,7 @@ class TestAdaptiveGradientDescentHiddenNeuronFitStrategy(unittest.TestCase):
         previous_weights_and_bias = [neuron.bias] + [connection.weight for connection in neuron.connections]
         neuron.fit_strategy.target = 0.6
         neuron.fit_strategy.delta = 0.2
-        neuron.fit_strategy()
+        neuron.fit_strategy.fit()
         post_weights_and_bias = [neuron.bias] + [connection.weight for connection in neuron.connections]
         self.assertTrue(isinstance(neuron.fit_strategy, AdaptiveGradientDescentHiddenNeuronFitStrategy))
         self.assertNotEqual(previous_weights_and_bias, post_weights_and_bias)

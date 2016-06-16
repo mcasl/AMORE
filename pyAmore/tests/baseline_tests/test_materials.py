@@ -74,7 +74,7 @@ class TestMlpNeuron(unittest.TestCase):
     def test_call(self):
         neural_network = mlp_network([4, 3, 2], 'tanh', 'identity')
         test_neuron = neural_network.layers[1][1]
-        self.assertEqual(test_neuron(), test_neuron.predict_strategy())
+        self.assertEqual(test_neuron(), test_neuron.predict_strategy.predict())
 
 
 class TestNetwork(unittest.TestCase):

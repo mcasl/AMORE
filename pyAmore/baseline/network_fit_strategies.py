@@ -1,14 +1,14 @@
 from .neuron_predict_strategies import *
 
 
-class NetworkFitStrategy(object, metaclass=ABCMeta):
+class NetworkFitStrategy(metaclass=ABCMeta):
     @abstractmethod
     def __init__(self, neural_network):
         self.neural_network = neural_network
 
     @abstractmethod
     def __call__(self, *args, **kwargs):
-        raise NotImplementedError("You shouldn't be calling NetworkFitStrategy.__call__")
+        raise NotImplementedError("You shouldn't be calling NetworkFitStrategy.predict")
 
 
 class MlpNetworkFitStrategy(NetworkFitStrategy):
@@ -19,7 +19,7 @@ class MlpNetworkFitStrategy(NetworkFitStrategy):
 
     @abstractmethod
     def __call__(self, *args, **kwargs):
-        raise NotImplementedError("You shouldn't be calling MlpNetworkFitStrategy.__call__")
+        raise NotImplementedError("You shouldn't be calling MlpNetworkFitStrategy.predict")
 
     def poke_targets(self, data):
         output_layer = self.neural_network.layers[-1]
@@ -27,7 +27,8 @@ class MlpNetworkFitStrategy(NetworkFitStrategy):
             neuron.fit_strategy.target = value
 
     def backpropagate(self):
-        [neuron.fit_strategy() for neuron in self.neuron_fit_sequence]
+        for neuron in self.neuron_fit_sequence:
+            neuron.fit_strategy.fit()
 
 
 class AdaptiveNetworkFitStrategy(MlpNetworkFitStrategy):

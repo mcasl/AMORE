@@ -19,7 +19,7 @@ class TestNeuronPredictStrategies(unittest.TestCase):
         neural_network = factory.make_primitive_network()
         neuron = factory.make_primitive_neuron(neural_network)
         predict_strategy = factory.make_neuron_predict_strategy(neuron)
-        self.assertRaises(NotImplementedError, NeuronPredictStrategy.__call__, predict_strategy)
+        self.assertRaises(NotImplementedError, NeuronPredictStrategy.predict, predict_strategy)
 
 
 class TestMlpNeuronPredictStrategy(unittest.TestCase):
@@ -37,4 +37,4 @@ class TestMlpNeuronPredictStrategy(unittest.TestCase):
         for connection in neuron.connections:
             accumulator += connection.neuron.output * connection.weight
         result = math.tanh(accumulator)
-        self.assertEqual(neuron.predict_strategy(), result)
+        self.assertEqual(neuron.predict_strategy.predict(), result)

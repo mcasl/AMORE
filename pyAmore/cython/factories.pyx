@@ -7,7 +7,7 @@ from pyAmore.cython.builders import *
 from pyAmore.cython.activation_functions import activation_functions_set
 
 
-class Factory(object, metaclass=ABCMeta):
+class Factory(metaclass=ABCMeta):
     """ An class for providing a generic make method
     """
 

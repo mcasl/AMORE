@@ -6,7 +6,7 @@ from .neuron_fit_strategies import *
 from .builders import *
 
 
-class Factory(object, metaclass=ABCMeta):
+class Factory(metaclass=ABCMeta):
     """ An class for providing a generic make method
     """
 

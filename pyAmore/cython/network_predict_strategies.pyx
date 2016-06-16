@@ -1,17 +1,22 @@
+# cython: profile=True
+
+from materials cimport *
+
+
 import numpy as np
 
-cdef class NetworkPredictStrategy(object):
-    def __init__(self, neural_network):
+cdef class NetworkPredictStrategy:
+    def __init__(self, Network neural_network):
         self.neural_network = neural_network
 
     def __call__(self, *args, **kwargs):
-        raise NotImplementedError("You shouldn't be calling NetworkPredictStrategy.__call__")
+        raise NotImplementedError("You shouldn't be calling NetworkPredictStrategy.predict")
 
     def activate_neurons(self, *args, **kwargs):
         raise NotImplementedError("You shouldn't be calling NetworkPredictStrategy.activate_neurons")
 
 cdef class MlpNetworkPredictStrategy(NetworkPredictStrategy):
-    def __init__(self, neural_network):
+    def __init__(self, MlpNetwork neural_network):
         NetworkPredictStrategy.__init__(self, neural_network)
         self.neuron_predict_sequence = self.neural_network.factory.make_primitive_container()
 
@@ -35,4 +40,4 @@ cdef class MlpNetworkPredictStrategy(NetworkPredictStrategy):
         cdef neuron_predict_sequence_length = len(self.neuron_predict_sequence)
         for position in range(neuron_predict_sequence_length):
             neuron = self.neuron_predict_sequence[position]
-            neuron.predict_strategy()
+            neuron.predict_strategy.predict()

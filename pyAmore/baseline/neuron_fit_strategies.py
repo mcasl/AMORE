@@ -2,17 +2,25 @@ from .cost_functions import *
 from .neuron_predict_strategies import *
 
 
-class NeuronFitStrategy(object, metaclass=ABCMeta):
+class NeuronFitStrategy(metaclass=ABCMeta):
     @abstractmethod
     def __init__(self, neuron):
         self.neuron = neuron
         self.cost_function = cost_functions_set['default']
+
+    @abstractmethod
+    def fit(self):
+        raise NotImplementedError
 
 
 class MlpNeuronFitStrategy(NeuronFitStrategy):
     @abstractmethod
     def __init__(self, neuron):
         NeuronFitStrategy.__init__(self, neuron)
+
+    @abstractmethod
+    def fit(self):
+        raise NotImplementedError
 
 
 class AdaptiveGradientDescentNeuronFitStrategy(MlpNeuronFitStrategy):
@@ -24,12 +32,16 @@ class AdaptiveGradientDescentNeuronFitStrategy(MlpNeuronFitStrategy):
         self.output_derivative = 0.0
         self.target = 0.0
 
+    @abstractmethod
+    def fit(self):
+        raise NotImplementedError
+
 
 class AdaptiveGradientDescentOutputNeuronFitStrategy(AdaptiveGradientDescentNeuronFitStrategy):
     def __init__(self, neuron):
         AdaptiveGradientDescentNeuronFitStrategy.__init__(self, neuron)
 
-    def __call__(self):
+    def fit(self):
         neuron = self.neuron
         self.output_derivative = neuron.activation_function.derivative(neuron.predict_strategy.induced_local_field,
                                                                        self.neuron.output)
@@ -47,7 +59,7 @@ class AdaptiveGradientDescentHiddenNeuronFitStrategy(AdaptiveGradientDescentNeur
     def __init__(self, neuron):
         AdaptiveGradientDescentNeuronFitStrategy.__init__(self, neuron)
 
-    def __call__(self):
+    def fit(self):
         neuron = self.neuron
         self.output_derivative = neuron.activation_function.derivative(neuron.predict_strategy.induced_local_field,
                                                                        neuron.output)

@@ -1,29 +1,18 @@
-import math
+cimport libc.math
 import random
-from typing import List
 
-from abc import ABCMeta, abstractmethod
-from pyAmore.cython.materials import MlpNetwork
+from materials cimport *
 
-
-class NetworkBuilder(object, metaclass=ABCMeta):
-    """ The mother of all neural creators (a.k.a. Interface)
-    """
-
-    @abstractmethod
-    def create_neural_network(self, *args):
+cdef class NetworkBuilder:
+    cpdef create_neural_network(self, *args):
         raise NotImplementedError("You shouldn't be calling NeuralNetworkBuilder.create_neural_network")
 
-
-class MlpNetworkBuilder(NetworkBuilder):
-    """ A simple implementation of the logic for building multilayer feed forward networks
-    """
-
-    def create_neural_network(self,
-                              neural_factory,
-                              layers_size: List[int],
-                              hidden_layers_activation_function_name: str,
-                              output_layer_activation_function_name: str):
+cdef class MlpNetworkBuilder(NetworkBuilder):
+    cpdef create_neural_network(self,
+                                neural_factory,  # TODO: MaterialsFactory neural_factory
+                                list layers_size,
+                                str hidden_layers_activation_function_name,
+                                str output_layer_activation_function_name):
 
         """ A method for creating a multilayer feed forward network
         """
@@ -37,33 +26,27 @@ class MlpNetworkBuilder(NetworkBuilder):
             MlpNetworkBuilder.set_neurons_fit_strategy(neural_factory, neural_network)
             return neural_network
 
-    @staticmethod
-    def set_neurons_fit_strategy(neural_factory,
-                                 neural_network: MlpNetwork):
+    cpdef set_neurons_fit_strategy(self, neural_factory, MlpNetwork neural_network):
         # Providing input neurons with a fit strategy simplifies
         # the code for adjusting the weights and biases
         for layer in neural_network.layers:
             for neuron in layer:
                 neuron.fit_strategy = neural_factory.make_neuron_fit_strategy(neuron)
 
-    @staticmethod
-    def set_neurons_predict_strategy(neural_factory,
-                                     neural_network: MlpNetwork):
+    cpdef set_neurons_predict_strategy(self, neural_factory, MlpNetwork neural_network):
         # Providing input neurons with a fit strategy simplifies
         # the code for adjusting the weights and biases
         for layer in neural_network.layers:
             for neuron in layer:
                 neuron.predict_strategy = neural_factory.make_neuron_predict_strategy(neuron)
 
-    @staticmethod
-    def set_neurons_learning_rate(neural_network, learning_rate):
+    cpdef set_neurons_learning_rate(self, neural_network, RealNumber learning_rate):
         for neuron in neural_network.fit_strategy.neuron_fit_sequence:
             neuron.fit_strategy.learning_rate = learning_rate
 
-    @staticmethod
-    def create_primitive_layers(neural_factory,
-                                neural_network,
-                                layers_size: List[int]):
+    cpdef create_primitive_layers(self, neural_factory,
+                                  neural_network,
+                                  layers_size: List[int]):
         """ This method fills the neural network with neurons according to
             the structure given in the number_of_neurons list.
             The neurons are unconnected yet and their weights are uninitialized.
@@ -79,9 +62,8 @@ class MlpNetworkBuilder(NetworkBuilder):
             layers.append(layer)
         neural_network.layers = layers
 
-    @staticmethod
-    def connect_network_layers(neural_factory,
-                               neural_network):
+    cpdef connect_network_layers(self, neural_factory,
+                                 neural_network):
         """ This subroutine walks the neurons through
             and establishes the connections in a fully connected manner.
             :param neural_factory:  A factories such as MlpFactory
@@ -95,8 +77,7 @@ class MlpNetworkBuilder(NetworkBuilder):
                     neuron.connections.append(neural_factory.make_primitive_connection(origin))
             origin_layer = destination_layer
 
-    @staticmethod
-    def create_neuron_fit_and_predict_sequence(neural_network):
+    cpdef create_neuron_fit_and_predict_sequence(self, neural_network):
         predict_sequence = neural_network.factory.make_primitive_container()
         for layer in neural_network.layers[1:]:
             for neuron in layer:
@@ -105,8 +86,7 @@ class MlpNetworkBuilder(NetworkBuilder):
         neural_network.fit_strategy.neuron_fit_sequence = neural_network.factory.make_primitive_container()
         neural_network.fit_strategy.neuron_fit_sequence.extend(reversed(predict_sequence))
 
-    @staticmethod
-    def initialize_network(neural_network):
+    cpdef initialize_network(self, neural_network):
         """ This subroutine walks the neurons through
             and changes:
                 *   The connections' weights following a recipe

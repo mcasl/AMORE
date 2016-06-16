@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
 
 
-class NeuralViewerConsole(object, metaclass=ABCMeta):
+class NeuralViewerConsole(metaclass=ABCMeta):
     @staticmethod
     @abstractmethod
     def show_connection(connection):

@@ -5,6 +5,14 @@ class CostFunction:
     def __init__(self):
         self.label = None
 
+    def original(self, prediction, target):
+        residual = prediction - target
+        return residual ** 2
+
+    def derivative(self, prediction, target):
+        residual = prediction - target
+        return residual
+
 
 class AdaptLmsCostFunction(CostFunction):
     def __init__(self):
@@ -52,5 +60,5 @@ class BatchLmsCostFunction(CostFunction):
 
 cost_functions_set = {'adaptLMS': AdaptLmsCostFunction(),
                       'adaptLMLS': AdaptLmLsCostFunction(),
-                      'default': AdaptLmsCostFunction(),
+                      'default': CostFunction(),
                       }

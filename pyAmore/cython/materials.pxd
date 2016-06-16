@@ -1,14 +1,14 @@
-from common cimport RealNumber
-from network_fit_strategies     cimport *
-from network_predict_strategies cimport *
-from neuron_fit_strategies      cimport *
-from neuron_predict_strategies  cimport *
-
+from common                     cimport RealNumber
+from network_fit_strategies     cimport NetworkFitStrategy
+from network_predict_strategies cimport NetworkPredictStrategy
+from neuron_fit_strategies      cimport NeuronFitStrategy
+from neuron_predict_strategies  cimport NeuronPredictStrategy
+from activation_functions       cimport ActivationFunction
 
 cdef class MlpContainer(list):
     pass
 
-cdef class Network(object):
+cdef class Network:
     cdef public:
         object factory
         NetworkPredictStrategy predict_strategy
@@ -18,9 +18,9 @@ cdef class MlpNetwork(Network):
     cdef public:
         MlpContainer layers
 
-cdef class Neuron(object):
+cdef class Neuron:
     cdef public:
-        object label
+        str label
         RealNumber output
         Network neural_network
         NeuronPredictStrategy predict_strategy
@@ -28,11 +28,11 @@ cdef class Neuron(object):
 
 cdef class MlpNeuron(Neuron):
     cdef public:
-        object activation_function  # TODO: must be change to specific type
+        ActivationFunction activation_function  # TODO: must be change to specific type
         MlpContainer connections
         RealNumber bias
 
-cdef class MlpConnection(object):
+cdef class MlpConnection:
     cdef public:
         RealNumber weight
         Neuron neuron

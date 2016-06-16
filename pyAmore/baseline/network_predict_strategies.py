@@ -3,14 +3,14 @@ import numpy as np
 from .neuron_predict_strategies import *
 
 
-class NetworkPredictStrategy(object, metaclass=ABCMeta):
+class NetworkPredictStrategy(metaclass=ABCMeta):
     @abstractmethod
     def __init__(self, neural_network):
         self.neural_network = neural_network
 
     @abstractmethod
     def __call__(self, *args, **kwargs):
-        raise NotImplementedError("You shouldn't be calling NetworkPredictStrategy.__call__")
+        raise NotImplementedError("You shouldn't be calling NetworkPredictStrategy.predict")
 
     @abstractmethod
     def activate_neurons(self, *args, **kwargs):
@@ -39,4 +39,4 @@ class MlpNetworkPredictStrategy(NetworkPredictStrategy):
 
     def activate_neurons(self):
         for neuron in self.neuron_predict_sequence:
-            neuron.predict_strategy()
+            neuron.predict_strategy.predict()

@@ -1,6 +1,16 @@
-import numpy as np
+# cython: profile=True
 
-cdef class Network(object):
+from common                     cimport RealNumber
+from network_fit_strategies     cimport NetworkFitStrategy
+from network_predict_strategies cimport NetworkPredictStrategy
+from neuron_fit_strategies      cimport NeuronFitStrategy
+from neuron_predict_strategies  cimport NeuronPredictStrategy
+from activation_functions       cimport ActivationFunction
+
+cdef class MlpContainer(list):
+    pass
+
+cdef class Network:
     """ The mother of all neural networks (a.k.a Interface)
     """
 
@@ -12,7 +22,7 @@ cdef class Network(object):
     def __call__(self, *args, **kwargs):
         """ Method for obtaining outputs from inputs
         """
-        raise NotImplementedError("You shouldn't be calling NeuralNetwork.__call__")
+        raise NotImplementedError("You shouldn't be calling NeuralNetwork.predict")
 
     def poke_inputs(self, input_data):
         raise NotImplementedError("You shouldn't be calling NeuralNetwork.poke_inputs")
@@ -50,11 +60,11 @@ cdef class MlpNetwork(Network):
         """
         return list(map(len, self.layers))
 
-cdef class Neuron(object):
+cdef class Neuron:
     """ The mother of all neurons (a.k.a. Interface)
     """
 
-    def __init__(self, neural_network):
+    def __init__(self, Network neural_network):
         """ Initializer. An assumption is made that all neurons will have at least these properties.
         """
         self.label = None
@@ -68,13 +78,13 @@ cdef class Neuron(object):
         # It's the builder that assigns it.
 
     def __call__(self, *args, **kwargs):
-        raise NotImplementedError("You shouldn't be calling Neuron.__call__()")
+        raise NotImplementedError("You shouldn't be calling Neuron.predict()")
 
 cdef class MlpNeuron(Neuron):
     """ A simple neuron as in multilayer feed forward networks
     """
 
-    def __init__(self, neural_network):
+    def __init__(self, MlpNetwork neural_network):
         """ Initializer. Python requires explicit call to base class initializer
         """
         Neuron.__init__(self, neural_network)
@@ -83,9 +93,9 @@ cdef class MlpNeuron(Neuron):
         self.bias = 0.0
 
     def __call__(self, *args, **kwargs):
-        return self.predict_strategy()
+        return self.predict_strategy.predict()
 
-cdef class MlpConnection(object):
+cdef class MlpConnection:
     """ A simple data structure for linking neurons in MLP networks
     """
 

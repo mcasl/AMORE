@@ -367,17 +367,35 @@ body.cython { font-family: courier; font-size: 12; }
     Click on a line that starts with a "<code>+</code>" to see the C code that Cython generated for it.
 </p>
 <p>Raw output: <a href="materials.c">materials.c</a></p>
-<div class="cython"><pre class="cython line score-8" onclick='toggleDiv(this)'>+<span class="">01</span>: <span class="k">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span></pre>
-<pre class='cython code score-8 '>  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_Import</span>(__pyx_n_s_numpy, 0, -1);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
-  <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
-  if (<span class='py_c_api'>PyDict_SetItem</span>(__pyx_d, __pyx_n_s_np, __pyx_t_1) &lt; 0) <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
-  <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_1); __pyx_t_1 = 0;
-</pre><pre class="cython line score-0">&#xA0;<span class="">02</span>: </pre>
-<pre class="cython line score-0">&#xA0;<span class="">03</span>: <span class="k">cdef</span> <span class="k">class</span> <span class="nf">Network</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">04</span>:     <span class="sd">&quot;&quot;&quot; The mother of all neural networks (a.k.a Interface)</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">05</span>: <span class="sd">    &quot;&quot;&quot;</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">06</span>: </pre>
-<pre class="cython line score-27" onclick='toggleDiv(this)'>+<span class="">07</span>:     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">neural_factory</span><span class="p">):</span></pre>
+<div class="cython">
+  <pre class="cython line score-0">&#xA0;<span class="">001</span>: <span class="c"># cython: profile=True</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">002</span>: </pre>
+  <pre class="cython line score-0">&#xA0;<span class="">003</span>: <span class="k">from</span> <span
+          class="nn">common</span>                     <span class="k">cimport</span> <span class="n">RealNumber</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">004</span>: <span class="k">from</span> <span class="nn">network_fit_strategies</span>     <span
+          class="k">cimport</span> <span class="n">NetworkFitStrategy</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">005</span>: <span class="k">from</span> <span class="nn">network_predict_strategies</span> <span
+          class="k">cimport</span> <span class="n">NetworkPredictStrategy</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">006</span>: <span class="k">from</span> <span class="nn">neuron_fit_strategies</span>      <span
+          class="k">cimport</span> <span class="n">NeuronFitStrategy</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">007</span>: <span class="k">from</span> <span class="nn">neuron_predict_strategies</span>  <span
+          class="k">cimport</span> <span class="n">NeuronPredictStrategy</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">008</span>: <span class="k">from</span> <span class="nn">activation_functions</span>       <span
+          class="k">cimport</span> <span class="n">ActivationFunction</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">009</span>: </pre>
+  <pre class="cython line score-0">&#xA0;<span class="">010</span>: <span class="k">cdef</span> <span
+          class="k">class</span> <span class="nf">MlpContainer</span><span class="p">(</span><span
+          class="nb">list</span><span class="p">):</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">011</span>:     <span class="k">pass</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">012</span>: </pre>
+  <pre class="cython line score-0">&#xA0;<span class="">013</span>: <span class="k">cdef</span> <span
+          class="k">class</span> <span class="nf">Network</span><span class="p">:</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">014</span>:     <span class="sd">&quot;&quot;&quot; The mother of all neural networks (a.k.a Interface)</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">015</span>: <span class="sd">    &quot;&quot;&quot;</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">016</span>: </pre>
+  <pre class="cython line score-27" onclick='toggleDiv(this)'>+<span class="">017</span>:     <span class="k">def</span> <span
+          class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span
+          class="n">neural_factory</span><span class="p">):</span></pre>
 <pre class='cython code score-27 '>/* Python wrapper */
 static int __pyx_pw_7pyAmore_6cython_9materials_7Network_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static int __pyx_pw_7pyAmore_6cython_9materials_7Network_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
@@ -403,7 +421,8 @@ static int __pyx_pw_7pyAmore_6cython_9materials_7Network_1__init__(PyObject *__p
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args &gt; 0)) {
-        if (unlikely(<span class='pyx_c_api'>__Pyx_ParseOptionalKeywords</span>(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") &lt; 0)) <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 7; __pyx_clineno = __LINE__; goto __pyx_L3_error;}</span>
+        if (unlikely(<span class='pyx_c_api'>__Pyx_ParseOptionalKeywords</span>(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") &lt; 0)) <span
+          class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 17; __pyx_clineno = __LINE__; goto __pyx_L3_error;}</span>
       }
     } else if (<span class='py_macro_api'>PyTuple_GET_SIZE</span>(__pyx_args) != 1) {
       goto __pyx_L5_argtuple_error;
@@ -414,7 +433,8 @@ static int __pyx_pw_7pyAmore_6cython_9materials_7Network_1__init__(PyObject *__p
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  <span class='pyx_c_api'>__Pyx_RaiseArgtupleInvalid</span>("__init__", 1, 1, 1, <span class='py_macro_api'>PyTuple_GET_SIZE</span>(__pyx_args)); <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 7; __pyx_clineno = __LINE__; goto __pyx_L3_error;}</span>
+  <span class='pyx_c_api'>__Pyx_RaiseArgtupleInvalid</span>("__init__", 1, 1, 1, <span class='py_macro_api'>PyTuple_GET_SIZE</span>(__pyx_args)); <span
+          class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 17; __pyx_clineno = __LINE__; goto __pyx_L3_error;}</span>
   __pyx_L3_error:;
   <span class='pyx_c_api'>__Pyx_AddTraceback</span>("pyAmore.cython.materials.Network.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
@@ -432,8 +452,10 @@ static int __pyx_pw_7pyAmore_6cython_9materials_7Network_1__init__(PyObject *__p
 
 static int __pyx_pf_7pyAmore_6cython_9materials_7Network___init__(struct __pyx_obj_7pyAmore_6cython_9materials_Network *__pyx_v_self, PyObject *__pyx_v_neural_factory) {
   int __pyx_r;
+  <span class='trace'>__Pyx_TraceDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannyDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannySetupContext</span>("__init__", 0);
+  <span class='trace'>__Pyx_TraceCall</span>("__init__", __pyx_f[0], 17, 0, <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 17; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>);
 /* … */
   /* function exit code */
   __pyx_r = 0;
@@ -446,17 +468,27 @@ static int __pyx_pf_7pyAmore_6cython_9materials_7Network___init__(struct __pyx_o
   <span class='pyx_c_api'>__Pyx_AddTraceback</span>("pyAmore.cython.materials.Network.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
+  <span class='trace'>__Pyx_TraceReturn</span>(Py_None, 0);
   <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
   return __pyx_r;
 }
-</pre><pre class="cython line score-2" onclick='toggleDiv(this)'>+<span class="">08</span>:         <span class="bp">self</span><span class="o">.</span><span class="n">factory</span> <span class="o">=</span> <span class="n">neural_factory</span></pre>
+</pre>
+  <pre class="cython line score-2" onclick='toggleDiv(this)'>+<span class="">018</span>:         <span
+          class="bp">self</span><span class="o">.</span><span class="n">factory</span> <span class="o">=</span> <span
+          class="n">neural_factory</span></pre>
 <pre class='cython code score-2 '>  <span class='pyx_macro_api'>__Pyx_INCREF</span>(__pyx_v_neural_factory);
   <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_v_neural_factory);
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_v_self-&gt;factory);
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_v_self-&gt;factory);
   __pyx_v_self-&gt;factory = __pyx_v_neural_factory;
-</pre><pre class="cython line score-29" onclick='toggleDiv(this)'>+<span class="">09</span>:         <span class="bp">self</span><span class="o">.</span><span class="n">predict_strategy</span> <span class="o">=</span> <span class="n">neural_factory</span><span class="o">.</span><span class="n">make_network_predict_strategy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></pre>
-<pre class='cython code score-29 '>  __pyx_t_2 = <span class='pyx_c_api'>__Pyx_PyObject_GetAttrStr</span>(__pyx_v_neural_factory, __pyx_n_s_make_network_predict_strategy);<span class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 9; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+</pre>
+  <pre class="cython line score-29" onclick='toggleDiv(this)'>+<span class="">019</span>:         <span
+          class="bp">self</span><span class="o">.</span><span class="n">predict_strategy</span> <span class="o">=</span> <span
+          class="n">neural_factory</span><span class="o">.</span><span
+          class="n">make_network_predict_strategy</span><span class="p">(</span><span class="bp">self</span><span
+          class="p">)</span></pre>
+<pre class='cython code score-29 '>  __pyx_t_2 = <span class='pyx_c_api'>__Pyx_PyObject_GetAttrStr</span>(__pyx_v_neural_factory, __pyx_n_s_make_network_predict_strategy);<span
+        class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 19; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_2);
   __pyx_t_3 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON &amp;&amp; likely(<span class='py_c_api'>PyMethod_Check</span>(__pyx_t_2))) {
@@ -469,28 +501,35 @@ static int __pyx_pf_7pyAmore_6cython_9materials_7Network___init__(struct __pyx_o
     }
   }
   if (!__pyx_t_3) {
-    __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_CallOneArg</span>(__pyx_t_2, ((PyObject *)__pyx_v_self));<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 9; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+    __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_CallOneArg</span>(__pyx_t_2, ((PyObject *)__pyx_v_self));<span
+          class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 19; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
     <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
   } else {
-    __pyx_t_4 = <span class='py_c_api'>PyTuple_New</span>(1+1);<span class='error_goto'> if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 9; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+    __pyx_t_4 = <span class='py_c_api'>PyTuple_New</span>(1+1);<span class='error_goto'> if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 19; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
     <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_4);
     <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_t_3); <span class='py_macro_api'>PyTuple_SET_ITEM</span>(__pyx_t_4, 0, __pyx_t_3); __pyx_t_3 = NULL;
     <span class='pyx_macro_api'>__Pyx_INCREF</span>(((PyObject *)__pyx_v_self));
     <span class='refnanny'>__Pyx_GIVEREF</span>(((PyObject *)__pyx_v_self));
     <span class='py_macro_api'>PyTuple_SET_ITEM</span>(__pyx_t_4, 0+1, ((PyObject *)__pyx_v_self));
-    __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_t_2, __pyx_t_4, NULL);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 9; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+    __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_t_2, __pyx_t_4, NULL);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 19; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
     <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
     <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_4); __pyx_t_4 = 0;
   }
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_2); __pyx_t_2 = 0;
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(<span class='pyx_c_api'>__Pyx_TypeTest</span>(__pyx_t_1, __pyx_ptype_7pyAmore_6cython_26network_predict_strategies_NetworkPredictStrategy))))) <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 9; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(<span class='pyx_c_api'>__Pyx_TypeTest</span>(__pyx_t_1, __pyx_ptype_7pyAmore_6cython_26network_predict_strategies_NetworkPredictStrategy))))) <span
+          class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 19; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_t_1);
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_v_self-&gt;predict_strategy);
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(((PyObject *)__pyx_v_self-&gt;predict_strategy));
   __pyx_v_self-&gt;predict_strategy = ((struct __pyx_obj_7pyAmore_6cython_26network_predict_strategies_NetworkPredictStrategy *)__pyx_t_1);
   __pyx_t_1 = 0;
-</pre><pre class="cython line score-29" onclick='toggleDiv(this)'>+<span class="">10</span>:         <span class="bp">self</span><span class="o">.</span><span class="n">fit_strategy</span> <span class="o">=</span> <span class="n">neural_factory</span><span class="o">.</span><span class="n">make_network_fit_strategy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></pre>
-<pre class='cython code score-29 '>  __pyx_t_2 = <span class='pyx_c_api'>__Pyx_PyObject_GetAttrStr</span>(__pyx_v_neural_factory, __pyx_n_s_make_network_fit_strategy);<span class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 10; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+</pre>
+  <pre class="cython line score-29" onclick='toggleDiv(this)'>+<span class="">020</span>:         <span
+          class="bp">self</span><span class="o">.</span><span class="n">fit_strategy</span> <span
+          class="o">=</span> <span class="n">neural_factory</span><span class="o">.</span><span class="n">make_network_fit_strategy</span><span
+          class="p">(</span><span class="bp">self</span><span class="p">)</span></pre>
+<pre class='cython code score-29 '>  __pyx_t_2 = <span class='pyx_c_api'>__Pyx_PyObject_GetAttrStr</span>(__pyx_v_neural_factory, __pyx_n_s_make_network_fit_strategy);<span
+        class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 20; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_2);
   __pyx_t_4 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON &amp;&amp; likely(<span class='py_c_api'>PyMethod_Check</span>(__pyx_t_2))) {
@@ -503,28 +542,34 @@ static int __pyx_pf_7pyAmore_6cython_9materials_7Network___init__(struct __pyx_o
     }
   }
   if (!__pyx_t_4) {
-    __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_CallOneArg</span>(__pyx_t_2, ((PyObject *)__pyx_v_self));<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 10; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+    __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_CallOneArg</span>(__pyx_t_2, ((PyObject *)__pyx_v_self));<span
+          class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 20; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
     <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
   } else {
-    __pyx_t_3 = <span class='py_c_api'>PyTuple_New</span>(1+1);<span class='error_goto'> if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 10; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+    __pyx_t_3 = <span class='py_c_api'>PyTuple_New</span>(1+1);<span class='error_goto'> if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 20; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
     <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_3);
     <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_t_4); <span class='py_macro_api'>PyTuple_SET_ITEM</span>(__pyx_t_3, 0, __pyx_t_4); __pyx_t_4 = NULL;
     <span class='pyx_macro_api'>__Pyx_INCREF</span>(((PyObject *)__pyx_v_self));
     <span class='refnanny'>__Pyx_GIVEREF</span>(((PyObject *)__pyx_v_self));
     <span class='py_macro_api'>PyTuple_SET_ITEM</span>(__pyx_t_3, 0+1, ((PyObject *)__pyx_v_self));
-    __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_t_2, __pyx_t_3, NULL);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 10; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+    __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_t_2, __pyx_t_3, NULL);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 20; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
     <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
     <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_3); __pyx_t_3 = 0;
   }
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_2); __pyx_t_2 = 0;
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(<span class='pyx_c_api'>__Pyx_TypeTest</span>(__pyx_t_1, __pyx_ptype_7pyAmore_6cython_22network_fit_strategies_NetworkFitStrategy))))) <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 10; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(<span class='pyx_c_api'>__Pyx_TypeTest</span>(__pyx_t_1, __pyx_ptype_7pyAmore_6cython_22network_fit_strategies_NetworkFitStrategy))))) <span
+          class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 20; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_t_1);
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_v_self-&gt;fit_strategy);
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(((PyObject *)__pyx_v_self-&gt;fit_strategy));
   __pyx_v_self-&gt;fit_strategy = ((struct __pyx_obj_7pyAmore_6cython_22network_fit_strategies_NetworkFitStrategy *)__pyx_t_1);
   __pyx_t_1 = 0;
-</pre><pre class="cython line score-0">&#xA0;<span class="">11</span>: </pre>
-<pre class="cython line score-8" onclick='toggleDiv(this)'>+<span class="">12</span>:     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span></pre>
+</pre>
+  <pre class="cython line score-0">&#xA0;<span class="">021</span>: </pre>
+  <pre class="cython line score-8" onclick='toggleDiv(this)'>+<span class="">022</span>:     <span class="k">def</span> <span
+          class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span
+          class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span
+          class="n">kwargs</span><span class="p">):</span></pre>
 <pre class='cython code score-8 '>/* Python wrapper */
 static PyObject *__pyx_pw_7pyAmore_6cython_9materials_7Network_3__call__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static char __pyx_doc_7pyAmore_6cython_9materials_7Network_2__call__[] = " Method for obtaining outputs from inputs\n        ";
@@ -551,8 +596,10 @@ static PyObject *__pyx_pw_7pyAmore_6cython_9materials_7Network_3__call__(PyObjec
 
 static PyObject *__pyx_pf_7pyAmore_6cython_9materials_7Network_2__call__(CYTHON_UNUSED struct __pyx_obj_7pyAmore_6cython_9materials_Network *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v_args, CYTHON_UNUSED PyObject *__pyx_v_kwargs) {
   PyObject *__pyx_r = NULL;
+  <span class='trace'>__Pyx_TraceDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannyDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannySetupContext</span>("__call__", 0);
+  <span class='trace'>__Pyx_TraceCall</span>("__call__", __pyx_f[0], 22, 0, <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 22; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>);
 /* … */
   /* function exit code */
   __pyx_L1_error:;
@@ -560,23 +607,33 @@ static PyObject *__pyx_pf_7pyAmore_6cython_9materials_7Network_2__call__(CYTHON_
   <span class='pyx_c_api'>__Pyx_AddTraceback</span>("pyAmore.cython.materials.Network.__call__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   <span class='refnanny'>__Pyx_XGIVEREF</span>(__pyx_r);
+  <span class='trace'>__Pyx_TraceReturn</span>(__pyx_r, 0);
   <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
   return __pyx_r;
 }
-</pre><pre class="cython line score-0">&#xA0;<span class="">13</span>:         <span class="sd">&quot;&quot;&quot; Method for obtaining outputs from inputs</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">14</span>: <span class="sd">        &quot;&quot;&quot;</span></pre>
-<pre class="cython line score-10" onclick='toggleDiv(this)'>+<span class="">15</span>:         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;You shouldn&#39;t be calling NeuralNetwork.__call__&quot;</span><span class="p">)</span></pre>
-<pre class='cython code score-10 '>  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_builtin_NotImplementedError, __pyx_tuple_, NULL);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 15; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+</pre>
+  <pre class="cython line score-0">&#xA0;<span class="">023</span>:         <span class="sd">&quot;&quot;&quot; Method for obtaining outputs from inputs</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">024</span>: <span
+          class="sd">        &quot;&quot;&quot;</span></pre>
+  <pre class="cython line score-10" onclick='toggleDiv(this)'>+<span class="">025</span>:         <span
+          class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;You shouldn&#39;t be calling NeuralNetwork.predict&quot;</span><span
+          class="p">)</span></pre>
+<pre class='cython code score-10 '>  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_builtin_NotImplementedError, __pyx_tuple_, NULL);<span
+        class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 25; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
   <span class='pyx_c_api'>__Pyx_Raise</span>(__pyx_t_1, 0, 0, 0);
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_1); __pyx_t_1 = 0;
-  <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 15; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 25; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
 /* … */
-  __pyx_tuple_ = <span class='py_c_api'>PyTuple_Pack</span>(1, __pyx_kp_s_You_shouldn_t_be_calling_NeuralN);<span class='error_goto'> if (unlikely(!__pyx_tuple_)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 15; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  __pyx_tuple_ = <span class='py_c_api'>PyTuple_Pack</span>(1, __pyx_kp_s_You_shouldn_t_be_calling_NeuralN);<span
+          class='error_goto'> if (unlikely(!__pyx_tuple_)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 25; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_tuple_);
   <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_tuple_);
-</pre><pre class="cython line score-0">&#xA0;<span class="">16</span>: </pre>
-<pre class="cython line score-3" onclick='toggleDiv(this)'>+<span class="">17</span>:     <span class="k">def</span> <span class="nf">poke_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">):</span></pre>
+</pre>
+  <pre class="cython line score-0">&#xA0;<span class="">026</span>: </pre>
+  <pre class="cython line score-3" onclick='toggleDiv(this)'>+<span class="">027</span>:     <span class="k">def</span> <span
+          class="nf">poke_inputs</span><span class="p">(</span><span class="bp">self</span><span
+          class="p">,</span> <span class="n">input_data</span><span class="p">):</span></pre>
 <pre class='cython code score-3 '>/* Python wrapper */
 static PyObject *__pyx_pw_7pyAmore_6cython_9materials_7Network_5poke_inputs(PyObject *__pyx_v_self, PyObject *__pyx_v_input_data); /*proto*/
 static PyObject *__pyx_pw_7pyAmore_6cython_9materials_7Network_5poke_inputs(PyObject *__pyx_v_self, PyObject *__pyx_v_input_data) {
@@ -592,8 +649,10 @@ static PyObject *__pyx_pw_7pyAmore_6cython_9materials_7Network_5poke_inputs(PyOb
 
 static PyObject *__pyx_pf_7pyAmore_6cython_9materials_7Network_4poke_inputs(CYTHON_UNUSED struct __pyx_obj_7pyAmore_6cython_9materials_Network *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v_input_data) {
   PyObject *__pyx_r = NULL;
+  <span class='trace'>__Pyx_TraceDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannyDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannySetupContext</span>("poke_inputs", 0);
+  <span class='trace'>__Pyx_TraceCall</span>("poke_inputs", __pyx_f[0], 27, 0, <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 27; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>);
 /* … */
   /* function exit code */
   __pyx_L1_error:;
@@ -601,21 +660,30 @@ static PyObject *__pyx_pf_7pyAmore_6cython_9materials_7Network_4poke_inputs(CYTH
   <span class='pyx_c_api'>__Pyx_AddTraceback</span>("pyAmore.cython.materials.Network.poke_inputs", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   <span class='refnanny'>__Pyx_XGIVEREF</span>(__pyx_r);
+  <span class='trace'>__Pyx_TraceReturn</span>(__pyx_r, 0);
   <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
   return __pyx_r;
 }
-</pre><pre class="cython line score-10" onclick='toggleDiv(this)'>+<span class="">18</span>:         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;You shouldn&#39;t be calling NeuralNetwork.poke_inputs&quot;</span><span class="p">)</span></pre>
-<pre class='cython code score-10 '>  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_builtin_NotImplementedError, __pyx_tuple__2, NULL);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 18; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+</pre>
+  <pre class="cython line score-10" onclick='toggleDiv(this)'>+<span class="">028</span>:         <span
+          class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;You shouldn&#39;t be calling NeuralNetwork.poke_inputs&quot;</span><span
+          class="p">)</span></pre>
+<pre class='cython code score-10 '>  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_builtin_NotImplementedError, __pyx_tuple__2, NULL);<span
+        class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 28; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
   <span class='pyx_c_api'>__Pyx_Raise</span>(__pyx_t_1, 0, 0, 0);
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_1); __pyx_t_1 = 0;
-  <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 18; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 28; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
 /* … */
-  __pyx_tuple__2 = <span class='py_c_api'>PyTuple_Pack</span>(1, __pyx_kp_s_You_shouldn_t_be_calling_NeuralN_2);<span class='error_goto'> if (unlikely(!__pyx_tuple__2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 18; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  __pyx_tuple__2 = <span class='py_c_api'>PyTuple_Pack</span>(1, __pyx_kp_s_You_shouldn_t_be_calling_NeuralN_2);<span
+          class='error_goto'> if (unlikely(!__pyx_tuple__2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 28; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_tuple__2);
   <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_tuple__2);
-</pre><pre class="cython line score-0">&#xA0;<span class="">19</span>: </pre>
-<pre class="cython line score-3" onclick='toggleDiv(this)'>+<span class="">20</span>:     <span class="k">def</span> <span class="nf">pick_outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></pre>
+</pre>
+  <pre class="cython line score-0">&#xA0;<span class="">029</span>: </pre>
+  <pre class="cython line score-3" onclick='toggleDiv(this)'>+<span class="">030</span>:     <span class="k">def</span> <span
+          class="nf">pick_outputs</span><span class="p">(</span><span class="bp">self</span><span
+          class="p">):</span></pre>
 <pre class='cython code score-3 '>/* Python wrapper */
 static PyObject *__pyx_pw_7pyAmore_6cython_9materials_7Network_7pick_outputs(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
 static PyObject *__pyx_pw_7pyAmore_6cython_9materials_7Network_7pick_outputs(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
@@ -631,8 +699,10 @@ static PyObject *__pyx_pw_7pyAmore_6cython_9materials_7Network_7pick_outputs(PyO
 
 static PyObject *__pyx_pf_7pyAmore_6cython_9materials_7Network_6pick_outputs(CYTHON_UNUSED struct __pyx_obj_7pyAmore_6cython_9materials_Network *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
+  <span class='trace'>__Pyx_TraceDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannyDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannySetupContext</span>("pick_outputs", 0);
+  <span class='trace'>__Pyx_TraceCall</span>("pick_outputs", __pyx_f[0], 30, 0, <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 30; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>);
 /* … */
   /* function exit code */
   __pyx_L1_error:;
@@ -640,33 +710,45 @@ static PyObject *__pyx_pf_7pyAmore_6cython_9materials_7Network_6pick_outputs(CYT
   <span class='pyx_c_api'>__Pyx_AddTraceback</span>("pyAmore.cython.materials.Network.pick_outputs", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   <span class='refnanny'>__Pyx_XGIVEREF</span>(__pyx_r);
+  <span class='trace'>__Pyx_TraceReturn</span>(__pyx_r, 0);
   <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
   return __pyx_r;
 }
-</pre><pre class="cython line score-10" onclick='toggleDiv(this)'>+<span class="">21</span>:         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;You shouldn&#39;t be calling NeuralNetwork.pick_outputs&quot;</span><span class="p">)</span></pre>
-<pre class='cython code score-10 '>  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_builtin_NotImplementedError, __pyx_tuple__3, NULL);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 21; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+</pre>
+  <pre class="cython line score-10" onclick='toggleDiv(this)'>+<span class="">031</span>:         <span
+          class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;You shouldn&#39;t be calling NeuralNetwork.pick_outputs&quot;</span><span
+          class="p">)</span></pre>
+<pre class='cython code score-10 '>  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_builtin_NotImplementedError, __pyx_tuple__3, NULL);<span
+        class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 31; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
   <span class='pyx_c_api'>__Pyx_Raise</span>(__pyx_t_1, 0, 0, 0);
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_1); __pyx_t_1 = 0;
-  <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 21; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 31; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
 /* … */
-  __pyx_tuple__3 = <span class='py_c_api'>PyTuple_Pack</span>(1, __pyx_kp_s_You_shouldn_t_be_calling_NeuralN_3);<span class='error_goto'> if (unlikely(!__pyx_tuple__3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 21; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  __pyx_tuple__3 = <span class='py_c_api'>PyTuple_Pack</span>(1, __pyx_kp_s_You_shouldn_t_be_calling_NeuralN_3);<span
+          class='error_goto'> if (unlikely(!__pyx_tuple__3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 31; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_tuple__3);
   <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_tuple__3);
-</pre><pre class="cython line score-0">&#xA0;<span class="">22</span>: </pre>
-<pre class="cython line score-20" onclick='toggleDiv(this)'>+<span class="">23</span>:     <span class="nd">@property</span></pre>
-<pre class='cython code score-20 '>  __pyx_t_2 = <span class='py_c_api'>PyTuple_New</span>(1);<span class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 23; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+</pre>
+  <pre class="cython line score-0">&#xA0;<span class="">032</span>: </pre>
+  <pre class="cython line score-20" onclick='toggleDiv(this)'>+<span class="">033</span>:     <span
+          class="nd">@property</span></pre>
+<pre class='cython code score-20 '>  __pyx_t_2 = <span class='py_c_api'>PyTuple_New</span>(1);<span class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 33; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_2);
   <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_t_1);
   <span class='py_macro_api'>PyTuple_SET_ITEM</span>(__pyx_t_2, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_builtin_property, __pyx_t_2, NULL);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 23; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_builtin_property, __pyx_t_2, NULL);<span
+          class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 33; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_2); __pyx_t_2 = 0;
-  if (<span class='py_c_api'>PyDict_SetItem</span>((PyObject *)__pyx_ptype_7pyAmore_6cython_9materials_Network-&gt;tp_dict, __pyx_n_s_shape, __pyx_t_1) &lt; 0) <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 24; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  if (<span class='py_c_api'>PyDict_SetItem</span>((PyObject *)__pyx_ptype_7pyAmore_6cython_9materials_Network-&gt;tp_dict, __pyx_n_s_shape, __pyx_t_1) &lt; 0) <span
+          class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 34; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_1); __pyx_t_1 = 0;
   <span class='py_c_api'>PyType_Modified</span>(__pyx_ptype_7pyAmore_6cython_9materials_Network);
-</pre><pre class="cython line score-5" onclick='toggleDiv(this)'>+<span class="">24</span>:     <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></pre>
+</pre>
+  <pre class="cython line score-5" onclick='toggleDiv(this)'>+<span class="">034</span>:     <span class="k">def</span> <span
+          class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></pre>
 <pre class='cython code score-5 '>/* Python wrapper */
 static PyObject *__pyx_pw_7pyAmore_6cython_9materials_7Network_9shape(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
 static char __pyx_doc_7pyAmore_6cython_9materials_7Network_8shape[] = " Gives information about the number of neurons in the neural network\n        ";
@@ -683,8 +765,10 @@ static PyObject *__pyx_pw_7pyAmore_6cython_9materials_7Network_9shape(PyObject *
 
 static PyObject *__pyx_pf_7pyAmore_6cython_9materials_7Network_8shape(CYTHON_UNUSED struct __pyx_obj_7pyAmore_6cython_9materials_Network *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
+  <span class='trace'>__Pyx_TraceDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannyDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannySetupContext</span>("shape", 0);
+  <span class='trace'>__Pyx_TraceCall</span>("shape", __pyx_f[0], 34, 0, <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 34; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>);
 /* … */
   /* function exit code */
   __pyx_L1_error:;
@@ -692,30 +776,43 @@ static PyObject *__pyx_pf_7pyAmore_6cython_9materials_7Network_8shape(CYTHON_UNU
   <span class='pyx_c_api'>__Pyx_AddTraceback</span>("pyAmore.cython.materials.Network.shape", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   <span class='refnanny'>__Pyx_XGIVEREF</span>(__pyx_r);
+  <span class='trace'>__Pyx_TraceReturn</span>(__pyx_r, 0);
   <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
   return __pyx_r;
 }
 /* … */
-  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_GetNameInClass</span>((PyObject *)__pyx_ptype_7pyAmore_6cython_9materials_Network, __pyx_n_s_shape);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 24; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_GetNameInClass</span>((PyObject *)__pyx_ptype_7pyAmore_6cython_9materials_Network, __pyx_n_s_shape);<span
+          class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 34; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
-</pre><pre class="cython line score-0">&#xA0;<span class="">25</span>:         <span class="sd">&quot;&quot;&quot; Gives information about the number of neurons in the neural network</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">26</span>: <span class="sd">        &quot;&quot;&quot;</span></pre>
-<pre class="cython line score-10" onclick='toggleDiv(this)'>+<span class="">27</span>:         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;You shouldn&#39;t be calling NeuralNetwork.shape&quot;</span><span class="p">)</span></pre>
-<pre class='cython code score-10 '>  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_builtin_NotImplementedError, __pyx_tuple__4, NULL);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 27; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+</pre>
+  <pre class="cython line score-0">&#xA0;<span class="">035</span>:         <span class="sd">&quot;&quot;&quot; Gives information about the number of neurons in the neural network</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">036</span>: <span
+          class="sd">        &quot;&quot;&quot;</span></pre>
+  <pre class="cython line score-10" onclick='toggleDiv(this)'>+<span class="">037</span>:         <span
+          class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;You shouldn&#39;t be calling NeuralNetwork.shape&quot;</span><span
+          class="p">)</span></pre>
+<pre class='cython code score-10 '>  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_builtin_NotImplementedError, __pyx_tuple__4, NULL);<span
+        class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 37; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
   <span class='pyx_c_api'>__Pyx_Raise</span>(__pyx_t_1, 0, 0, 0);
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_1); __pyx_t_1 = 0;
-  <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 27; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 37; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
 /* … */
-  __pyx_tuple__4 = <span class='py_c_api'>PyTuple_Pack</span>(1, __pyx_kp_s_You_shouldn_t_be_calling_NeuralN_4);<span class='error_goto'> if (unlikely(!__pyx_tuple__4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 27; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  __pyx_tuple__4 = <span class='py_c_api'>PyTuple_Pack</span>(1, __pyx_kp_s_You_shouldn_t_be_calling_NeuralN_4);<span
+          class='error_goto'> if (unlikely(!__pyx_tuple__4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 37; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_tuple__4);
   <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_tuple__4);
-</pre><pre class="cython line score-0">&#xA0;<span class="">28</span>: </pre>
-<pre class="cython line score-0">&#xA0;<span class="">29</span>: <span class="k">cdef</span> <span class="k">class</span> <span class="nf">MlpNetwork</span><span class="p">(</span><span class="n">Network</span><span class="p">):</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">30</span>:     <span class="sd">&quot;&quot;&quot; Simple implementation of a multilayer feed forward network</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">31</span>: <span class="sd">    &quot;&quot;&quot;</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">32</span>: </pre>
-<pre class="cython line score-27" onclick='toggleDiv(this)'>+<span class="">33</span>:     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">neural_factory</span><span class="p">):</span></pre>
+</pre>
+  <pre class="cython line score-0">&#xA0;<span class="">038</span>: </pre>
+  <pre class="cython line score-0">&#xA0;<span class="">039</span>: <span class="k">cdef</span> <span
+          class="k">class</span> <span class="nf">MlpNetwork</span><span class="p">(</span><span
+          class="n">Network</span><span class="p">):</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">040</span>:     <span class="sd">&quot;&quot;&quot; Simple implementation of a multilayer feed forward network</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">041</span>: <span class="sd">    &quot;&quot;&quot;</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">042</span>: </pre>
+  <pre class="cython line score-27" onclick='toggleDiv(this)'>+<span class="">043</span>:     <span class="k">def</span> <span
+          class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span
+          class="n">neural_factory</span><span class="p">):</span></pre>
 <pre class='cython code score-27 '>/* Python wrapper */
 static int __pyx_pw_7pyAmore_6cython_9materials_10MlpNetwork_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static int __pyx_pw_7pyAmore_6cython_9materials_10MlpNetwork_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
@@ -741,7 +838,8 @@ static int __pyx_pw_7pyAmore_6cython_9materials_10MlpNetwork_1__init__(PyObject 
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args &gt; 0)) {
-        if (unlikely(<span class='pyx_c_api'>__Pyx_ParseOptionalKeywords</span>(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") &lt; 0)) <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 33; __pyx_clineno = __LINE__; goto __pyx_L3_error;}</span>
+        if (unlikely(<span class='pyx_c_api'>__Pyx_ParseOptionalKeywords</span>(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") &lt; 0)) <span
+          class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 43; __pyx_clineno = __LINE__; goto __pyx_L3_error;}</span>
       }
     } else if (<span class='py_macro_api'>PyTuple_GET_SIZE</span>(__pyx_args) != 1) {
       goto __pyx_L5_argtuple_error;
@@ -752,7 +850,8 @@ static int __pyx_pw_7pyAmore_6cython_9materials_10MlpNetwork_1__init__(PyObject 
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  <span class='pyx_c_api'>__Pyx_RaiseArgtupleInvalid</span>("__init__", 1, 1, 1, <span class='py_macro_api'>PyTuple_GET_SIZE</span>(__pyx_args)); <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 33; __pyx_clineno = __LINE__; goto __pyx_L3_error;}</span>
+  <span class='pyx_c_api'>__Pyx_RaiseArgtupleInvalid</span>("__init__", 1, 1, 1, <span class='py_macro_api'>PyTuple_GET_SIZE</span>(__pyx_args)); <span
+          class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 43; __pyx_clineno = __LINE__; goto __pyx_L3_error;}</span>
   __pyx_L3_error:;
   <span class='pyx_c_api'>__Pyx_AddTraceback</span>("pyAmore.cython.materials.MlpNetwork.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
@@ -770,8 +869,10 @@ static int __pyx_pw_7pyAmore_6cython_9materials_10MlpNetwork_1__init__(PyObject 
 
 static int __pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork___init__(struct __pyx_obj_7pyAmore_6cython_9materials_MlpNetwork *__pyx_v_self, PyObject *__pyx_v_neural_factory) {
   int __pyx_r;
+  <span class='trace'>__Pyx_TraceDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannyDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannySetupContext</span>("__init__", 0);
+  <span class='trace'>__Pyx_TraceCall</span>("__init__", __pyx_f[0], 43, 0, <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 43; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>);
 /* … */
   /* function exit code */
   __pyx_r = 0;
@@ -784,11 +885,16 @@ static int __pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork___init__(struct __p
   <span class='pyx_c_api'>__Pyx_AddTraceback</span>("pyAmore.cython.materials.MlpNetwork.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
+  <span class='trace'>__Pyx_TraceReturn</span>(Py_None, 0);
   <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
   return __pyx_r;
 }
-</pre><pre class="cython line score-27" onclick='toggleDiv(this)'>+<span class="">34</span>:         <span class="n">Network</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">neural_factory</span><span class="p">)</span></pre>
-<pre class='cython code score-27 '>  __pyx_t_2 = <span class='pyx_c_api'>__Pyx_PyObject_GetAttrStr</span>(((PyObject *)__pyx_ptype_7pyAmore_6cython_9materials_Network), __pyx_n_s_init);<span class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 34; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+</pre>
+  <pre class="cython line score-27" onclick='toggleDiv(this)'>+<span class="">044</span>:         <span class="n">Network</span><span
+          class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span
+          class="p">,</span> <span class="n">neural_factory</span><span class="p">)</span></pre>
+<pre class='cython code score-27 '>  __pyx_t_2 = <span class='pyx_c_api'>__Pyx_PyObject_GetAttrStr</span>(((PyObject *)__pyx_ptype_7pyAmore_6cython_9materials_Network), __pyx_n_s_init);<span
+        class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 44; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_2);
   __pyx_t_3 = NULL;
   __pyx_t_4 = 0;
@@ -802,7 +908,7 @@ static int __pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork___init__(struct __p
       __pyx_t_4 = 1;
     }
   }
-  __pyx_t_5 = <span class='py_c_api'>PyTuple_New</span>(2+__pyx_t_4);<span class='error_goto'> if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 34; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  __pyx_t_5 = <span class='py_c_api'>PyTuple_New</span>(2+__pyx_t_4);<span class='error_goto'> if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 44; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_5);
   if (__pyx_t_3) {
     <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_t_3); <span class='py_macro_api'>PyTuple_SET_ITEM</span>(__pyx_t_5, 0, __pyx_t_3); __pyx_t_3 = NULL;
@@ -813,13 +919,18 @@ static int __pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork___init__(struct __p
   <span class='pyx_macro_api'>__Pyx_INCREF</span>(__pyx_v_neural_factory);
   <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_v_neural_factory);
   <span class='py_macro_api'>PyTuple_SET_ITEM</span>(__pyx_t_5, 1+__pyx_t_4, __pyx_v_neural_factory);
-  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_t_2, __pyx_t_5, NULL);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 34; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_t_2, __pyx_t_5, NULL);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 44; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_5); __pyx_t_5 = 0;
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_2); __pyx_t_2 = 0;
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_1); __pyx_t_1 = 0;
-</pre><pre class="cython line score-21" onclick='toggleDiv(this)'>+<span class="">35</span>:         <span class="bp">self</span><span class="o">.</span><span class="n">layers</span> <span class="o">=</span> <span class="n">neural_factory</span><span class="o">.</span><span class="n">make_primitive_container</span><span class="p">()</span></pre>
-<pre class='cython code score-21 '>  __pyx_t_2 = <span class='pyx_c_api'>__Pyx_PyObject_GetAttrStr</span>(__pyx_v_neural_factory, __pyx_n_s_make_primitive_container);<span class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 35; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+</pre>
+  <pre class="cython line score-21" onclick='toggleDiv(this)'>+<span class="">045</span>:         <span
+          class="bp">self</span><span class="o">.</span><span class="n">layers</span> <span class="o">=</span> <span
+          class="n">neural_factory</span><span class="o">.</span><span class="n">make_primitive_container</span><span
+          class="p">()</span></pre>
+<pre class='cython code score-21 '>  __pyx_t_2 = <span class='pyx_c_api'>__Pyx_PyObject_GetAttrStr</span>(__pyx_v_neural_factory, __pyx_n_s_make_primitive_container);<span
+        class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 45; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_2);
   __pyx_t_5 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON &amp;&amp; likely(<span class='py_c_api'>PyMethod_Check</span>(__pyx_t_2))) {
@@ -832,21 +943,25 @@ static int __pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork___init__(struct __p
     }
   }
   if (__pyx_t_5) {
-    __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_CallOneArg</span>(__pyx_t_2, __pyx_t_5);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 35; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+    __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_CallOneArg</span>(__pyx_t_2, __pyx_t_5);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 45; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
     <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_5); __pyx_t_5 = 0;
   } else {
-    __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_CallNoArg</span>(__pyx_t_2);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 35; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+    __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_CallNoArg</span>(__pyx_t_2);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 45; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   }
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_2); __pyx_t_2 = 0;
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(<span class='pyx_c_api'>__Pyx_TypeTest</span>(__pyx_t_1, __pyx_ptype_7pyAmore_6cython_9materials_MlpContainer))))) <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 35; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(<span class='pyx_c_api'>__Pyx_TypeTest</span>(__pyx_t_1, __pyx_ptype_7pyAmore_6cython_9materials_MlpContainer))))) <span
+          class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 45; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_t_1);
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_v_self-&gt;layers);
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(((PyObject *)__pyx_v_self-&gt;layers));
   __pyx_v_self-&gt;layers = ((struct __pyx_obj_7pyAmore_6cython_9materials_MlpContainer *)__pyx_t_1);
   __pyx_t_1 = 0;
-</pre><pre class="cython line score-0">&#xA0;<span class="">36</span>: </pre>
-<pre class="cython line score-27" onclick='toggleDiv(this)'>+<span class="">37</span>:     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">):</span></pre>
+</pre>
+  <pre class="cython line score-0">&#xA0;<span class="">046</span>: </pre>
+  <pre class="cython line score-27" onclick='toggleDiv(this)'>+<span class="">047</span>:     <span class="k">def</span> <span
+          class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span
+          class="n">input_data</span><span class="p">):</span></pre>
 <pre class='cython code score-27 '>/* Python wrapper */
 static PyObject *__pyx_pw_7pyAmore_6cython_9materials_10MlpNetwork_3__call__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static PyObject *__pyx_pw_7pyAmore_6cython_9materials_10MlpNetwork_3__call__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
@@ -872,7 +987,8 @@ static PyObject *__pyx_pw_7pyAmore_6cython_9materials_10MlpNetwork_3__call__(PyO
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args &gt; 0)) {
-        if (unlikely(<span class='pyx_c_api'>__Pyx_ParseOptionalKeywords</span>(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__call__") &lt; 0)) <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 37; __pyx_clineno = __LINE__; goto __pyx_L3_error;}</span>
+        if (unlikely(<span class='pyx_c_api'>__Pyx_ParseOptionalKeywords</span>(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__call__") &lt; 0)) <span
+          class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 47; __pyx_clineno = __LINE__; goto __pyx_L3_error;}</span>
       }
     } else if (<span class='py_macro_api'>PyTuple_GET_SIZE</span>(__pyx_args) != 1) {
       goto __pyx_L5_argtuple_error;
@@ -883,7 +999,8 @@ static PyObject *__pyx_pw_7pyAmore_6cython_9materials_10MlpNetwork_3__call__(PyO
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  <span class='pyx_c_api'>__Pyx_RaiseArgtupleInvalid</span>("__call__", 1, 1, 1, <span class='py_macro_api'>PyTuple_GET_SIZE</span>(__pyx_args)); <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 37; __pyx_clineno = __LINE__; goto __pyx_L3_error;}</span>
+  <span class='pyx_c_api'>__Pyx_RaiseArgtupleInvalid</span>("__call__", 1, 1, 1, <span class='py_macro_api'>PyTuple_GET_SIZE</span>(__pyx_args)); <span
+          class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 47; __pyx_clineno = __LINE__; goto __pyx_L3_error;}</span>
   __pyx_L3_error:;
   <span class='pyx_c_api'>__Pyx_AddTraceback</span>("pyAmore.cython.materials.MlpNetwork.__call__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
@@ -901,8 +1018,10 @@ static PyObject *__pyx_pw_7pyAmore_6cython_9materials_10MlpNetwork_3__call__(PyO
 
 static PyObject *__pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork_2__call__(struct __pyx_obj_7pyAmore_6cython_9materials_MlpNetwork *__pyx_v_self, PyObject *__pyx_v_input_data) {
   PyObject *__pyx_r = NULL;
+  <span class='trace'>__Pyx_TraceDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannyDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannySetupContext</span>("__call__", 0);
+  <span class='trace'>__Pyx_TraceCall</span>("__call__", __pyx_f[0], 47, 0, <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 47; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>);
 /* … */
   /* function exit code */
   __pyx_L1_error:;
@@ -914,10 +1033,15 @@ static PyObject *__pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork_2__call__(str
   __pyx_r = NULL;
   __pyx_L0:;
   <span class='refnanny'>__Pyx_XGIVEREF</span>(__pyx_r);
+  <span class='trace'>__Pyx_TraceReturn</span>(__pyx_r, 0);
   <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
   return __pyx_r;
 }
-</pre><pre class="cython line score-26" onclick='toggleDiv(this)'>+<span class="">38</span>:         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict_strategy</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span></pre>
+</pre>
+  <pre class="cython line score-26" onclick='toggleDiv(this)'>+<span class="">048</span>:         <span
+          class="k">return</span> <span class="bp">self</span><span class="o">.</span><span
+          class="n">predict_strategy</span><span class="p">(</span><span class="n">input_data</span><span
+          class="p">)</span></pre>
 <pre class='cython code score-26 '>  <span class='pyx_macro_api'>__Pyx_XDECREF</span>(__pyx_r);
   <span class='pyx_macro_api'>__Pyx_INCREF</span>(((PyObject *)__pyx_v_self-&gt;__pyx_base.predict_strategy));
   __pyx_t_2 = ((PyObject *)__pyx_v_self-&gt;__pyx_base.predict_strategy); __pyx_t_3 = NULL;
@@ -931,16 +1055,17 @@ static PyObject *__pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork_2__call__(str
     }
   }
   if (!__pyx_t_3) {
-    __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_CallOneArg</span>(__pyx_t_2, __pyx_v_input_data);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 38; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+    __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_CallOneArg</span>(__pyx_t_2, __pyx_v_input_data);<span
+          class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 48; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
     <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
   } else {
-    __pyx_t_4 = <span class='py_c_api'>PyTuple_New</span>(1+1);<span class='error_goto'> if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 38; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+    __pyx_t_4 = <span class='py_c_api'>PyTuple_New</span>(1+1);<span class='error_goto'> if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 48; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
     <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_4);
     <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_t_3); <span class='py_macro_api'>PyTuple_SET_ITEM</span>(__pyx_t_4, 0, __pyx_t_3); __pyx_t_3 = NULL;
     <span class='pyx_macro_api'>__Pyx_INCREF</span>(__pyx_v_input_data);
     <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_v_input_data);
     <span class='py_macro_api'>PyTuple_SET_ITEM</span>(__pyx_t_4, 0+1, __pyx_v_input_data);
-    __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_t_2, __pyx_t_4, NULL);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 38; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+    __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_t_2, __pyx_t_4, NULL);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 48; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
     <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
     <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_4); __pyx_t_4 = 0;
   }
@@ -948,8 +1073,11 @@ static PyObject *__pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork_2__call__(str
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
-</pre><pre class="cython line score-0">&#xA0;<span class="">39</span>: </pre>
-<pre class="cython line score-10" onclick='toggleDiv(this)'>+<span class="">40</span>:     <span class="k">def</span> <span class="nf">poke_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">):</span></pre>
+</pre>
+  <pre class="cython line score-0">&#xA0;<span class="">049</span>: </pre>
+  <pre class="cython line score-10" onclick='toggleDiv(this)'>+<span class="">050</span>:     <span class="k">def</span> <span
+          class="nf">poke_inputs</span><span class="p">(</span><span class="bp">self</span><span
+          class="p">,</span> <span class="n">input_data</span><span class="p">):</span></pre>
 <pre class='cython code score-10 '>/* Python wrapper */
 static PyObject *__pyx_pw_7pyAmore_6cython_9materials_10MlpNetwork_5poke_inputs(PyObject *__pyx_v_self, PyObject *__pyx_v_input_data); /*proto*/
 static PyObject *__pyx_pw_7pyAmore_6cython_9materials_10MlpNetwork_5poke_inputs(PyObject *__pyx_v_self, PyObject *__pyx_v_input_data) {
@@ -967,8 +1095,10 @@ static PyObject *__pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork_4poke_inputs(
   PyObject *__pyx_v_neuron = NULL;
   PyObject *__pyx_v_value = NULL;
   PyObject *__pyx_r = NULL;
+  <span class='trace'>__Pyx_TraceDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannyDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannySetupContext</span>("poke_inputs", 0);
+  <span class='trace'>__Pyx_TraceCall</span>("poke_inputs", __pyx_f[0], 50, 0, <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 50; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>);
 /* … */
   /* function exit code */
   __pyx_r = Py_None; <span class='pyx_macro_api'>__Pyx_INCREF</span>(Py_None);
@@ -985,13 +1115,20 @@ static PyObject *__pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork_4poke_inputs(
   <span class='pyx_macro_api'>__Pyx_XDECREF</span>(__pyx_v_neuron);
   <span class='pyx_macro_api'>__Pyx_XDECREF</span>(__pyx_v_value);
   <span class='refnanny'>__Pyx_XGIVEREF</span>(__pyx_r);
+  <span class='trace'>__Pyx_TraceReturn</span>(__pyx_r, 0);
   <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
   return __pyx_r;
 }
-</pre><pre class="cython line score-108" onclick='toggleDiv(this)'>+<span class="">41</span>:         <span class="k">for</span> <span class="n">neuron</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="mf">0</span><span class="p">],</span> <span class="n">input_data</span><span class="p">):</span></pre>
-<pre class='cython code score-108 '>  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_GetItemInt</span>(((PyObject *)__pyx_v_self-&gt;layers), 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1);<span class='error_goto'> if (unlikely(__pyx_t_1 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 41; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>;
+</pre>
+  <pre class="cython line score-108" onclick='toggleDiv(this)'>+<span class="">051</span>:         <span
+          class="k">for</span> <span class="n">neuron</span><span class="p">,</span> <span class="n">value</span> <span
+          class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span
+          class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="mf">0</span><span
+          class="p">],</span> <span class="n">input_data</span><span class="p">):</span></pre>
+<pre class='cython code score-108 '>  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_GetItemInt</span>(((PyObject *)__pyx_v_self-&gt;layers), 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1);<span
+        class='error_goto'> if (unlikely(__pyx_t_1 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>;
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
-  __pyx_t_2 = <span class='py_c_api'>PyTuple_New</span>(2);<span class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 41; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  __pyx_t_2 = <span class='py_c_api'>PyTuple_New</span>(2);<span class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_2);
   <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_t_1);
   <span class='py_macro_api'>PyTuple_SET_ITEM</span>(__pyx_t_2, 0, __pyx_t_1);
@@ -999,16 +1136,17 @@ static PyObject *__pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork_4poke_inputs(
   <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_v_input_data);
   <span class='py_macro_api'>PyTuple_SET_ITEM</span>(__pyx_t_2, 1, __pyx_v_input_data);
   __pyx_t_1 = 0;
-  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_builtin_zip, __pyx_t_2, NULL);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 41; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_builtin_zip, __pyx_t_2, NULL);<span
+          class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_2); __pyx_t_2 = 0;
   if (likely(<span class='py_c_api'>PyList_CheckExact</span>(__pyx_t_1)) || <span class='py_c_api'>PyTuple_CheckExact</span>(__pyx_t_1)) {
     __pyx_t_2 = __pyx_t_1; <span class='pyx_macro_api'>__Pyx_INCREF</span>(__pyx_t_2); __pyx_t_3 = 0;
     __pyx_t_4 = NULL;
   } else {
-    __pyx_t_3 = -1; __pyx_t_2 = <span class='py_c_api'>PyObject_GetIter</span>(__pyx_t_1);<span class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 41; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+    __pyx_t_3 = -1; __pyx_t_2 = <span class='py_c_api'>PyObject_GetIter</span>(__pyx_t_1);<span class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
     <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_2);
-    __pyx_t_4 = Py_TYPE(__pyx_t_2)-&gt;tp_iternext;<span class='error_goto'> if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 41; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+    __pyx_t_4 = Py_TYPE(__pyx_t_2)-&gt;tp_iternext;<span class='error_goto'> if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   }
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_1); __pyx_t_1 = 0;
   for (;;) {
@@ -1016,17 +1154,21 @@ static PyObject *__pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork_4poke_inputs(
       if (likely(<span class='py_c_api'>PyList_CheckExact</span>(__pyx_t_2))) {
         if (__pyx_t_3 &gt;= <span class='py_macro_api'>PyList_GET_SIZE</span>(__pyx_t_2)) break;
         #if CYTHON_COMPILING_IN_CPYTHON
-        __pyx_t_1 = <span class='py_macro_api'>PyList_GET_ITEM</span>(__pyx_t_2, __pyx_t_3); <span class='pyx_macro_api'>__Pyx_INCREF</span>(__pyx_t_1); __pyx_t_3++;<span class='error_goto'> if (unlikely(0 &lt; 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 41; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+        __pyx_t_1 = <span class='py_macro_api'>PyList_GET_ITEM</span>(__pyx_t_2, __pyx_t_3); <span
+          class='pyx_macro_api'>__Pyx_INCREF</span>(__pyx_t_1); __pyx_t_3++;<span class='error_goto'> if (unlikely(0 &lt; 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
         #else
-        __pyx_t_1 = <span class='py_macro_api'>PySequence_ITEM</span>(__pyx_t_2, __pyx_t_3); __pyx_t_3++;<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 41; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+        __pyx_t_1 = <span class='py_macro_api'>PySequence_ITEM</span>(__pyx_t_2, __pyx_t_3); __pyx_t_3++;<span
+          class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
         <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
         #endif
       } else {
         if (__pyx_t_3 &gt;= <span class='py_macro_api'>PyTuple_GET_SIZE</span>(__pyx_t_2)) break;
         #if CYTHON_COMPILING_IN_CPYTHON
-        __pyx_t_1 = <span class='py_macro_api'>PyTuple_GET_ITEM</span>(__pyx_t_2, __pyx_t_3); <span class='pyx_macro_api'>__Pyx_INCREF</span>(__pyx_t_1); __pyx_t_3++;<span class='error_goto'> if (unlikely(0 &lt; 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 41; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+        __pyx_t_1 = <span class='py_macro_api'>PyTuple_GET_ITEM</span>(__pyx_t_2, __pyx_t_3); <span
+          class='pyx_macro_api'>__Pyx_INCREF</span>(__pyx_t_1); __pyx_t_3++;<span class='error_goto'> if (unlikely(0 &lt; 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
         #else
-        __pyx_t_1 = <span class='py_macro_api'>PySequence_ITEM</span>(__pyx_t_2, __pyx_t_3); __pyx_t_3++;<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 41; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+        __pyx_t_1 = <span class='py_macro_api'>PySequence_ITEM</span>(__pyx_t_2, __pyx_t_3); __pyx_t_3++;<span
+          class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
         <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
         #endif
       }
@@ -1036,7 +1178,7 @@ static PyObject *__pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork_4poke_inputs(
         PyObject* exc_type = <span class='py_c_api'>PyErr_Occurred</span>();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || <span class='py_c_api'>PyErr_GivenExceptionMatches</span>(exc_type, PyExc_StopIteration))) <span class='py_c_api'>PyErr_Clear</span>();
-          else <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 41; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+          else <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
         }
         break;
       }
@@ -1052,7 +1194,7 @@ static PyObject *__pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork_4poke_inputs(
       if (unlikely(size != 2)) {
         if (size &gt; 2) <span class='pyx_c_api'>__Pyx_RaiseTooManyValuesError</span>(2);
         else if (size &gt;= 0) <span class='pyx_c_api'>__Pyx_RaiseNeedMoreValuesError</span>(size);
-        <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 41; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+        <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
       }
       #if CYTHON_COMPILING_IN_CPYTHON
       if (likely(<span class='py_c_api'>PyTuple_CheckExact</span>(sequence))) {
@@ -1065,15 +1207,15 @@ static PyObject *__pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork_4poke_inputs(
       <span class='pyx_macro_api'>__Pyx_INCREF</span>(__pyx_t_5);
       <span class='pyx_macro_api'>__Pyx_INCREF</span>(__pyx_t_6);
       #else
-      __pyx_t_5 = <span class='py_macro_api'>PySequence_ITEM</span>(sequence, 0);<span class='error_goto'> if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 41; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+      __pyx_t_5 = <span class='py_macro_api'>PySequence_ITEM</span>(sequence, 0);<span class='error_goto'> if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
       <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_5);
-      __pyx_t_6 = <span class='py_macro_api'>PySequence_ITEM</span>(sequence, 1);<span class='error_goto'> if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 41; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+      __pyx_t_6 = <span class='py_macro_api'>PySequence_ITEM</span>(sequence, 1);<span class='error_goto'> if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
       <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_6);
       #endif
       <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_1); __pyx_t_1 = 0;
     } else {
       Py_ssize_t index = -1;
-      __pyx_t_7 = <span class='py_c_api'>PyObject_GetIter</span>(__pyx_t_1);<span class='error_goto'> if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 41; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+      __pyx_t_7 = <span class='py_c_api'>PyObject_GetIter</span>(__pyx_t_1);<span class='error_goto'> if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
       <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_7);
       <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_1); __pyx_t_1 = 0;
       __pyx_t_8 = Py_TYPE(__pyx_t_7)-&gt;tp_iternext;
@@ -1081,7 +1223,8 @@ static PyObject *__pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork_4poke_inputs(
       <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_5);
       index = 1; __pyx_t_6 = __pyx_t_8(__pyx_t_7); if (unlikely(!__pyx_t_6)) goto __pyx_L5_unpacking_failed;
       <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_6);
-      if (<span class='pyx_c_api'>__Pyx_IternextUnpackEndCheck</span>(__pyx_t_8(__pyx_t_7), 2) &lt; 0) <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 41; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+      if (<span class='pyx_c_api'>__Pyx_IternextUnpackEndCheck</span>(__pyx_t_8(__pyx_t_7), 2) &lt; 0) <span
+          class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
       __pyx_t_8 = NULL;
       <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_7); __pyx_t_7 = 0;
       goto __pyx_L6_unpacking_done;
@@ -1089,7 +1232,7 @@ static PyObject *__pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork_4poke_inputs(
       <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_7); __pyx_t_7 = 0;
       __pyx_t_8 = NULL;
       if (<span class='pyx_c_api'>__Pyx_IterFinish</span>() == 0) <span class='pyx_c_api'>__Pyx_RaiseNeedMoreValuesError</span>(index);
-      <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 41; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+      <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
       __pyx_L6_unpacking_done:;
     }
     <span class='pyx_macro_api'>__Pyx_XDECREF_SET</span>(__pyx_v_neuron, __pyx_t_5);
@@ -1099,10 +1242,16 @@ static PyObject *__pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork_4poke_inputs(
 /* … */
   }
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_2); __pyx_t_2 = 0;
-</pre><pre class="cython line score-2" onclick='toggleDiv(this)'>+<span class="">42</span>:             <span class="n">neuron</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">value</span></pre>
-<pre class='cython code score-2 '>    if (<span class='pyx_c_api'>__Pyx_PyObject_SetAttrStr</span>(__pyx_v_neuron, __pyx_n_s_output, __pyx_v_value) &lt; 0) <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 42; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
-</pre><pre class="cython line score-0">&#xA0;<span class="">43</span>: </pre>
-<pre class="cython line score-6" onclick='toggleDiv(this)'>+<span class="">44</span>:     <span class="k">def</span> <span class="nf">pick_outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></pre>
+</pre>
+  <pre class="cython line score-2" onclick='toggleDiv(this)'>+<span class="">052</span>:             <span class="n">neuron</span><span
+          class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">value</span></pre>
+<pre class='cython code score-2 '>    if (<span class='pyx_c_api'>__Pyx_PyObject_SetAttrStr</span>(__pyx_v_neuron, __pyx_n_s_output, __pyx_v_value) &lt; 0) <span
+        class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 52; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+</pre>
+  <pre class="cython line score-0">&#xA0;<span class="">053</span>: </pre>
+  <pre class="cython line score-6" onclick='toggleDiv(this)'>+<span class="">054</span>:     <span class="k">def</span> <span
+          class="nf">pick_outputs</span><span class="p">(</span><span class="bp">self</span><span
+          class="p">):</span></pre>
 <pre class='cython code score-6 '>/* Python wrapper */
 static PyObject *__pyx_pw_7pyAmore_6cython_9materials_10MlpNetwork_7pick_outputs(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
 static PyObject *__pyx_pw_7pyAmore_6cython_9materials_10MlpNetwork_7pick_outputs(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
@@ -1119,8 +1268,10 @@ static PyObject *__pyx_pw_7pyAmore_6cython_9materials_10MlpNetwork_7pick_outputs
 static PyObject *__pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork_6pick_outputs(struct __pyx_obj_7pyAmore_6cython_9materials_MlpNetwork *__pyx_v_self) {
   PyObject *__pyx_v_neuron = NULL;
   PyObject *__pyx_r = NULL;
+  <span class='trace'>__Pyx_TraceDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannyDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannySetupContext</span>("pick_outputs", 0);
+  <span class='trace'>__Pyx_TraceCall</span>("pick_outputs", __pyx_f[0], 54, 0, <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 54; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>);
 /* … */
   /* function exit code */
   __pyx_L1_error:;
@@ -1132,22 +1283,29 @@ static PyObject *__pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork_6pick_outputs
   __pyx_L0:;
   <span class='pyx_macro_api'>__Pyx_XDECREF</span>(__pyx_v_neuron);
   <span class='refnanny'>__Pyx_XGIVEREF</span>(__pyx_r);
+  <span class='trace'>__Pyx_TraceReturn</span>(__pyx_r, 0);
   <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
   return __pyx_r;
 }
-</pre><pre class="cython line score-60" onclick='toggleDiv(this)'>+<span class="">45</span>:         <span class="k">return</span> <span class="p">[</span><span class="n">neuron</span><span class="o">.</span><span class="n">output</span> <span class="k">for</span> <span class="n">neuron</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="o">-</span><span class="mf">1</span><span class="p">]]</span></pre>
+</pre>
+  <pre class="cython line score-60" onclick='toggleDiv(this)'>+<span class="">055</span>:         <span
+          class="k">return</span> <span class="p">[</span><span class="n">neuron</span><span class="o">.</span><span
+          class="n">output</span> <span class="k">for</span> <span class="n">neuron</span> <span
+          class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span
+          class="p">[</span><span class="o">-</span><span class="mf">1</span><span class="p">]]</span></pre>
 <pre class='cython code score-60 '>  <span class='pyx_macro_api'>__Pyx_XDECREF</span>(__pyx_r);
-  __pyx_t_1 = <span class='py_c_api'>PyList_New</span>(0);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 45; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  __pyx_t_1 = <span class='py_c_api'>PyList_New</span>(0);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 55; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
-  __pyx_t_2 = <span class='pyx_c_api'>__Pyx_GetItemInt</span>(((PyObject *)__pyx_v_self-&gt;layers), -1L, long, 1, __Pyx_PyInt_From_long, 0, 1, 1);<span class='error_goto'> if (unlikely(__pyx_t_2 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 45; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>;
+  __pyx_t_2 = <span class='pyx_c_api'>__Pyx_GetItemInt</span>(((PyObject *)__pyx_v_self-&gt;layers), -1L, long, 1, __Pyx_PyInt_From_long, 0, 1, 1);<span
+          class='error_goto'> if (unlikely(__pyx_t_2 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 55; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>;
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_2);
   if (likely(<span class='py_c_api'>PyList_CheckExact</span>(__pyx_t_2)) || <span class='py_c_api'>PyTuple_CheckExact</span>(__pyx_t_2)) {
     __pyx_t_3 = __pyx_t_2; <span class='pyx_macro_api'>__Pyx_INCREF</span>(__pyx_t_3); __pyx_t_4 = 0;
     __pyx_t_5 = NULL;
   } else {
-    __pyx_t_4 = -1; __pyx_t_3 = <span class='py_c_api'>PyObject_GetIter</span>(__pyx_t_2);<span class='error_goto'> if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 45; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+    __pyx_t_4 = -1; __pyx_t_3 = <span class='py_c_api'>PyObject_GetIter</span>(__pyx_t_2);<span class='error_goto'> if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 55; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
     <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_3);
-    __pyx_t_5 = Py_TYPE(__pyx_t_3)-&gt;tp_iternext;<span class='error_goto'> if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 45; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+    __pyx_t_5 = Py_TYPE(__pyx_t_3)-&gt;tp_iternext;<span class='error_goto'> if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 55; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   }
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_2); __pyx_t_2 = 0;
   for (;;) {
@@ -1155,17 +1313,21 @@ static PyObject *__pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork_6pick_outputs
       if (likely(<span class='py_c_api'>PyList_CheckExact</span>(__pyx_t_3))) {
         if (__pyx_t_4 &gt;= <span class='py_macro_api'>PyList_GET_SIZE</span>(__pyx_t_3)) break;
         #if CYTHON_COMPILING_IN_CPYTHON
-        __pyx_t_2 = <span class='py_macro_api'>PyList_GET_ITEM</span>(__pyx_t_3, __pyx_t_4); <span class='pyx_macro_api'>__Pyx_INCREF</span>(__pyx_t_2); __pyx_t_4++;<span class='error_goto'> if (unlikely(0 &lt; 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 45; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+        __pyx_t_2 = <span class='py_macro_api'>PyList_GET_ITEM</span>(__pyx_t_3, __pyx_t_4); <span
+          class='pyx_macro_api'>__Pyx_INCREF</span>(__pyx_t_2); __pyx_t_4++;<span class='error_goto'> if (unlikely(0 &lt; 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 55; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
         #else
-        __pyx_t_2 = <span class='py_macro_api'>PySequence_ITEM</span>(__pyx_t_3, __pyx_t_4); __pyx_t_4++;<span class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 45; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+        __pyx_t_2 = <span class='py_macro_api'>PySequence_ITEM</span>(__pyx_t_3, __pyx_t_4); __pyx_t_4++;<span
+          class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 55; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
         <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_2);
         #endif
       } else {
         if (__pyx_t_4 &gt;= <span class='py_macro_api'>PyTuple_GET_SIZE</span>(__pyx_t_3)) break;
         #if CYTHON_COMPILING_IN_CPYTHON
-        __pyx_t_2 = <span class='py_macro_api'>PyTuple_GET_ITEM</span>(__pyx_t_3, __pyx_t_4); <span class='pyx_macro_api'>__Pyx_INCREF</span>(__pyx_t_2); __pyx_t_4++;<span class='error_goto'> if (unlikely(0 &lt; 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 45; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+        __pyx_t_2 = <span class='py_macro_api'>PyTuple_GET_ITEM</span>(__pyx_t_3, __pyx_t_4); <span
+          class='pyx_macro_api'>__Pyx_INCREF</span>(__pyx_t_2); __pyx_t_4++;<span class='error_goto'> if (unlikely(0 &lt; 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 55; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
         #else
-        __pyx_t_2 = <span class='py_macro_api'>PySequence_ITEM</span>(__pyx_t_3, __pyx_t_4); __pyx_t_4++;<span class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 45; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+        __pyx_t_2 = <span class='py_macro_api'>PySequence_ITEM</span>(__pyx_t_3, __pyx_t_4); __pyx_t_4++;<span
+          class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 55; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
         <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_2);
         #endif
       }
@@ -1175,7 +1337,7 @@ static PyObject *__pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork_6pick_outputs
         PyObject* exc_type = <span class='py_c_api'>PyErr_Occurred</span>();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || <span class='py_c_api'>PyErr_GivenExceptionMatches</span>(exc_type, PyExc_StopIteration))) <span class='py_c_api'>PyErr_Clear</span>();
-          else <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 45; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+          else <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 55; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
         }
         break;
       }
@@ -1183,29 +1345,37 @@ static PyObject *__pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork_6pick_outputs
     }
     <span class='pyx_macro_api'>__Pyx_XDECREF_SET</span>(__pyx_v_neuron, __pyx_t_2);
     __pyx_t_2 = 0;
-    __pyx_t_2 = <span class='pyx_c_api'>__Pyx_PyObject_GetAttrStr</span>(__pyx_v_neuron, __pyx_n_s_output);<span class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 45; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+    __pyx_t_2 = <span class='pyx_c_api'>__Pyx_PyObject_GetAttrStr</span>(__pyx_v_neuron, __pyx_n_s_output);<span
+          class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 55; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
     <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_2);
-    if (unlikely(<span class='pyx_c_api'>__Pyx_ListComp_Append</span>(__pyx_t_1, (PyObject*)__pyx_t_2))) <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 45; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+    if (unlikely(<span class='pyx_c_api'>__Pyx_ListComp_Append</span>(__pyx_t_1, (PyObject*)__pyx_t_2))) <span
+          class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 55; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
     <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_2); __pyx_t_2 = 0;
   }
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
-</pre><pre class="cython line score-0">&#xA0;<span class="">46</span>: </pre>
-<pre class="cython line score-20" onclick='toggleDiv(this)'>+<span class="">47</span>:     <span class="nd">@property</span></pre>
-<pre class='cython code score-20 '>  __pyx_t_2 = <span class='py_c_api'>PyTuple_New</span>(1);<span class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 47; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+</pre>
+  <pre class="cython line score-0">&#xA0;<span class="">056</span>: </pre>
+  <pre class="cython line score-20" onclick='toggleDiv(this)'>+<span class="">057</span>:     <span
+          class="nd">@property</span></pre>
+<pre class='cython code score-20 '>  __pyx_t_2 = <span class='py_c_api'>PyTuple_New</span>(1);<span class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 57; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_2);
   <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_t_1);
   <span class='py_macro_api'>PyTuple_SET_ITEM</span>(__pyx_t_2, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_builtin_property, __pyx_t_2, NULL);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 47; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_builtin_property, __pyx_t_2, NULL);<span
+          class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 57; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_2); __pyx_t_2 = 0;
-  if (<span class='py_c_api'>PyDict_SetItem</span>((PyObject *)__pyx_ptype_7pyAmore_6cython_9materials_MlpNetwork-&gt;tp_dict, __pyx_n_s_shape, __pyx_t_1) &lt; 0) <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 48; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  if (<span class='py_c_api'>PyDict_SetItem</span>((PyObject *)__pyx_ptype_7pyAmore_6cython_9materials_MlpNetwork-&gt;tp_dict, __pyx_n_s_shape, __pyx_t_1) &lt; 0) <span
+          class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 58; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_1); __pyx_t_1 = 0;
   <span class='py_c_api'>PyType_Modified</span>(__pyx_ptype_7pyAmore_6cython_9materials_MlpNetwork);
-</pre><pre class="cython line score-6" onclick='toggleDiv(this)'>+<span class="">48</span>:     <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></pre>
+</pre>
+  <pre class="cython line score-6" onclick='toggleDiv(this)'>+<span class="">058</span>:     <span class="k">def</span> <span
+          class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></pre>
 <pre class='cython code score-6 '>/* Python wrapper */
 static PyObject *__pyx_pw_7pyAmore_6cython_9materials_10MlpNetwork_9shape(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
 static char __pyx_doc_7pyAmore_6cython_9materials_10MlpNetwork_8shape[] = " Gives information on the number of neurons in the neural network\n        ";
@@ -1222,8 +1392,10 @@ static PyObject *__pyx_pw_7pyAmore_6cython_9materials_10MlpNetwork_9shape(PyObje
 
 static PyObject *__pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork_8shape(struct __pyx_obj_7pyAmore_6cython_9materials_MlpNetwork *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
+  <span class='trace'>__Pyx_TraceDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannyDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannySetupContext</span>("shape", 0);
+  <span class='trace'>__Pyx_TraceCall</span>("shape", __pyx_f[0], 58, 0, <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 58; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>);
 /* … */
   /* function exit code */
   __pyx_L1_error:;
@@ -1233,19 +1405,26 @@ static PyObject *__pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork_8shape(struct
   __pyx_r = NULL;
   __pyx_L0:;
   <span class='refnanny'>__Pyx_XGIVEREF</span>(__pyx_r);
+  <span class='trace'>__Pyx_TraceReturn</span>(__pyx_r, 0);
   <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
   return __pyx_r;
 }
 /* … */
-  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_GetNameInClass</span>((PyObject *)__pyx_ptype_7pyAmore_6cython_9materials_MlpNetwork, __pyx_n_s_shape);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 48; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_GetNameInClass</span>((PyObject *)__pyx_ptype_7pyAmore_6cython_9materials_MlpNetwork, __pyx_n_s_shape);<span
+          class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 58; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
-</pre><pre class="cython line score-0">&#xA0;<span class="">49</span>:         <span class="sd">&quot;&quot;&quot; Gives information on the number of neurons in the neural network</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">50</span>: <span class="sd">        &quot;&quot;&quot;</span></pre>
-<pre class="cython line score-20" onclick='toggleDiv(this)'>+<span class="">51</span>:         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">))</span></pre>
+</pre>
+  <pre class="cython line score-0">&#xA0;<span class="">059</span>:         <span class="sd">&quot;&quot;&quot; Gives information on the number of neurons in the neural network</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">060</span>: <span
+          class="sd">        &quot;&quot;&quot;</span></pre>
+  <pre class="cython line score-20" onclick='toggleDiv(this)'>+<span class="">061</span>:         <span
+          class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span
+          class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="bp">self</span><span
+          class="o">.</span><span class="n">layers</span><span class="p">))</span></pre>
 <pre class='cython code score-20 '>  <span class='pyx_macro_api'>__Pyx_XDECREF</span>(__pyx_r);
-  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_GetBuiltinName</span>(__pyx_n_s_len);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_GetBuiltinName</span>(__pyx_n_s_len);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
-  __pyx_t_2 = <span class='py_c_api'>PyTuple_New</span>(2);<span class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  __pyx_t_2 = <span class='py_c_api'>PyTuple_New</span>(2);<span class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_2);
   <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_t_1);
   <span class='py_macro_api'>PyTuple_SET_ITEM</span>(__pyx_t_2, 0, __pyx_t_1);
@@ -1253,29 +1432,34 @@ static PyObject *__pyx_pf_7pyAmore_6cython_9materials_10MlpNetwork_8shape(struct
   <span class='refnanny'>__Pyx_GIVEREF</span>(((PyObject *)__pyx_v_self-&gt;layers));
   <span class='py_macro_api'>PyTuple_SET_ITEM</span>(__pyx_t_2, 1, ((PyObject *)__pyx_v_self-&gt;layers));
   __pyx_t_1 = 0;
-  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_builtin_map, __pyx_t_2, NULL);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_builtin_map, __pyx_t_2, NULL);<span
+          class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = <span class='py_c_api'>PySequence_List</span>(__pyx_t_1);<span class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  __pyx_t_2 = <span class='py_c_api'>PySequence_List</span>(__pyx_t_1);<span class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_2);
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
-</pre><pre class="cython line score-0">&#xA0;<span class="">52</span>: </pre>
-<pre class="cython line score-0">&#xA0;<span class="">53</span>: <span class="k">cdef</span> <span class="k">class</span> <span class="nf">Neuron</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">54</span>:     <span class="sd">&quot;&quot;&quot; The mother of all neurons (a.k.a. Interface)</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">55</span>: <span class="sd">    &quot;&quot;&quot;</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">56</span>: </pre>
-<pre class="cython line score-24" onclick='toggleDiv(this)'>+<span class="">57</span>:     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">neural_network</span><span class="p">):</span></pre>
-<pre class='cython code score-24 '>/* Python wrapper */
+</pre>
+  <pre class="cython line score-0">&#xA0;<span class="">062</span>: </pre>
+  <pre class="cython line score-0">&#xA0;<span class="">063</span>: <span class="k">cdef</span> <span
+          class="k">class</span> <span class="nf">Neuron</span><span class="p">:</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">064</span>:     <span class="sd">&quot;&quot;&quot; The mother of all neurons (a.k.a. Interface)</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">065</span>: <span class="sd">    &quot;&quot;&quot;</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">066</span>: </pre>
+  <pre class="cython line score-25" onclick='toggleDiv(this)'>+<span class="">067</span>:     <span class="k">def</span> <span
+          class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span
+          class="n">Network</span> <span class="n">neural_network</span><span class="p">):</span></pre>
+<pre class='cython code score-25 '>/* Python wrapper */
 static int __pyx_pw_7pyAmore_6cython_9materials_6Neuron_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static char __pyx_doc_7pyAmore_6cython_9materials_6Neuron___init__[] = " Initializer. An assumption is made that all neurons will have at least these properties.\n        ";
 #if CYTHON_COMPILING_IN_CPYTHON
 struct wrapperbase __pyx_wrapperbase_7pyAmore_6cython_9materials_6Neuron___init__;
 #endif
 static int __pyx_pw_7pyAmore_6cython_9materials_6Neuron_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
-  PyObject *__pyx_v_neural_network = 0;
+  struct __pyx_obj_7pyAmore_6cython_9materials_Network *__pyx_v_neural_network = 0;
   int __pyx_r;
   <span class='refnanny'>__Pyx_RefNannyDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannySetupContext</span>("__init__ (wrapper)", 0);
@@ -1297,86 +1481,113 @@ static int __pyx_pw_7pyAmore_6cython_9materials_6Neuron_1__init__(PyObject *__py
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args &gt; 0)) {
-        if (unlikely(<span class='pyx_c_api'>__Pyx_ParseOptionalKeywords</span>(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") &lt; 0)) <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 57; __pyx_clineno = __LINE__; goto __pyx_L3_error;}</span>
+        if (unlikely(<span class='pyx_c_api'>__Pyx_ParseOptionalKeywords</span>(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") &lt; 0)) <span
+          class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 67; __pyx_clineno = __LINE__; goto __pyx_L3_error;}</span>
       }
     } else if (<span class='py_macro_api'>PyTuple_GET_SIZE</span>(__pyx_args) != 1) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = <span class='py_macro_api'>PyTuple_GET_ITEM</span>(__pyx_args, 0);
     }
-    __pyx_v_neural_network = values[0];
+    __pyx_v_neural_network = ((struct __pyx_obj_7pyAmore_6cython_9materials_Network *)values[0]);
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  <span class='pyx_c_api'>__Pyx_RaiseArgtupleInvalid</span>("__init__", 1, 1, 1, <span class='py_macro_api'>PyTuple_GET_SIZE</span>(__pyx_args)); <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 57; __pyx_clineno = __LINE__; goto __pyx_L3_error;}</span>
+  <span class='pyx_c_api'>__Pyx_RaiseArgtupleInvalid</span>("__init__", 1, 1, 1, <span class='py_macro_api'>PyTuple_GET_SIZE</span>(__pyx_args)); <span
+          class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 67; __pyx_clineno = __LINE__; goto __pyx_L3_error;}</span>
   __pyx_L3_error:;
   <span class='pyx_c_api'>__Pyx_AddTraceback</span>("pyAmore.cython.materials.Neuron.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
   return -1;
   __pyx_L4_argument_unpacking_done:;
+  if (unlikely(!<span class='pyx_c_api'>__Pyx_ArgTypeTest</span>(((PyObject *)__pyx_v_neural_network), __pyx_ptype_7pyAmore_6cython_9materials_Network, 1, "neural_network", 0))) <span
+          class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 67; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   __pyx_r = __pyx_pf_7pyAmore_6cython_9materials_6Neuron___init__(((struct __pyx_obj_7pyAmore_6cython_9materials_Neuron *)__pyx_v_self), __pyx_v_neural_network);
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
 
   /* function exit code */
-  <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
-  return __pyx_r;
-}
-
-static int __pyx_pf_7pyAmore_6cython_9materials_6Neuron___init__(struct __pyx_obj_7pyAmore_6cython_9materials_Neuron *__pyx_v_self, PyObject *__pyx_v_neural_network) {
-  int __pyx_r;
-  <span class='refnanny'>__Pyx_RefNannyDeclarations</span>
-  <span class='refnanny'>__Pyx_RefNannySetupContext</span>("__init__", 0);
-/* … */
-  /* function exit code */
-  __pyx_r = 0;
   goto __pyx_L0;
   __pyx_L1_error:;
-  <span class='pyx_macro_api'>__Pyx_XDECREF</span>(__pyx_t_1);
-  <span class='pyx_c_api'>__Pyx_AddTraceback</span>("pyAmore.cython.materials.Neuron.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
   return __pyx_r;
 }
-</pre><pre class="cython line score-0">&#xA0;<span class="">58</span>:         <span class="sd">&quot;&quot;&quot; Initializer. An assumption is made that all neurons will have at least these properties.</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">59</span>: <span class="sd">        &quot;&quot;&quot;</span></pre>
-<pre class="cython line score-2" onclick='toggleDiv(this)'>+<span class="">60</span>:         <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="bp">None</span></pre>
+
+static int __pyx_pf_7pyAmore_6cython_9materials_6Neuron___init__(struct __pyx_obj_7pyAmore_6cython_9materials_Neuron *__pyx_v_self, struct __pyx_obj_7pyAmore_6cython_9materials_Network *__pyx_v_neural_network) {
+  int __pyx_r;
+  <span class='trace'>__Pyx_TraceDeclarations</span>
+  <span class='refnanny'>__Pyx_RefNannyDeclarations</span>
+  <span class='refnanny'>__Pyx_RefNannySetupContext</span>("__init__", 0);
+  <span class='trace'>__Pyx_TraceCall</span>("__init__", __pyx_f[0], 67, 0, <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 67; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>);
+/* … */
+  /* function exit code */
+  __pyx_r = 0;
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  <span class='pyx_c_api'>__Pyx_AddTraceback</span>("pyAmore.cython.materials.Neuron.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = -1;
+  __pyx_L0:;
+  <span class='trace'>__Pyx_TraceReturn</span>(Py_None, 0);
+  <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
+  return __pyx_r;
+}
+</pre>
+  <pre class="cython line score-0">&#xA0;<span class="">068</span>:         <span class="sd">&quot;&quot;&quot; Initializer. An assumption is made that all neurons will have at least these properties.</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">069</span>: <span
+          class="sd">        &quot;&quot;&quot;</span></pre>
+  <pre class="cython line score-2" onclick='toggleDiv(this)'>+<span class="">070</span>:         <span
+          class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span
+          class="bp">None</span></pre>
 <pre class='cython code score-2 '>  <span class='pyx_macro_api'>__Pyx_INCREF</span>(Py_None);
   <span class='refnanny'>__Pyx_GIVEREF</span>(Py_None);
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_v_self-&gt;label);
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_v_self-&gt;label);
-  __pyx_v_self-&gt;label = Py_None;
-</pre><pre class="cython line score-0" onclick='toggleDiv(this)'>+<span class="">61</span>:         <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="mf">0.0</span></pre>
+  __pyx_v_self-&gt;label = ((PyObject*)Py_None);
+</pre>
+  <pre class="cython line score-0" onclick='toggleDiv(this)'>+<span class="">071</span>:         <span
+          class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span
+          class="mf">0.0</span></pre>
 <pre class='cython code score-0 '>  __pyx_v_self-&gt;output = 0.0;
-</pre><pre class="cython line score-4" onclick='toggleDiv(this)'>+<span class="">62</span>:         <span class="bp">self</span><span class="o">.</span><span class="n">neural_network</span> <span class="o">=</span> <span class="n">neural_network</span></pre>
-<pre class='cython code score-4 '>  if (!(likely(((__pyx_v_neural_network) == Py_None) || likely(<span class='pyx_c_api'>__Pyx_TypeTest</span>(__pyx_v_neural_network, __pyx_ptype_7pyAmore_6cython_9materials_Network))))) <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 62; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
-  __pyx_t_1 = __pyx_v_neural_network;
-  <span class='pyx_macro_api'>__Pyx_INCREF</span>(__pyx_t_1);
-  <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_t_1);
+</pre>
+  <pre class="cython line score-2" onclick='toggleDiv(this)'>+<span class="">072</span>:         <span
+          class="bp">self</span><span class="o">.</span><span class="n">neural_network</span> <span
+          class="o">=</span> <span class="n">neural_network</span></pre>
+<pre class='cython code score-2 '>  <span class='pyx_macro_api'>__Pyx_INCREF</span>(((PyObject *)__pyx_v_neural_network));
+  <span class='refnanny'>__Pyx_GIVEREF</span>(((PyObject *)__pyx_v_neural_network));
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_v_self-&gt;neural_network);
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(((PyObject *)__pyx_v_self-&gt;neural_network));
-  __pyx_v_self-&gt;neural_network = ((struct __pyx_obj_7pyAmore_6cython_9materials_Network *)__pyx_t_1);
-  __pyx_t_1 = 0;
-</pre><pre class="cython line score-2" onclick='toggleDiv(this)'>+<span class="">63</span>:         <span class="bp">self</span><span class="o">.</span><span class="n">predict_strategy</span> <span class="o">=</span> <span class="bp">None</span></pre>
+  __pyx_v_self-&gt;neural_network = __pyx_v_neural_network;
+</pre>
+  <pre class="cython line score-2" onclick='toggleDiv(this)'>+<span class="">073</span>:         <span
+          class="bp">self</span><span class="o">.</span><span class="n">predict_strategy</span> <span class="o">=</span> <span
+          class="bp">None</span></pre>
 <pre class='cython code score-2 '>  <span class='pyx_macro_api'>__Pyx_INCREF</span>(Py_None);
   <span class='refnanny'>__Pyx_GIVEREF</span>(Py_None);
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_v_self-&gt;predict_strategy);
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(((PyObject *)__pyx_v_self-&gt;predict_strategy));
   __pyx_v_self-&gt;predict_strategy = ((struct __pyx_obj_7pyAmore_6cython_25neuron_predict_strategies_NeuronPredictStrategy *)Py_None);
-</pre><pre class="cython line score-2" onclick='toggleDiv(this)'>+<span class="">64</span>:         <span class="bp">self</span><span class="o">.</span><span class="n">fit_strategy</span> <span class="o">=</span> <span class="bp">None</span></pre>
+</pre>
+  <pre class="cython line score-2" onclick='toggleDiv(this)'>+<span class="">074</span>:         <span
+          class="bp">self</span><span class="o">.</span><span class="n">fit_strategy</span> <span
+          class="o">=</span> <span class="bp">None</span></pre>
 <pre class='cython code score-2 '>  <span class='pyx_macro_api'>__Pyx_INCREF</span>(Py_None);
   <span class='refnanny'>__Pyx_GIVEREF</span>(Py_None);
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_v_self-&gt;fit_strategy);
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(((PyObject *)__pyx_v_self-&gt;fit_strategy));
   __pyx_v_self-&gt;fit_strategy = ((struct __pyx_obj_7pyAmore_6cython_21neuron_fit_strategies_NeuronFitStrategy *)Py_None);
-</pre><pre class="cython line score-0">&#xA0;<span class="">65</span>:         <span class="c"># self.fit_strategy should not be assigned here as it might depend on the neurons role</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">66</span>:         <span class="c"># and it will be the builders&#39;s responsibility to assign it</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">67</span>:         <span class="c"># Similarly, self.predict_strategy is not assigned here for versatility.</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">68</span>:         <span class="c"># It&#39;s the builder that assigns it.</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">69</span>: </pre>
-<pre class="cython line score-8" onclick='toggleDiv(this)'>+<span class="">70</span>:     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span></pre>
+</pre>
+  <pre class="cython line score-0">&#xA0;<span class="">075</span>:         <span class="c"># self.fit_strategy should not be assigned here as it might depend on the neurons role</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">076</span>:         <span class="c"># and it will be the builders&#39;s responsibility to assign it</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">077</span>:         <span class="c"># Similarly, self.predict_strategy is not assigned here for versatility.</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">078</span>:         <span class="c"># It&#39;s the builder that assigns it.</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">079</span>: </pre>
+  <pre class="cython line score-8" onclick='toggleDiv(this)'>+<span class="">080</span>:     <span class="k">def</span> <span
+          class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span
+          class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span
+          class="n">kwargs</span><span class="p">):</span></pre>
 <pre class='cython code score-8 '>/* Python wrapper */
 static PyObject *__pyx_pw_7pyAmore_6cython_9materials_6Neuron_3__call__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static PyObject *__pyx_pw_7pyAmore_6cython_9materials_6Neuron_3__call__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
@@ -1399,8 +1610,10 @@ static PyObject *__pyx_pw_7pyAmore_6cython_9materials_6Neuron_3__call__(PyObject
 
 static PyObject *__pyx_pf_7pyAmore_6cython_9materials_6Neuron_2__call__(CYTHON_UNUSED struct __pyx_obj_7pyAmore_6cython_9materials_Neuron *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v_args, CYTHON_UNUSED PyObject *__pyx_v_kwargs) {
   PyObject *__pyx_r = NULL;
+  <span class='trace'>__Pyx_TraceDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannyDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannySetupContext</span>("__call__", 0);
+  <span class='trace'>__Pyx_TraceCall</span>("__call__", __pyx_f[0], 80, 0, <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>);
 /* … */
   /* function exit code */
   __pyx_L1_error:;
@@ -1408,33 +1621,44 @@ static PyObject *__pyx_pf_7pyAmore_6cython_9materials_6Neuron_2__call__(CYTHON_U
   <span class='pyx_c_api'>__Pyx_AddTraceback</span>("pyAmore.cython.materials.Neuron.__call__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   <span class='refnanny'>__Pyx_XGIVEREF</span>(__pyx_r);
+  <span class='trace'>__Pyx_TraceReturn</span>(__pyx_r, 0);
   <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
   return __pyx_r;
 }
-</pre><pre class="cython line score-10" onclick='toggleDiv(this)'>+<span class="">71</span>:         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;You shouldn&#39;t be calling Neuron.__call__()&quot;</span><span class="p">)</span></pre>
-<pre class='cython code score-10 '>  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_builtin_NotImplementedError, __pyx_tuple__5, NULL);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 71; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+</pre>
+  <pre class="cython line score-10" onclick='toggleDiv(this)'>+<span class="">081</span>:         <span
+          class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;You shouldn&#39;t be calling Neuron.predict()&quot;</span><span
+          class="p">)</span></pre>
+<pre class='cython code score-10 '>  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_builtin_NotImplementedError, __pyx_tuple__5, NULL);<span
+        class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
   <span class='pyx_c_api'>__Pyx_Raise</span>(__pyx_t_1, 0, 0, 0);
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_1); __pyx_t_1 = 0;
-  <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 71; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
 /* … */
-  __pyx_tuple__5 = <span class='py_c_api'>PyTuple_Pack</span>(1, __pyx_kp_s_You_shouldn_t_be_calling_Neuron);<span class='error_goto'> if (unlikely(!__pyx_tuple__5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 71; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  __pyx_tuple__5 = <span class='py_c_api'>PyTuple_Pack</span>(1, __pyx_kp_s_You_shouldn_t_be_calling_Neuron);<span
+          class='error_goto'> if (unlikely(!__pyx_tuple__5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_tuple__5);
   <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_tuple__5);
-</pre><pre class="cython line score-0">&#xA0;<span class="">72</span>: </pre>
-<pre class="cython line score-0">&#xA0;<span class="">73</span>: <span class="k">cdef</span> <span class="k">class</span> <span class="nf">MlpNeuron</span><span class="p">(</span><span class="n">Neuron</span><span class="p">):</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">74</span>:     <span class="sd">&quot;&quot;&quot; A simple neuron as in multilayer feed forward networks</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">75</span>: <span class="sd">    &quot;&quot;&quot;</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">76</span>: </pre>
-<pre class="cython line score-27" onclick='toggleDiv(this)'>+<span class="">77</span>:     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">neural_network</span><span class="p">):</span></pre>
-<pre class='cython code score-27 '>/* Python wrapper */
+</pre>
+  <pre class="cython line score-0">&#xA0;<span class="">082</span>: </pre>
+  <pre class="cython line score-0">&#xA0;<span class="">083</span>: <span class="k">cdef</span> <span
+          class="k">class</span> <span class="nf">MlpNeuron</span><span class="p">(</span><span
+          class="n">Neuron</span><span class="p">):</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">084</span>:     <span class="sd">&quot;&quot;&quot; A simple neuron as in multilayer feed forward networks</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">085</span>: <span class="sd">    &quot;&quot;&quot;</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">086</span>: </pre>
+  <pre class="cython line score-29" onclick='toggleDiv(this)'>+<span class="">087</span>:     <span class="k">def</span> <span
+          class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span
+          class="n">MlpNetwork</span> <span class="n">neural_network</span><span class="p">):</span></pre>
+<pre class='cython code score-29 '>/* Python wrapper */
 static int __pyx_pw_7pyAmore_6cython_9materials_9MlpNeuron_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static char __pyx_doc_7pyAmore_6cython_9materials_9MlpNeuron___init__[] = " Initializer. Python requires explicit call to base class initializer\n        ";
 #if CYTHON_COMPILING_IN_CPYTHON
 struct wrapperbase __pyx_wrapperbase_7pyAmore_6cython_9materials_9MlpNeuron___init__;
 #endif
 static int __pyx_pw_7pyAmore_6cython_9materials_9MlpNeuron_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
-  PyObject *__pyx_v_neural_network = 0;
+  struct __pyx_obj_7pyAmore_6cython_9materials_MlpNetwork *__pyx_v_neural_network = 0;
   int __pyx_r;
   <span class='refnanny'>__Pyx_RefNannyDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannySetupContext</span>("__init__ (wrapper)", 0);
@@ -1456,37 +1680,47 @@ static int __pyx_pw_7pyAmore_6cython_9materials_9MlpNeuron_1__init__(PyObject *_
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args &gt; 0)) {
-        if (unlikely(<span class='pyx_c_api'>__Pyx_ParseOptionalKeywords</span>(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") &lt; 0)) <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 77; __pyx_clineno = __LINE__; goto __pyx_L3_error;}</span>
+        if (unlikely(<span class='pyx_c_api'>__Pyx_ParseOptionalKeywords</span>(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") &lt; 0)) <span
+          class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 87; __pyx_clineno = __LINE__; goto __pyx_L3_error;}</span>
       }
     } else if (<span class='py_macro_api'>PyTuple_GET_SIZE</span>(__pyx_args) != 1) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = <span class='py_macro_api'>PyTuple_GET_ITEM</span>(__pyx_args, 0);
     }
-    __pyx_v_neural_network = values[0];
+    __pyx_v_neural_network = ((struct __pyx_obj_7pyAmore_6cython_9materials_MlpNetwork *)values[0]);
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  <span class='pyx_c_api'>__Pyx_RaiseArgtupleInvalid</span>("__init__", 1, 1, 1, <span class='py_macro_api'>PyTuple_GET_SIZE</span>(__pyx_args)); <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 77; __pyx_clineno = __LINE__; goto __pyx_L3_error;}</span>
+  <span class='pyx_c_api'>__Pyx_RaiseArgtupleInvalid</span>("__init__", 1, 1, 1, <span class='py_macro_api'>PyTuple_GET_SIZE</span>(__pyx_args)); <span
+          class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 87; __pyx_clineno = __LINE__; goto __pyx_L3_error;}</span>
   __pyx_L3_error:;
   <span class='pyx_c_api'>__Pyx_AddTraceback</span>("pyAmore.cython.materials.MlpNeuron.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
   return -1;
   __pyx_L4_argument_unpacking_done:;
+  if (unlikely(!<span class='pyx_c_api'>__Pyx_ArgTypeTest</span>(((PyObject *)__pyx_v_neural_network), __pyx_ptype_7pyAmore_6cython_9materials_MlpNetwork, 1, "neural_network", 0))) <span
+          class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 87; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   __pyx_r = __pyx_pf_7pyAmore_6cython_9materials_9MlpNeuron___init__(((struct __pyx_obj_7pyAmore_6cython_9materials_MlpNeuron *)__pyx_v_self), __pyx_v_neural_network);
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
 
   /* function exit code */
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __pyx_r = -1;
+  __pyx_L0:;
   <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
   return __pyx_r;
 }
 
-static int __pyx_pf_7pyAmore_6cython_9materials_9MlpNeuron___init__(struct __pyx_obj_7pyAmore_6cython_9materials_MlpNeuron *__pyx_v_self, PyObject *__pyx_v_neural_network) {
+static int __pyx_pf_7pyAmore_6cython_9materials_9MlpNeuron___init__(struct __pyx_obj_7pyAmore_6cython_9materials_MlpNeuron *__pyx_v_self, struct __pyx_obj_7pyAmore_6cython_9materials_MlpNetwork *__pyx_v_neural_network) {
   int __pyx_r;
+  <span class='trace'>__Pyx_TraceDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannyDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannySetupContext</span>("__init__", 0);
+  <span class='trace'>__Pyx_TraceCall</span>("__init__", __pyx_f[0], 87, 0, <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 87; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>);
 /* … */
   /* function exit code */
   __pyx_r = 0;
@@ -1499,13 +1733,20 @@ static int __pyx_pf_7pyAmore_6cython_9materials_9MlpNeuron___init__(struct __pyx
   <span class='pyx_c_api'>__Pyx_AddTraceback</span>("pyAmore.cython.materials.MlpNeuron.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
+  <span class='trace'>__Pyx_TraceReturn</span>(Py_None, 0);
   <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
   return __pyx_r;
 }
-</pre><pre class="cython line score-0">&#xA0;<span class="">78</span>:         <span class="sd">&quot;&quot;&quot; Initializer. Python requires explicit call to base class initializer</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">79</span>: <span class="sd">        &quot;&quot;&quot;</span></pre>
-<pre class="cython line score-27" onclick='toggleDiv(this)'>+<span class="">80</span>:         <span class="n">Neuron</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">neural_network</span><span class="p">)</span></pre>
-<pre class='cython code score-27 '>  __pyx_t_2 = <span class='pyx_c_api'>__Pyx_PyObject_GetAttrStr</span>(((PyObject *)__pyx_ptype_7pyAmore_6cython_9materials_Neuron), __pyx_n_s_init);<span class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+</pre>
+  <pre class="cython line score-0">&#xA0;<span class="">088</span>:         <span class="sd">&quot;&quot;&quot; Initializer. Python requires explicit call to base class initializer</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">089</span>: <span
+          class="sd">        &quot;&quot;&quot;</span></pre>
+  <pre class="cython line score-27" onclick='toggleDiv(this)'>+<span class="">090</span>:         <span
+          class="n">Neuron</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span
+          class="bp">self</span><span class="p">,</span> <span class="n">neural_network</span><span
+          class="p">)</span></pre>
+<pre class='cython code score-27 '>  __pyx_t_2 = <span class='pyx_c_api'>__Pyx_PyObject_GetAttrStr</span>(((PyObject *)__pyx_ptype_7pyAmore_6cython_9materials_Neuron), __pyx_n_s_init);<span
+        class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 90; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_2);
   __pyx_t_3 = NULL;
   __pyx_t_4 = 0;
@@ -1519,7 +1760,7 @@ static int __pyx_pf_7pyAmore_6cython_9materials_9MlpNeuron___init__(struct __pyx
       __pyx_t_4 = 1;
     }
   }
-  __pyx_t_5 = <span class='py_c_api'>PyTuple_New</span>(2+__pyx_t_4);<span class='error_goto'> if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  __pyx_t_5 = <span class='py_c_api'>PyTuple_New</span>(2+__pyx_t_4);<span class='error_goto'> if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 90; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_5);
   if (__pyx_t_3) {
     <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_t_3); <span class='py_macro_api'>PyTuple_SET_ITEM</span>(__pyx_t_5, 0, __pyx_t_3); __pyx_t_3 = NULL;
@@ -1527,63 +1768,79 @@ static int __pyx_pf_7pyAmore_6cython_9materials_9MlpNeuron___init__(struct __pyx
   <span class='pyx_macro_api'>__Pyx_INCREF</span>(((PyObject *)__pyx_v_self));
   <span class='refnanny'>__Pyx_GIVEREF</span>(((PyObject *)__pyx_v_self));
   <span class='py_macro_api'>PyTuple_SET_ITEM</span>(__pyx_t_5, 0+__pyx_t_4, ((PyObject *)__pyx_v_self));
-  <span class='pyx_macro_api'>__Pyx_INCREF</span>(__pyx_v_neural_network);
-  <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_v_neural_network);
-  <span class='py_macro_api'>PyTuple_SET_ITEM</span>(__pyx_t_5, 1+__pyx_t_4, __pyx_v_neural_network);
-  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_t_2, __pyx_t_5, NULL);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  <span class='pyx_macro_api'>__Pyx_INCREF</span>(((PyObject *)__pyx_v_neural_network));
+  <span class='refnanny'>__Pyx_GIVEREF</span>(((PyObject *)__pyx_v_neural_network));
+  <span class='py_macro_api'>PyTuple_SET_ITEM</span>(__pyx_t_5, 1+__pyx_t_4, ((PyObject *)__pyx_v_neural_network));
+  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_t_2, __pyx_t_5, NULL);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 90; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_5); __pyx_t_5 = 0;
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_2); __pyx_t_2 = 0;
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_1); __pyx_t_1 = 0;
-</pre><pre class="cython line score-9" onclick='toggleDiv(this)'>+<span class="">81</span>:         <span class="bp">self</span><span class="o">.</span><span class="n">activation_function</span> <span class="o">=</span> <span class="n">neural_network</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">make_activation_function</span><span class="p">(</span><span class="s">&#39;default&#39;</span><span class="p">)</span></pre>
-<pre class='cython code score-9 '>  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_GetAttrStr</span>(__pyx_v_neural_network, __pyx_n_s_factory);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+</pre>
+  <pre class="cython line score-8" onclick='toggleDiv(this)'>+<span class="">091</span>:         <span
+          class="bp">self</span><span class="o">.</span><span class="n">activation_function</span> <span
+          class="o">=</span> <span class="n">neural_network</span><span class="o">.</span><span class="n">factory</span><span
+          class="o">.</span><span class="n">make_activation_function</span><span class="p">(</span><span class="s">&#39;default&#39;</span><span
+          class="p">)</span></pre>
+<pre class='cython code score-8 '>  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_GetAttrStr</span>(__pyx_v_neural_network-&gt;__pyx_base.factory, __pyx_n_s_make_activation_function);<span
+        class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 91; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
-  __pyx_t_2 = <span class='pyx_c_api'>__Pyx_PyObject_GetAttrStr</span>(__pyx_t_1, __pyx_n_s_make_activation_function);<span class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  __pyx_t_2 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_t_1, __pyx_tuple__6, NULL);<span
+          class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 91; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_2);
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_t_2, __pyx_tuple__6, NULL);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
-  <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
-  <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_2); __pyx_t_2 = 0;
-  <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_t_1);
+  if (!(likely(((__pyx_t_2) == Py_None) || likely(<span class='pyx_c_api'>__Pyx_TypeTest</span>(__pyx_t_2, __pyx_ptype_7pyAmore_6cython_20activation_functions_ActivationFunction))))) <span
+          class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 91; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_t_2);
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_v_self-&gt;activation_function);
-  <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_v_self-&gt;activation_function);
-  __pyx_v_self-&gt;activation_function = __pyx_t_1;
-  __pyx_t_1 = 0;
-</pre><pre class="cython line score-24" onclick='toggleDiv(this)'>+<span class="">82</span>:         <span class="bp">self</span><span class="o">.</span><span class="n">connections</span> <span class="o">=</span> <span class="n">neural_network</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">make_primitive_container</span><span class="p">()</span></pre>
-<pre class='cython code score-24 '>  __pyx_t_2 = <span class='pyx_c_api'>__Pyx_PyObject_GetAttrStr</span>(__pyx_v_neural_network, __pyx_n_s_factory);<span class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
-  <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_2);
-  __pyx_t_5 = <span class='pyx_c_api'>__Pyx_PyObject_GetAttrStr</span>(__pyx_t_2, __pyx_n_s_make_primitive_container);<span class='error_goto'> if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
-  <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_5);
-  <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = NULL;
-  if (CYTHON_COMPILING_IN_CPYTHON &amp;&amp; likely(<span class='py_c_api'>PyMethod_Check</span>(__pyx_t_5))) {
-    __pyx_t_2 = <span class='py_macro_api'>PyMethod_GET_SELF</span>(__pyx_t_5);
-    if (likely(__pyx_t_2)) {
-      PyObject* function = <span class='py_macro_api'>PyMethod_GET_FUNCTION</span>(__pyx_t_5);
-      <span class='pyx_macro_api'>__Pyx_INCREF</span>(__pyx_t_2);
+  <span class='pyx_macro_api'>__Pyx_DECREF</span>(((PyObject *)__pyx_v_self-&gt;activation_function));
+  __pyx_v_self-&gt;activation_function = ((struct __pyx_obj_7pyAmore_6cython_20activation_functions_ActivationFunction *)__pyx_t_2);
+  __pyx_t_2 = 0;
+</pre>
+  <pre class="cython line score-21" onclick='toggleDiv(this)'>+<span class="">092</span>:         <span
+          class="bp">self</span><span class="o">.</span><span class="n">connections</span> <span
+          class="o">=</span> <span class="n">neural_network</span><span class="o">.</span><span class="n">factory</span><span
+          class="o">.</span><span class="n">make_primitive_container</span><span class="p">()</span></pre>
+<pre class='cython code score-21 '>  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_GetAttrStr</span>(__pyx_v_neural_network-&gt;__pyx_base.factory, __pyx_n_s_make_primitive_container);<span
+        class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 92; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
+  __pyx_t_5 = NULL;
+  if (CYTHON_COMPILING_IN_CPYTHON &amp;&amp; likely(<span class='py_c_api'>PyMethod_Check</span>(__pyx_t_1))) {
+    __pyx_t_5 = <span class='py_macro_api'>PyMethod_GET_SELF</span>(__pyx_t_1);
+    if (likely(__pyx_t_5)) {
+      PyObject* function = <span class='py_macro_api'>PyMethod_GET_FUNCTION</span>(__pyx_t_1);
+      <span class='pyx_macro_api'>__Pyx_INCREF</span>(__pyx_t_5);
       <span class='pyx_macro_api'>__Pyx_INCREF</span>(function);
-      <span class='pyx_macro_api'>__Pyx_DECREF_SET</span>(__pyx_t_5, function);
+      <span class='pyx_macro_api'>__Pyx_DECREF_SET</span>(__pyx_t_1, function);
     }
   }
-  if (__pyx_t_2) {
-    __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_CallOneArg</span>(__pyx_t_5, __pyx_t_2);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
-    <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_2); __pyx_t_2 = 0;
+  if (__pyx_t_5) {
+    __pyx_t_2 = <span class='pyx_c_api'>__Pyx_PyObject_CallOneArg</span>(__pyx_t_1, __pyx_t_5);<span class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 92; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+    <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_5); __pyx_t_5 = 0;
   } else {
-    __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_CallNoArg</span>(__pyx_t_5);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+    __pyx_t_2 = <span class='pyx_c_api'>__Pyx_PyObject_CallNoArg</span>(__pyx_t_1);<span class='error_goto'> if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 92; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   }
-  <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
-  <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_5); __pyx_t_5 = 0;
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(<span class='pyx_c_api'>__Pyx_TypeTest</span>(__pyx_t_1, __pyx_ptype_7pyAmore_6cython_9materials_MlpContainer))))) <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
-  <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_t_1);
+  <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_2);
+  <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_1); __pyx_t_1 = 0;
+  if (!(likely(((__pyx_t_2) == Py_None) || likely(<span class='pyx_c_api'>__Pyx_TypeTest</span>(__pyx_t_2, __pyx_ptype_7pyAmore_6cython_9materials_MlpContainer))))) <span
+          class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 92; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_t_2);
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_v_self-&gt;connections);
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(((PyObject *)__pyx_v_self-&gt;connections));
-  __pyx_v_self-&gt;connections = ((struct __pyx_obj_7pyAmore_6cython_9materials_MlpContainer *)__pyx_t_1);
-  __pyx_t_1 = 0;
-</pre><pre class="cython line score-0" onclick='toggleDiv(this)'>+<span class="">83</span>:         <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="o">=</span> <span class="mf">0.0</span></pre>
+  __pyx_v_self-&gt;connections = ((struct __pyx_obj_7pyAmore_6cython_9materials_MlpContainer *)__pyx_t_2);
+  __pyx_t_2 = 0;
+</pre>
+  <pre class="cython line score-0" onclick='toggleDiv(this)'>+<span class="">093</span>:         <span
+          class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="o">=</span> <span
+          class="mf">0.0</span></pre>
 <pre class='cython code score-0 '>  __pyx_v_self-&gt;bias = 0.0;
-</pre><pre class="cython line score-0">&#xA0;<span class="">84</span>: </pre>
-<pre class="cython line score-10" onclick='toggleDiv(this)'>+<span class="">85</span>:     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span></pre>
-<pre class='cython code score-10 '>/* Python wrapper */
+</pre>
+  <pre class="cython line score-0">&#xA0;<span class="">094</span>: </pre>
+  <pre class="cython line score-8" onclick='toggleDiv(this)'>+<span class="">095</span>:     <span class="k">def</span> <span
+          class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span
+          class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span
+          class="n">kwargs</span><span class="p">):</span></pre>
+<pre class='cython code score-8 '>/* Python wrapper */
 static PyObject *__pyx_pw_7pyAmore_6cython_9materials_9MlpNeuron_3__call__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static PyObject *__pyx_pw_7pyAmore_6cython_9materials_9MlpNeuron_3__call__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   CYTHON_UNUSED PyObject *__pyx_v_args = 0;
@@ -1605,51 +1862,45 @@ static PyObject *__pyx_pw_7pyAmore_6cython_9materials_9MlpNeuron_3__call__(PyObj
 
 static PyObject *__pyx_pf_7pyAmore_6cython_9materials_9MlpNeuron_2__call__(struct __pyx_obj_7pyAmore_6cython_9materials_MlpNeuron *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v_args, CYTHON_UNUSED PyObject *__pyx_v_kwargs) {
   PyObject *__pyx_r = NULL;
+  <span class='trace'>__Pyx_TraceDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannyDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannySetupContext</span>("__call__", 0);
+  <span class='trace'>__Pyx_TraceCall</span>("__call__", __pyx_f[0], 95, 0, <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 95; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>);
 /* … */
   /* function exit code */
   __pyx_L1_error:;
   <span class='pyx_macro_api'>__Pyx_XDECREF</span>(__pyx_t_1);
-  <span class='pyx_macro_api'>__Pyx_XDECREF</span>(__pyx_t_2);
-  <span class='pyx_macro_api'>__Pyx_XDECREF</span>(__pyx_t_3);
   <span class='pyx_c_api'>__Pyx_AddTraceback</span>("pyAmore.cython.materials.MlpNeuron.__call__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   <span class='refnanny'>__Pyx_XGIVEREF</span>(__pyx_r);
+  <span class='trace'>__Pyx_TraceReturn</span>(__pyx_r, 0);
   <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
   return __pyx_r;
 }
-</pre><pre class="cython line score-18" onclick='toggleDiv(this)'>+<span class="">86</span>:         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict_strategy</span><span class="p">()</span></pre>
-<pre class='cython code score-18 '>  <span class='pyx_macro_api'>__Pyx_XDECREF</span>(__pyx_r);
-  <span class='pyx_macro_api'>__Pyx_INCREF</span>(((PyObject *)__pyx_v_self-&gt;__pyx_base.predict_strategy));
-  __pyx_t_2 = ((PyObject *)__pyx_v_self-&gt;__pyx_base.predict_strategy); __pyx_t_3 = NULL;
-  if (CYTHON_COMPILING_IN_CPYTHON &amp;&amp; likely(<span class='py_c_api'>PyMethod_Check</span>(__pyx_t_2))) {
-    __pyx_t_3 = <span class='py_macro_api'>PyMethod_GET_SELF</span>(__pyx_t_2);
-    if (likely(__pyx_t_3)) {
-      PyObject* function = <span class='py_macro_api'>PyMethod_GET_FUNCTION</span>(__pyx_t_2);
-      <span class='pyx_macro_api'>__Pyx_INCREF</span>(__pyx_t_3);
-      <span class='pyx_macro_api'>__Pyx_INCREF</span>(function);
-      <span class='pyx_macro_api'>__Pyx_DECREF_SET</span>(__pyx_t_2, function);
-    }
-  }
-  if (__pyx_t_3) {
-    __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_CallOneArg</span>(__pyx_t_2, __pyx_t_3);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 86; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
-    <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_3); __pyx_t_3 = 0;
-  } else {
-    __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_CallNoArg</span>(__pyx_t_2);<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 86; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
-  }
+</pre>
+  <pre class="cython line score-6" onclick='toggleDiv(this)'>+<span class="">096</span>:         <span
+          class="k">return</span> <span class="bp">self</span><span class="o">.</span><span
+          class="n">predict_strategy</span><span class="o">.</span><span class="n">predict</span><span
+          class="p">()</span></pre>
+<pre class='cython code score-6 '>  <span class='pyx_macro_api'>__Pyx_XDECREF</span>(__pyx_r);
+  __pyx_t_1 = <span class='py_c_api'>PyFloat_FromDouble</span>(((struct __pyx_vtabstruct_7pyAmore_6cython_25neuron_predict_strategies_NeuronPredictStrategy *)__pyx_v_self-&gt;__pyx_base.predict_strategy-&gt;__pyx_vtab)-&gt;predict(__pyx_v_self-&gt;__pyx_base.predict_strategy, 0));<span
+          class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 96; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
-  <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
-</pre><pre class="cython line score-0">&#xA0;<span class="">87</span>: </pre>
-<pre class="cython line score-0">&#xA0;<span class="">88</span>: <span class="k">cdef</span> <span class="k">class</span> <span class="nf">MlpConnection</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">89</span>:     <span class="sd">&quot;&quot;&quot; A simple data structure for linking neurons in MLP networks</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">90</span>: <span class="sd">    &quot;&quot;&quot;</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">91</span>: </pre>
-<pre class="cython line score-31" onclick='toggleDiv(this)'>+<span class="">92</span>:     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">neuron</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span></pre>
+</pre>
+  <pre class="cython line score-0">&#xA0;<span class="">097</span>: </pre>
+  <pre class="cython line score-0">&#xA0;<span class="">098</span>: <span class="k">cdef</span> <span
+          class="k">class</span> <span class="nf">MlpConnection</span><span class="p">:</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">099</span>:     <span class="sd">&quot;&quot;&quot; A simple data structure for linking neurons in MLP networks</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">100</span>: <span class="sd">    &quot;&quot;&quot;</span></pre>
+  <pre class="cython line score-0">&#xA0;<span class="">101</span>: </pre>
+  <pre class="cython line score-31" onclick='toggleDiv(this)'>+<span class="">102</span>:     <span class="k">def</span> <span
+          class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span
+          class="n">neuron</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span
+          class="mf">0.0</span><span class="p">):</span></pre>
 <pre class='cython code score-31 '>/* Python wrapper */
 static int __pyx_pw_7pyAmore_6cython_9materials_13MlpConnection_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static int __pyx_pw_7pyAmore_6cython_9materials_13MlpConnection_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
@@ -1683,7 +1934,8 @@ static int __pyx_pw_7pyAmore_6cython_9materials_13MlpConnection_1__init__(PyObje
         }
       }
       if (unlikely(kw_args &gt; 0)) {
-        if (unlikely(<span class='pyx_c_api'>__Pyx_ParseOptionalKeywords</span>(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") &lt; 0)) <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 92; __pyx_clineno = __LINE__; goto __pyx_L3_error;}</span>
+        if (unlikely(<span class='pyx_c_api'>__Pyx_ParseOptionalKeywords</span>(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") &lt; 0)) <span
+          class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 102; __pyx_clineno = __LINE__; goto __pyx_L3_error;}</span>
       }
     } else {
       switch (<span class='py_macro_api'>PyTuple_GET_SIZE</span>(__pyx_args)) {
@@ -1698,7 +1950,8 @@ static int __pyx_pw_7pyAmore_6cython_9materials_13MlpConnection_1__init__(PyObje
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  <span class='pyx_c_api'>__Pyx_RaiseArgtupleInvalid</span>("__init__", 0, 1, 2, <span class='py_macro_api'>PyTuple_GET_SIZE</span>(__pyx_args)); <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 92; __pyx_clineno = __LINE__; goto __pyx_L3_error;}</span>
+  <span class='pyx_c_api'>__Pyx_RaiseArgtupleInvalid</span>("__init__", 0, 1, 2, <span class='py_macro_api'>PyTuple_GET_SIZE</span>(__pyx_args)); <span
+          class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 102; __pyx_clineno = __LINE__; goto __pyx_L3_error;}</span>
   __pyx_L3_error:;
   <span class='pyx_c_api'>__Pyx_AddTraceback</span>("pyAmore.cython.materials.MlpConnection.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
@@ -1716,8 +1969,10 @@ static int __pyx_pw_7pyAmore_6cython_9materials_13MlpConnection_1__init__(PyObje
 
 static int __pyx_pf_7pyAmore_6cython_9materials_13MlpConnection___init__(struct __pyx_obj_7pyAmore_6cython_9materials_MlpConnection *__pyx_v_self, PyObject *__pyx_v_neuron, PyObject *__pyx_v_weight) {
   int __pyx_r;
+  <span class='trace'>__Pyx_TraceDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannyDeclarations</span>
   <span class='refnanny'>__Pyx_RefNannySetupContext</span>("__init__", 0);
+  <span class='trace'>__Pyx_TraceCall</span>("__init__", __pyx_f[0], 102, 0, <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 102; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>);
 /* … */
   /* function exit code */
   __pyx_r = 0;
@@ -1727,14 +1982,23 @@ static int __pyx_pf_7pyAmore_6cython_9materials_13MlpConnection___init__(struct 
   <span class='pyx_c_api'>__Pyx_AddTraceback</span>("pyAmore.cython.materials.MlpConnection.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
+  <span class='trace'>__Pyx_TraceReturn</span>(Py_None, 0);
   <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
   return __pyx_r;
 }
-</pre><pre class="cython line score-5" onclick='toggleDiv(this)'>+<span class="">93</span>:         <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="n">weight</span></pre>
-<pre class='cython code score-5 '>  __pyx_t_1 = __pyx_<span class='py_c_api'>PyFloat_AsDouble</span>(__pyx_v_weight);<span class='error_goto'> if (unlikely((__pyx_t_1 == (double)-1) &amp;&amp; PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 93; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+</pre>
+  <pre class="cython line score-5" onclick='toggleDiv(this)'>+<span class="">103</span>:         <span
+          class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span
+          class="n">weight</span></pre>
+<pre class='cython code score-5 '>  __pyx_t_1 = __pyx_<span
+        class='py_c_api'>PyFloat_AsDouble</span>(__pyx_v_weight);<span class='error_goto'> if (unlikely((__pyx_t_1 == (double)-1) &amp;&amp; PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 103; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   __pyx_v_self-&gt;weight = __pyx_t_1;
-</pre><pre class="cython line score-4" onclick='toggleDiv(this)'>+<span class="">94</span>:         <span class="bp">self</span><span class="o">.</span><span class="n">neuron</span> <span class="o">=</span> <span class="n">neuron</span></pre>
-<pre class='cython code score-4 '>  if (!(likely(((__pyx_v_neuron) == Py_None) || likely(<span class='pyx_c_api'>__Pyx_TypeTest</span>(__pyx_v_neuron, __pyx_ptype_7pyAmore_6cython_9materials_Neuron))))) <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+</pre>
+  <pre class="cython line score-4" onclick='toggleDiv(this)'>+<span class="">104</span>:         <span
+          class="bp">self</span><span class="o">.</span><span class="n">neuron</span> <span class="o">=</span> <span
+          class="n">neuron</span></pre>
+<pre class='cython code score-4 '>  if (!(likely(((__pyx_v_neuron) == Py_None) || likely(<span class='pyx_c_api'>__Pyx_TypeTest</span>(__pyx_v_neuron, __pyx_ptype_7pyAmore_6cython_9materials_Neuron))))) <span
+        class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   __pyx_t_2 = __pyx_v_neuron;
   <span class='pyx_macro_api'>__Pyx_INCREF</span>(__pyx_t_2);
   <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_t_2);

@@ -18,7 +18,7 @@ class Network(metaclass=ABCMeta):
     def __call__(self, *args, **kwargs):
         """ Method for obtaining outputs from inputs
         """
-        raise NotImplementedError("You shouldn't be calling NeuralNetwork.__call__")
+        raise NotImplementedError("You shouldn't be calling NeuralNetwork.predict")
 
     @abstractmethod
     def poke_inputs(self, input_data):
@@ -90,7 +90,7 @@ class Neuron(metaclass=ABCMeta):
 
     @abstractmethod
     def __call__(self, *args, **kwargs):
-        raise NotImplementedError("You shouldn't be calling Neuron.__call__()")
+        raise NotImplementedError("You shouldn't be calling Neuron.predict()")
 
 
 class MlpNeuron(Neuron):
@@ -106,7 +106,7 @@ class MlpNeuron(Neuron):
         self.bias = 0.0
 
     def __call__(self, *args, **kwargs):
-        return self.predict_strategy()
+        return self.predict_strategy.predict()
 
 
 class MlpConnection:
