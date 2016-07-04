@@ -12,7 +12,7 @@ Process finished with exit code 0
 def test():
     data = np.random.rand(1000, 1)
     target = data ** 2
-    net = am.mlp_network([1, 5, 1], 'tanh', 'identity')
+    net = am.mlp_network([1, 50, 1], 'tanh', 'identity')
     print('\nNet created.\n')
     am.fit_adaptive_gradient_descent(net, data, target, 0.1, 10, 5)
     print('\nFinished.\n')

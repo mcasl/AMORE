@@ -1,10 +1,11 @@
-from pyAmore.cython.materials import *
-from pyAmore.cython.network_predict_strategies import *
-from pyAmore.cython.neuron_predict_strategies import *
-from pyAmore.cython.network_fit_strategies import *
-from pyAmore.cython.neuron_fit_strategies import *
-from pyAmore.cython.builders import *
-from pyAmore.cython.activation_functions import activation_functions_set
+from .activation_functions import activation_functions_set
+from .cost_functions import cost_functions_set
+from .materials import *
+from .network_predict_strategies import *
+from .neuron_predict_strategies import *
+from .network_fit_strategies import *
+from .neuron_fit_strategies import *
+from .builders import *
 
 
 class Factory(metaclass=ABCMeta):
@@ -29,7 +30,7 @@ class MaterialsFactory(Factory):
         Factory.__init__(self)
 
     def make_network_builder(self):
-        return self.make('NetworkBuilder')
+        return self.make('NetworkBuilder', self)
 
     def make_primitive_network(self):
         return self.make('Network', self)

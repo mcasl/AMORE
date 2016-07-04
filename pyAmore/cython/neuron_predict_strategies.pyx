@@ -1,4 +1,5 @@
 # cython: profile=True
+
 from common cimport *
 from materials cimport *
 
@@ -6,7 +7,7 @@ cdef class NeuronPredictStrategy:
     def __init__(self, Neuron neuron):
         self.neuron = neuron
 
-    cpdef RealNumber predict(self):
+    cpdef RealNumber predict(self) except -1:
         raise NotImplementedError("You shouldn't be calling NeuronPredictStrategy.predict")
 
 cdef class MlpNeuronPredictStrategy(NeuronPredictStrategy):
@@ -14,7 +15,7 @@ cdef class MlpNeuronPredictStrategy(NeuronPredictStrategy):
         NeuronPredictStrategy.__init__(self, neuron)
         self.induced_local_field = 0.0
 
-    cpdef RealNumber predict(self):
+    cpdef RealNumber predict(self) except -1:
         cdef MlpNeuron neuron = self.neuron
         cdef MlpContainer neuron_connections = neuron.connections
         cdef RealNumber accumulator = neuron.bias

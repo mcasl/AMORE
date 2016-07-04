@@ -6,8 +6,7 @@ cdef class NetworkFitStrategy:
         Network neural_network
 
 cdef class MlpNetworkFitStrategy(NetworkFitStrategy):
-    cdef public:
-        MlpContainer neuron_fit_sequence
+    cpdef poke_targets(self, data)
     cpdef backpropagate(self)
 
 

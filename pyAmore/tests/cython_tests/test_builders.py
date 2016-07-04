@@ -1,12 +1,13 @@
 import unittest
-from pyAmore.cython.interface import *
-from pyAmore.cython.builders import MlpNetworkBuilder
+from pyAmore.baseline.interface import *
 
 
 class TestBuilders(unittest.TestCase):
     def test_set_neurons_learning_rate(self):
+        factory = AdaptiveGradientDescentMaterialsFactory()
         neural_network = mlp_network([3, 4, 5], 'tanh', 'tanh')
-        MlpNetworkBuilder.set_neurons_learning_rate(neural_network, 1234)
+        builder = factory.make_network_builder()
+        builder.set_neurons_learning_rate(neural_network, 1234)
         rates = []
         for layer in neural_network.layers[1:]:
             for neuron in layer:

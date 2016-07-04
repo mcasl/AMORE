@@ -1,24 +1,24 @@
 # cython: profile=True
 
-from materials cimport *
-
-
 import numpy as np
 
+from .neuron_predict_strategies import *
+
+
 cdef class NetworkPredictStrategy:
-    def __init__(self, Network neural_network):
+    def __init__(self, neural_network):
         self.neural_network = neural_network
 
     def __call__(self, *args, **kwargs):
         raise NotImplementedError("You shouldn't be calling NetworkPredictStrategy.predict")
 
-    def activate_neurons(self, *args, **kwargs):
+    cpdef activate_neurons(self):
         raise NotImplementedError("You shouldn't be calling NetworkPredictStrategy.activate_neurons")
 
+
 cdef class MlpNetworkPredictStrategy(NetworkPredictStrategy):
-    def __init__(self, MlpNetwork neural_network):
+    def __init__(self, neural_network):
         NetworkPredictStrategy.__init__(self, neural_network)
-        self.neuron_predict_sequence = self.neural_network.factory.make_primitive_container()
 
     def __call__(self, input_data):
         data_number_of_rows, data_number_of_columns = input_data.shape
@@ -29,15 +29,23 @@ cdef class MlpNetworkPredictStrategy(NetworkPredictStrategy):
                 '\n[SimpleNeuralNetwork.sim Error:] Input layer size different from data number of columns\n')
 
         output_data = np.zeros((data_number_of_rows, output_layer_size))
-        for row, input_data in enumerate(input_data):
-            self.neural_network.poke_inputs(input_data)
+        cdef int position
+        cdef int number_of_rows = data_number_of_rows
+        for position in range(number_of_rows):
+            row_data = input_data[position]
+            self.neural_network.poke_inputs(row_data)
             self.activate_neurons()
-            output_data[row, :] = self.neural_network.pick_outputs()
+            output_data[position, :] = self.neural_network.pick_outputs()
         return output_data
 
     cpdef activate_neurons(self):
-        cdef int position
-        cdef neuron_predict_sequence_length = len(self.neuron_predict_sequence)
-        for position in range(neuron_predict_sequence_length):
-            neuron = self.neuron_predict_sequence[position]
-            neuron.predict_strategy.predict()
+        cdef int layer_position
+        cdef int neuron_position
+        cdef int number_of_layers = len(self.neural_network.layers)
+        cdef int number_of_neurons
+        for layer_position in range(1, number_of_layers):
+            layer = self.neural_network.layers[layer_position]
+            number_of_neurons = len(layer)
+            for neuron_position in range(number_of_neurons):
+                neuron = layer[neuron_position]
+                neuron.predict_strategy.predict()

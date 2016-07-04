@@ -24,10 +24,10 @@ cdef class Network:
         """
         raise NotImplementedError("You shouldn't be calling NeuralNetwork.predict")
 
-    def poke_inputs(self, input_data):
+    cpdef poke_inputs(self, input_data):
         raise NotImplementedError("You shouldn't be calling NeuralNetwork.poke_inputs")
 
-    def pick_outputs(self):
+    cpdef pick_outputs(self):
         raise NotImplementedError("You shouldn't be calling NeuralNetwork.pick_outputs")
 
     @property
@@ -47,11 +47,15 @@ cdef class MlpNetwork(Network):
     def __call__(self, input_data):
         return self.predict_strategy(input_data)
 
-    def poke_inputs(self, input_data):
-        for neuron, value in zip(self.layers[0], input_data):
+    cpdef poke_inputs(self, input_data):
+        cdef int neuron_position
+        cdef number_of_neurons = len(self.layers[0])
+        for neuron_position in range(number_of_neurons):
+            neuron = self.layers[0][neuron_position]
+            value = input_data[neuron_position]
             neuron.output = value
 
-    def pick_outputs(self):
+    cpdef pick_outputs(self):
         return [neuron.output for neuron in self.layers[-1]]
 
     @property
@@ -69,13 +73,6 @@ cdef class Neuron:
         """
         self.label = None
         self.output = 0.0
-        self.neural_network = neural_network
-        self.predict_strategy = None
-        self.fit_strategy = None
-        # self.fit_strategy should not be assigned here as it might depend on the neurons role
-        # and it will be the builders's responsibility to assign it
-        # Similarly, self.predict_strategy is not assigned here for versatility.
-        # It's the builder that assigns it.
 
     def __call__(self, *args, **kwargs):
         raise NotImplementedError("You shouldn't be calling Neuron.predict()")
@@ -88,6 +85,14 @@ cdef class MlpNeuron(Neuron):
         """ Initializer. Python requires explicit call to base class initializer
         """
         Neuron.__init__(self, neural_network)
+        self.neural_network = neural_network
+        self.predict_strategy = None
+        self.fit_strategy = None
+        # self.fit_strategy should not be assigned here as it might depend on the neurons role
+        # and it will be the builders's responsibility to assign it
+        # Similarly, self.predict_strategy is not assigned here for versatility.
+        # It's the builder that assigns it.
+
         self.activation_function = neural_network.factory.make_activation_function('default')
         self.connections = neural_network.factory.make_primitive_container()
         self.bias = 0.0

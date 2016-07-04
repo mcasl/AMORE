@@ -26,7 +26,6 @@ class TestMlpNetworkFitStrategy(unittest.TestCase):
     def test_init(self):
         neural_network = mlp_network([3, 4, 5], 'default', 'default')
         strategy = AdaptiveNetworkFitStrategy(neural_network)
-        self.assertEqual(strategy.neuron_fit_sequence, MlpContainer())
 
     def test_call(self):
         factory = AdaptiveGradientDescentMaterialsFactory()

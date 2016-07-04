@@ -1,14 +1,14 @@
 from common cimport RealNumber
 from cost_functions cimport *
-from materials cimport Neuron
+from materials cimport MlpNeuron
 
 cdef class NeuronFitStrategy:
     cdef public:
-        Neuron neuron
         CostFunction cost_function
 
 cdef class MlpNeuronFitStrategy(NeuronFitStrategy):
-    pass
+    cdef public:
+        MlpNeuron neuron
 
 cdef class AdaptiveGradientDescentNeuronFitStrategy(MlpNeuronFitStrategy):
     cdef public:

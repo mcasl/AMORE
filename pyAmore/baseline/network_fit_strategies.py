@@ -15,7 +15,6 @@ class MlpNetworkFitStrategy(NetworkFitStrategy):
     @abstractmethod
     def __init__(self, neural_network):
         NetworkFitStrategy.__init__(self, neural_network)
-        self.neuron_fit_sequence = neural_network.factory.make_primitive_container()
 
     @abstractmethod
     def __call__(self, *args, **kwargs):
@@ -27,8 +26,9 @@ class MlpNetworkFitStrategy(NetworkFitStrategy):
             neuron.fit_strategy.target = value
 
     def backpropagate(self):
-        for neuron in self.neuron_fit_sequence:
-            neuron.fit_strategy.fit()
+        for layer in reversed(self.neural_network.layers):
+            for neuron in layer:
+                neuron.fit_strategy.fit()
 
 
 class AdaptiveNetworkFitStrategy(MlpNetworkFitStrategy):

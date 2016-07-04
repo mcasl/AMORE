@@ -28,7 +28,7 @@ class MaterialsFactory(Factory):
         Factory.__init__(self)
 
     def make_network_builder(self):
-        return self.make('NetworkBuilder')
+        return self.make('NetworkBuilder', self)
 
     def make_primitive_network(self):
         return self.make('Network', self)

@@ -20,7 +20,6 @@ class NetworkPredictStrategy(metaclass=ABCMeta):
 class MlpNetworkPredictStrategy(NetworkPredictStrategy):
     def __init__(self, neural_network):
         NetworkPredictStrategy.__init__(self, neural_network)
-        self.neuron_predict_sequence = []
 
     def __call__(self, input_data):
         data_number_of_rows, data_number_of_columns = input_data.shape
@@ -38,5 +37,6 @@ class MlpNetworkPredictStrategy(NetworkPredictStrategy):
         return output_data
 
     def activate_neurons(self):
-        for neuron in self.neuron_predict_sequence:
-            neuron.predict_strategy.predict()
+        for layer in self.neural_network.layers[1:]:
+            for neuron in layer:
+                neuron.predict_strategy.predict()
