@@ -368,7 +368,18 @@ body.cython { font-family: courier; font-size: 12; }
 </p>
 <p>Raw output: <a href="neuron_predict_strategies.c">neuron_predict_strategies.c</a></p>
 <div class="cython">
-  <pre class="cython line score-0">&#xA0;<span class="">01</span>: <span class="c"># cython: profile=True</span></pre>
+  <pre class="cython line score-11" onclick='toggleDiv(this)'>+<span class="">01</span>: <span class="c"># cython: profile=True</span></pre>
+<pre class='cython code score-11 '>
+  /* "pyAmore/cython/neuron_predict_strategies.pyx":1
+ * # cython: profile=True             # &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;
+ * 
+ * from common cimport *
+ */
+  __pyx_t_1 = <span class='py_c_api'>PyDict_New</span>();<span class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
+  if (<span class='py_c_api'>PyDict_SetItem</span>(__pyx_d, __pyx_n_s_test, __pyx_t_1) &lt; 0) <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_1); __pyx_t_1 = 0;
+</pre>
   <pre class="cython line score-0">&#xA0;<span class="">02</span>: </pre>
   <pre class="cython line score-0">&#xA0;<span class="">03</span>: <span class="k">from</span> <span
           class="nn">common</span> <span class="k">cimport</span> <span class="o">*</span></pre>
@@ -578,15 +589,20 @@ static PyObject *__pyx_pf_7pyAmore_6cython_25neuron_predict_strategies_21NeuronP
   return __pyx_r;
 }
 </pre>
-  <pre class="cython line score-5" onclick='toggleDiv(this)'>+<span class="">11</span>:         <span
+  <pre class="cython line score-10" onclick='toggleDiv(this)'>+<span class="">11</span>:         <span
           class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;You shouldn&#39;t be calling NeuronPredictStrategy.predict&quot;</span><span
           class="p">)</span></pre>
-<pre class='cython code score-5 '>  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_builtin_NotImplementedError, __pyx_tuple_, NULL);<span
+<pre class='cython code score-10 '>  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_builtin_NotImplementedError, __pyx_tuple_, NULL);<span
         class='error_goto'> if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 11; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_1);
   <span class='pyx_c_api'>__Pyx_Raise</span>(__pyx_t_1, 0, 0, 0);
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_1); __pyx_t_1 = 0;
   <span class='error_goto'>{__pyx_filename = __pyx_f[0]; __pyx_lineno = 11; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+/* … */
+  __pyx_tuple_ = <span class='py_c_api'>PyTuple_Pack</span>(1, __pyx_kp_s_You_shouldn_t_be_calling_NeuronP);<span
+          class='error_goto'> if (unlikely(!__pyx_tuple_)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 11; __pyx_clineno = __LINE__; goto __pyx_L1_error;}</span>
+  <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_tuple_);
+  <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_tuple_);
 </pre>
   <pre class="cython line score-0">&#xA0;<span class="">12</span>: </pre>
   <pre class="cython line score-0" onclick='toggleDiv(this)'>+<span class="">13</span>: <span

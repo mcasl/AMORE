@@ -19,7 +19,7 @@ class TestNetworkFitStrategies(unittest.TestCase):
         factory = AdaptiveGradientDescentMaterialsFactory()
         neural_network = factory.make_primitive_network()
         fit_strategy = factory.make_network_fit_strategy(neural_network)
-        self.assertRaises(NotImplementedError, NetworkFitStrategy.__call__, fit_strategy)
+        self.assertRaises(NotImplementedError, NetworkFitStrategy.fit, fit_strategy, None, None)
 
 
 class TestMlpNetworkFitStrategy(unittest.TestCase):
@@ -31,7 +31,7 @@ class TestMlpNetworkFitStrategy(unittest.TestCase):
         factory = AdaptiveGradientDescentMaterialsFactory()
         neural_network = factory.make_primitive_network()
         fit_strategy = factory.make_network_fit_strategy(neural_network)
-        self.assertRaises(NotImplementedError, MlpNetworkFitStrategy.__call__, fit_strategy)
+        self.assertRaises(NotImplementedError, MlpNetworkFitStrategy.fit, fit_strategy, None, None)
 
     def test_poke_targets(self):
         # Stage 1: Poke data
@@ -82,7 +82,7 @@ class TestAdaptiveGradientDescentNetworkFitStrategy(unittest.TestCase):
         self.assertTrue((expected_original_weights[0] == original_weights[0].round(8)).all())
         self.assertTrue((expected_original_weights[1] == original_weights[1].round(8)).all())
 
-        neural_network.fit_strategy(input_data, target_data)
+        neural_network.fit_strategy.fit(input_data, target_data)
         trained_weights = network_weights(neural_network)
 
         expected_trained_weights = [np.array([[0.15912053, -0.14916691, 0.15508282, 0.33510523],

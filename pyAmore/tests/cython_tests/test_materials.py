@@ -110,13 +110,13 @@ class TestMlpNetwork(unittest.TestCase):
         self.assertEqual(neural_network.layers, factory.make_primitive_container())
 
     def test_call(self, input_size=100, shape=(4, 3, 2)):
-        neural_network = mlp_network(shape, 'tanh', 'identity')
+        neural_network = mlp_network(list(shape), 'tanh', 'identity')
         input_data = np.random.rand(input_size, shape[0])
         self.assertTrue((neural_network(input_data) == neural_network.predict_strategy(input_data)).all)
 
     def test_poke_inputs(self, shape=(40, 3, 2)):
         # Stage 1: Poke data
-        neural_network = mlp_network(shape, 'tanh', 'identity')
+        neural_network = mlp_network(list(shape), 'tanh', 'identity')
         sample_data = np.random.rand(shape[0])
         neural_network.poke_inputs(sample_data)
         # Stage 2: Verify previous operation
@@ -126,7 +126,7 @@ class TestMlpNetwork(unittest.TestCase):
 
     def test_pick_outputs(self, shape=(4, 6, 78)):
         # Stage 1: Write data in last layer neuron outputs
-        neural_network = mlp_network(shape, 'tanh', 'identity')
+        neural_network = mlp_network(list(shape), 'tanh', 'identity')
         sample_data = np.random.rand(shape[-1])
         last_layer = neural_network.layers[-1]
         for neuron, output_value in zip(last_layer, sample_data):
@@ -136,7 +136,7 @@ class TestMlpNetwork(unittest.TestCase):
         self.assertTrue((observed_data == sample_data).all)
 
     def test_shape(self, shape=(40, 52, 1, 7, 4)):
-        neural_network = mlp_network(shape, 'tanh', 'identity')
+        neural_network = mlp_network(list(shape), 'tanh', 'identity')
         self.assertEqual(neural_network.shape, list(shape))
 
 

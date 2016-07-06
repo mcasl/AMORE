@@ -3,7 +3,7 @@
 import numpy as np
 
 from .neuron_predict_strategies import *
-
+from .materials cimport MlpNeuron, MlpContainer
 
 cdef class NetworkPredictStrategy:
     def __init__(self, neural_network):
@@ -43,6 +43,8 @@ cdef class MlpNetworkPredictStrategy(NetworkPredictStrategy):
         cdef int neuron_position
         cdef int number_of_layers = len(self.neural_network.layers)
         cdef int number_of_neurons
+        cdef MlpNeuron neuron
+        cdef MlpContainer layer
         for layer_position in range(1, number_of_layers):
             layer = self.neural_network.layers[layer_position]
             number_of_neurons = len(layer)

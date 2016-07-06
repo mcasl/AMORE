@@ -29,7 +29,7 @@ def fit_adaptive_gradient_descent(mlp_neural_network,
     builder.set_neurons_learning_rate(mlp_neural_network, learning_rate)
     for step in range(number_of_steps):
         for inner_iterations in range(step_length):
-            mlp_neural_network.fit_strategy(input_data, target_data)
+            mlp_neural_network.fit_strategy.fit(input_data, target_data)
         print("Step={step}".format(step=step))
     return mlp_neural_network
 

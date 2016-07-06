@@ -4,6 +4,7 @@ from network_predict_strategies cimport NetworkPredictStrategy
 from neuron_fit_strategies      cimport MlpNeuronFitStrategy
 from neuron_predict_strategies  cimport MlpNeuronPredictStrategy
 from activation_functions       cimport ActivationFunction
+cimport numpy as np
 
 cdef class MlpContainer(list):
     pass
@@ -13,13 +14,13 @@ cdef class Network:
         object factory
         NetworkPredictStrategy predict_strategy
         NetworkFitStrategy fit_strategy
-    cpdef poke_inputs(self, input_data)
+    cpdef poke_inputs(self, np.ndarray input_data)
     cpdef pick_outputs(self)
 
 cdef class MlpNetwork(Network):
     cdef public:
         MlpContainer layers
-    cpdef poke_inputs(self, input_data)
+    cpdef poke_inputs(self, np.ndarray input_data)
     cpdef pick_outputs(self)
 
 cdef class Neuron:

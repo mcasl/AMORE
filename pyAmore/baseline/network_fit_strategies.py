@@ -7,7 +7,7 @@ class NetworkFitStrategy(metaclass=ABCMeta):
         self.neural_network = neural_network
 
     @abstractmethod
-    def __call__(self, *args, **kwargs):
+    def fit(self, *args, **kwargs):
         raise NotImplementedError("You shouldn't be calling NetworkFitStrategy.predict")
 
 
@@ -17,7 +17,7 @@ class MlpNetworkFitStrategy(NetworkFitStrategy):
         NetworkFitStrategy.__init__(self, neural_network)
 
     @abstractmethod
-    def __call__(self, *args, **kwargs):
+    def fit(self, *args, **kwargs):
         raise NotImplementedError("You shouldn't be calling MlpNetworkFitStrategy.predict")
 
     def poke_targets(self, data):
@@ -35,7 +35,7 @@ class AdaptiveNetworkFitStrategy(MlpNetworkFitStrategy):
     def __init__(self, neural_network):
         MlpNetworkFitStrategy.__init__(self, neural_network)
 
-    def __call__(self, input_data, target_data):
+    def fit(self, input_data, target_data):
         for input_data_row, target_data_row in zip(input_data, target_data):
             self.neural_network.poke_inputs(input_data_row)
             self.neural_network.predict_strategy.activate_neurons()

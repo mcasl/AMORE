@@ -6,6 +6,7 @@ from network_predict_strategies cimport NetworkPredictStrategy
 from neuron_fit_strategies      cimport NeuronFitStrategy
 from neuron_predict_strategies  cimport NeuronPredictStrategy
 from activation_functions       cimport ActivationFunction
+cimport numpy as np
 
 cdef class MlpContainer(list):
     pass
@@ -24,7 +25,7 @@ cdef class Network:
         """
         raise NotImplementedError("You shouldn't be calling NeuralNetwork.predict")
 
-    cpdef poke_inputs(self, input_data):
+    cpdef poke_inputs(self, np.ndarray input_data):
         raise NotImplementedError("You shouldn't be calling NeuralNetwork.poke_inputs")
 
     cpdef pick_outputs(self):
@@ -44,14 +45,16 @@ cdef class MlpNetwork(Network):
         Network.__init__(self, neural_factory)
         self.layers = neural_factory.make_primitive_container()
 
-    def __call__(self, input_data):
+    def __call__(self, np.ndarray input_data):
         return self.predict_strategy(input_data)
 
-    cpdef poke_inputs(self, input_data):
+    cpdef poke_inputs(self, np.ndarray input_data):
         cdef int neuron_position
         cdef number_of_neurons = len(self.layers[0])
+        cdef MlpNeuron neuron
+        cdef MlpContainer input_layer = self.layers[0]
         for neuron_position in range(number_of_neurons):
-            neuron = self.layers[0][neuron_position]
+            neuron = input_layer[neuron_position]
             value = input_data[neuron_position]
             neuron.output = value
 

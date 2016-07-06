@@ -2,12 +2,13 @@
 
 from .neuron_predict_strategies import *
 from .materials cimport MlpNeuron
+from .neuron_fit_strategies cimport MlpNeuronFitStrategy
 
 cdef class NetworkFitStrategy:
     def __init__(self, neural_network):
         self.neural_network = neural_network
 
-    def __call__(self, *args, **kwargs):
+    cpdef fit(self, np.ndarray input_data, np.ndarray target_data):
         raise NotImplementedError("You shouldn't be calling NetworkFitStrategy.predict")
 
 
@@ -15,7 +16,7 @@ cdef class MlpNetworkFitStrategy(NetworkFitStrategy):
     def __init__(self, neural_network):
         NetworkFitStrategy.__init__(self, neural_network)
 
-    def __call__(self, *args, **kwargs):
+    cpdef fit(self, np.ndarray input_data, np.ndarray target_data):
         raise NotImplementedError("You shouldn't be calling MlpNetworkFitStrategy.predict")
 
     cpdef poke_targets(self, data):
@@ -33,13 +34,15 @@ cdef class MlpNetworkFitStrategy(NetworkFitStrategy):
         cdef int number_of_layers = len(self.neural_network.layers)
         cdef int number_of_neurons
         cdef MlpNeuron neuron
+        cdef MlpNeuronFitStrategy neuron_fit_strategy
 
         for layers_position in range(-1 + number_of_layers, 0, -1):
             layer = self.neural_network.layers[layers_position]
             number_of_neurons = len(layer)
             for neuron_position in range(number_of_neurons):
                 neuron = layer[neuron_position]
-                neuron.fit_strategy.fit()
+                neuron_fit_strategy = neuron.fit_strategy
+                neuron_fit_strategy.fit()
 
                 #for layer in reversed(self.neural_network.layers):
                 #    for neuron in layer:
@@ -51,7 +54,7 @@ cdef class AdaptiveNetworkFitStrategy(MlpNetworkFitStrategy):
     def __init__(self, neural_network):
         MlpNetworkFitStrategy.__init__(self, neural_network)
 
-    def __call__(self, input_data, target_data):
+    cpdef fit(self, np.ndarray input_data, np.ndarray target_data):
         cdef int position
         cdef int input_data_length = len(input_data)
         for position in range(input_data_length):
