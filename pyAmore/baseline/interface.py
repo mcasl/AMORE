@@ -12,10 +12,11 @@ def mlp_network(layers_size,
                 output_layer_activation_function_name):
     factory = AdaptiveGradientDescentMaterialsFactory()
     builder = factory.make_network_builder()
-    neural_network = builder.create_neural_network(layers_size,
-                                                   hidden_layers_activation_function_name,
-                                                   output_layer_activation_function_name)
-    return neural_network
+    return builder.create_neural_network(
+        layers_size,
+        hidden_layers_activation_function_name,
+        output_layer_activation_function_name,
+    )
 
 
 def fit_adaptive_gradient_descent(mlp_neural_network,
@@ -28,7 +29,7 @@ def fit_adaptive_gradient_descent(mlp_neural_network,
     builder = factory.make_network_builder()
     builder.set_neurons_learning_rate(mlp_neural_network, learning_rate)
     for step in range(number_of_steps):
-        for inner_iterations in range(step_length):
+        for _ in range(step_length):
             mlp_neural_network.fit_strategy.fit(input_data, target_data)
         print("Step={step}".format(step=step))
     return mlp_neural_network
