@@ -72,7 +72,7 @@ class MlpNetworkBuilder(NetworkBuilder):
         layers = self.factory.make_primitive_container()
         for size in layers_size:
             layer = self.factory.make_primitive_container()
-            for dummy in range(size):
+            for _ in range(size):
                 layer.append(self.factory.make_primitive_neuron(neural_network))
             layers.append(layer)
         neural_network.layers = layers
@@ -100,7 +100,7 @@ class MlpNetworkBuilder(NetworkBuilder):
                 *   The neuron.neural_network attribute
             :param neural_network: A multilayer feed forward network
         """
-        neural_network_shape_is_not_valid = (neural_network.shape == []) or (neural_network.shape == [0])
+        neural_network_shape_is_not_valid = neural_network.shape in [[], [0]]
         if neural_network_shape_is_not_valid:
             raise ValueError('[Initialize network]: Empty net,  Shape is [0].')
         # Calculation of the total amount of parameters

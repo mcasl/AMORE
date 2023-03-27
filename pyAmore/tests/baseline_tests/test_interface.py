@@ -10,8 +10,10 @@ class TestInterface(unittest.TestCase):
                                      )
         network_connections = []
         for layer in neural_network.layers:
-            for neuron in layer:
-                network_connections.append([origin.neuron.label for origin in neuron.connections])
+            network_connections.extend(
+                [origin.neuron.label for origin in neuron.connections]
+                for neuron in layer
+            )
         self.assertEqual(network_connections, [[],
                                                [],
                                                [],

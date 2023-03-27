@@ -29,8 +29,7 @@ class TestMlpNeuralBuilder(unittest.TestCase):
         builder.set_neurons_fit_strategy(neural_network)
         result = []
         for layer in neural_network.layers:
-            for neuron in layer:
-                result.append(neuron.fit_strategy)
+            result.extend(neuron.fit_strategy for neuron in layer)
         self.assertTrue(isinstance(result[0], AdaptiveGradientDescentHiddenNeuronFitStrategy))
         self.assertTrue(isinstance(result[1], AdaptiveGradientDescentHiddenNeuronFitStrategy))
         self.assertTrue(isinstance(result[2], AdaptiveGradientDescentHiddenNeuronFitStrategy))
@@ -51,15 +50,17 @@ class TestMlpNeuralBuilder(unittest.TestCase):
         builder.create_primitive_layers(neural_network, [3, 5, 2])
         builder.connect_network_layers(neural_network)
         builder.initialize_network(neural_network)
-        labels = []
-        for layer in neural_network.layers:
-            labels.append([neuron.label for neuron in layer])
+        labels = [
+            [neuron.label for neuron in layer] for layer in neural_network.layers
+        ]
         self.assertEqual(labels, [['0', '1', '2'], ['3', '4', '5', '6', '7'], ['8', '9']])
 
         network_connections = []
         for layer in neural_network.layers:
-            for neuron in layer:
-                network_connections.append([origin.neuron.label for origin in neuron.connections])
+            network_connections.extend(
+                [origin.neuron.label for origin in neuron.connections]
+                for neuron in layer
+            )
         self.assertEqual(network_connections, [[],
                                                [],
                                                [],
@@ -90,9 +91,9 @@ class TestMlpNeuralBuilder(unittest.TestCase):
         for layer in neural_network.layers:
             for neuron in layer:
                 pre_initialized_biases.append(neuron.bias)
-                for connection in neuron.connections:
-                    pre_initialized_weights.append(connection.weight)
-
+                pre_initialized_weights.extend(
+                    connection.weight for connection in neuron.connections
+                )
         builder.initialize_network(neural_network)
 
         post_initialized_weights = []
@@ -100,9 +101,9 @@ class TestMlpNeuralBuilder(unittest.TestCase):
         for layer in neural_network.layers:
             for neuron in layer:
                 post_initialized_biases.append(neuron.bias)
-                for connection in neuron.connections:
-                    post_initialized_weights.append(connection.weight)
-
+                post_initialized_weights.extend(
+                    connection.weight for connection in neuron.connections
+                )
         self.assertNotEqual(pre_initialized_weights, post_initialized_weights)
         self.assertNotEqual(pre_initialized_biases, post_initialized_biases)
 

@@ -71,14 +71,20 @@ class MlpMaterialsFactory(MaterialsFactory):
     @abstractmethod
     def __init__(self):
         MaterialsFactory.__init__(self)
-        self.class_names.update({name: 'Mlp' + name for name in (
-            'Connection',
-            'Container',
-            'Neuron',
-            'Network',
-            'NeuronPredictStrategy',
-            'NetworkPredictStrategy',
-            'NetworkBuilder')})
+        self.class_names.update(
+            {
+                name: f'Mlp{name}'
+                for name in (
+                    'Connection',
+                    'Container',
+                    'Neuron',
+                    'Network',
+                    'NeuronPredictStrategy',
+                    'NetworkPredictStrategy',
+                    'NetworkBuilder',
+                )
+            }
+        )
 
     def make_neuron_fit_strategy(self, neuron):
         last_layer = neuron.neural_network.layers[-1]
@@ -111,30 +117,45 @@ class BatchMaterialsFactory(MlpMaterialsFactory):
 class AdaptiveGradientDescentMaterialsFactory(AdaptiveMaterialsFactory):
     def __init__(self):
         AdaptiveMaterialsFactory.__init__(self)
-        self.class_names.update({name: 'AdaptiveGradientDescent' + name for name in (
-            'OutputNeuronFitStrategy',
-            'HiddenNeuronFitStrategy')})
+        self.class_names.update(
+            {
+                name: f'AdaptiveGradientDescent{name}'
+                for name in ('OutputNeuronFitStrategy', 'HiddenNeuronFitStrategy')
+            }
+        )
 
 
 class AdaptiveGradientDescentWithMomentumMaterialsFactory(AdaptiveMaterialsFactory):
     def __init__(self):
         AdaptiveMaterialsFactory.__init__(self)
-        self.class_names.update({name: 'AdaptiveGradientDescentWithMomentum' + name for name in (
-            'OutputNeuronFitStrategy',
-            'HiddenNeuronFitStrategy')})
+        self.class_names.update(
+            {
+                name: f'AdaptiveGradientDescentWithMomentum{name}'
+                for name in ('OutputNeuronFitStrategy', 'HiddenNeuronFitStrategy')
+            }
+        )
 
 
 class BatchGradientDescentMaterialsFactory(BatchMaterialsFactory):
     def __init__(self):
         BatchMaterialsFactory.__init__(self)
-        self.class_names.update({name: 'BatchGradientDescent' + name for name in (
-            'OutputNeuronFitStrategy',
-            'HiddenNeuronFitStrategy',)})
+        self.class_names.update(
+            {
+                name: f'BatchGradientDescent{name}'
+                for name in (
+                    'OutputNeuronFitStrategy',
+                    'HiddenNeuronFitStrategy',
+                )
+            }
+        )
 
 
 class BatchGradientDescentWithMomentumMaterialsFactory(BatchMaterialsFactory):
     def __init__(self):
         BatchMaterialsFactory.__init__(self)
-        self.class_names.update({name: 'BatchGradientDescentWithMomentum' + name for name in (
-            'OutputNeuronFitStrategy',
-            'HiddenNeuronFitStrategy')})
+        self.class_names.update(
+            {
+                name: f'BatchGradientDescentWithMomentum{name}'
+                for name in ('OutputNeuronFitStrategy', 'HiddenNeuronFitStrategy')
+            }
+        )

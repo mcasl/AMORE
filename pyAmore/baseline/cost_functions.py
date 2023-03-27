@@ -10,8 +10,7 @@ class CostFunction:
         return residual ** 2
 
     def derivative(self, prediction, target):
-        residual = prediction - target
-        return residual
+        return prediction - target
 
 
 class AdaptLmsCostFunction(CostFunction):
@@ -23,8 +22,7 @@ class AdaptLmsCostFunction(CostFunction):
         return residual ** 2
 
     def derivative(self, prediction, target):
-        residual = prediction - target
-        return residual
+        return prediction - target
 
 
 class AdaptLmLsCostFunction(CostFunction):
@@ -33,13 +31,11 @@ class AdaptLmLsCostFunction(CostFunction):
 
     def original(self, prediction, target):
         residual = prediction - target
-        result = np.mean(np.log(1 + residual ** 2 / 2))
-        return result
+        return np.mean(np.log(1 + residual ** 2 / 2))
 
     def derivative(self, prediction, target):
         residual = prediction - target
-        result = residual / (1 + residual ** 2 / 2)
-        return result
+        return residual / (1 + residual ** 2 / 2)
 
 
 class BatchLmsCostFunction(CostFunction):

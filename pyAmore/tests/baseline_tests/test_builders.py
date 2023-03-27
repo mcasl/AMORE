@@ -10,7 +10,6 @@ class TestBuilders(unittest.TestCase):
         builder.set_neurons_learning_rate(neural_network, 1234)
         rates = []
         for layer in neural_network.layers[1:]:
-            for neuron in layer:
-                rates.append(neuron.fit_strategy.learning_rate)
+            rates.extend(neuron.fit_strategy.learning_rate for neuron in layer)
         self.assertEqual(rates, [1234, 1234, 1234, 1234,
                                  1234, 1234, 1234, 1234, 1234])
