@@ -1,0 +1,14 @@
+Encoding: UTF-8
+Package: AMORE
+Version: 0.2-17
+Date: 2023-11-16
+Title: Artificial Neural Network Training and Simulating
+Author: See https://github.com/mcasl/AMORE/
+Maintainer: Manuel Castejón-Limas <mcasl@unileon.es>
+Description: Commands for training a simulating an artificial neural network.
+License: GPL (>= 2)
+LazyLoad: yes
+Packaged: 2023-11-16 19:04:49 UTC; mcasl
+Repository: CRAN
+Date/Publication: 2023-11-16 05:10:21 UTC
+NeedsCompilation: yes

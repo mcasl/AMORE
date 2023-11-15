@@ -1,0 +1,33 @@
+v0.2-16: 2020.02.11
+	NAMESPACE
+		Added runif to NAMESPACE to avoid warning 
+v0.2-15: 2014.04.10
+	sim.R
+		Added finite error comprobation
+
+	src/BATCHgd.c and BATCHgdwm.c 
+		learning rate and momentum are divided by the number of tests in the train batch
+
+v0.2-14 
+	Minimal documentation changes
+
+v0.2-13: 2013.12.12
+	trMethods.R
+		Added thread number parameter (only used in BATCH methods)
+	sim.R
+		Added thread number parameter
+
+	src/BATCHgd.c and BATCHgdwm.c 
+		Moved var declaration to reduce dependences
+		Paralelized with OpenMP
+	Makevars
+		Created
+		Included OpenMP
+
+	man/*.MLPnet.Rd train.Rd
+		Added n.threads argument
+
+	Enforced CRAN requeriments:
+		man/ init.MLPneuron.Rd newff.Rd train.Rd :
+			Usage line reduced to less than 90 chars
+		
