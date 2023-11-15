@@ -1,0 +1,5 @@
+useDynLib(AMORE, .registration = TRUE)
+
+export(newff,train,sim,sim.MLPnet,ADAPTgd.MLPnet,ADAPTgdwm.MLPnet,BATCHgd.MLPnet,BATCHgdwm.MLPnet,error.LMS,error.LMLS,error.TAO,deltaE.TAO,hfun,phifun,dphifun,graphviz.MLPnet)
+importFrom("stats", "runif")
+S3method(sim, MLPnet)
